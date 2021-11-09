@@ -7,7 +7,7 @@ const GET_PRODUCTS = 'GET_PRODUCTS'
 
 // ACTION CREATORS
 
-const getProducts = (data) => {
+const getAllProducts = (data) => {
   return {
     type: GET_PRODUCTS,
     products: data
@@ -16,9 +16,9 @@ const getProducts = (data) => {
 
 // THUNKS
 
-export const fetchProducts = () => async(dispatch) => {
+export const fetchAllProducts = () => async(dispatch) => {
   const {data} = await axios.get('/api/products')
-  dispatch(getProducts(data))
+  dispatch(getAllProducts(data))
 }
 
 // INITIAL STATE
@@ -30,8 +30,7 @@ const initialState = [];
 const reducer = (state = initialState, action) => {
   switch(action.type) {
     case GET_PRODUCTS:
-      return action.data
-
+      return action.products
     default:
       return state
   }
