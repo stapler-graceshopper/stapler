@@ -3,7 +3,7 @@ const { models: { Product }} = require('../db');
 const { getAllProducts } = require('../db/models/Product');
 
 
-// ALL ROUTES MOUNTED ON /products
+// ALL ROUTES MOUNTED ON /api/products
 
 
 productRouter.get('/', (req, res, next) => {
@@ -12,7 +12,6 @@ productRouter.get('/', (req, res, next) => {
   } catch(error) {
     next(error)
   }
-  // res.send('hello world')
 })
 
 //  Dry Route Syntax. Combined all routes with '/:id' using .route() funciton
