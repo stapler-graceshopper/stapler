@@ -5,6 +5,7 @@ import { Login, Signup } from './components/AuthForm';
 import Home from './components/Home';
 import {me} from './store'
 import User from './components/User'
+import AllUsers from './components/AllUsers'
 
 /**
  * COMPONENT
@@ -17,13 +18,16 @@ class Routes extends Component {
   render() {
     const {isLoggedIn} = this.props
 
+    const allUsersPath = this.props.userType === 'admin' ? <Route path="/AllUsers" component={AllUsers} /> : null
+
     return (
       <div>
         {isLoggedIn ? (
           <Switch>
             <Route path="/user" component={User} />
             <Route path="/home" component={Home} />
-
+            {allUsersPath}
+            
             {/* our routes go here */}
 
             <Redirect to="/home" />
@@ -47,7 +51,8 @@ const mapState = state => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.auth that has a truthy id.
     // Otherwise, state.auth will be an empty object, and state.auth.id will be falsey
-    isLoggedIn: !!state.auth.id
+    isLoggedIn: !!state.auth.id,
+    userType: state.auth.type
   }
 }
 
