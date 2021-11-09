@@ -10,10 +10,41 @@ const User = db.define('user', {
   username: {
     type: Sequelize.STRING,
     unique: true,
-    allowNull: false
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
   },
   password: {
     type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
+  },
+  type: {
+    type: Sequelize.ENUM('customer', 'admin', 'engineer'),
+    defaultValue: 'customer'
+  },
+  email: {
+    type: Sequelize.STRING,
+    unique: true,
+    allowNull: false,
+    validate: {
+      isEmail: true,
+      notEmpty: true
+    }
+  },
+  image: {
+    type: Sequelize.STRING,
+    defaultValue: "https://th.bing.com/th/id/OIP.zsaaVp0tIiSnOK-1rYpBnwAAAA?w=194&h=194&c=7&r=0&o=5&dpr=2&pid=1.7"
+  },
+  address: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
   }
 })
 
