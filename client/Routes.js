@@ -27,7 +27,7 @@ class Routes extends Component {
             <Route path="/user" component={User} />
             <Route path="/home" component={Home} />
             {allUsersPath}
-            
+
             {/* our routes go here */}
 
             <Redirect to="/home" />
