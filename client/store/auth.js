@@ -34,6 +34,9 @@ export const authenticate = (user, method) => async dispatch => {
     if (method === 'login') {
       res = await axios.post(`/auth/${method}`, {username: user.username, password: user.password})
     } else {
+      if (!user.image) {
+        user.image = "https://th.bing.com/th/id/OIP.zsaaVp0tIiSnOK-1rYpBnwAAAA?w=194&h=194&c=7&r=0&o=5&dpr=2&pid=1.7"
+      }
       res = await axios.post(`/auth/${method}`, user)
     }
     window.localStorage.setItem(TOKEN, res.data.token)
