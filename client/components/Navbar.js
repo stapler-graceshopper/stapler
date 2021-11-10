@@ -2,8 +2,8 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
-
-const Navbar = ({handleClick, isLoggedIn}) => (
+// const allUsersPath = this.props.userType === 'admin' ? <Route path="/AllUsers" component={AllUsers} /> : null
+const Navbar = ({handleClick, isLoggedIn, userType}) => (
   <div>
     <h1>FS-App-Template</h1>
     <nav>
@@ -12,6 +12,9 @@ const Navbar = ({handleClick, isLoggedIn}) => (
           {/* The navbar will show these links after you log in */}
           <Link to="/home">Home</Link>
           <Link to="/user">User Info</Link>
+          {userType === 'admin' ?
+          <Link to="/AllUsers">All Users</Link> :
+          null}
           <Link to="/products">Products</Link>
           <Link to="/create">Create New</Link>
           <a href="#" onClick={handleClick}>
@@ -36,7 +39,8 @@ const Navbar = ({handleClick, isLoggedIn}) => (
  */
 const mapState = state => {
   return {
-    isLoggedIn: !!state.auth.id
+    isLoggedIn: !!state.auth.id,
+    userType: state.auth.type
   }
 }
 
