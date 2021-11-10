@@ -6,10 +6,10 @@ const GET_USER_PRODUCTS = 'GET_USER_PRODUCTS'
 
 // ACTION CREATORS
 
-const getAllUserProducts = (products) => {
+const getAllUserProducts = (userProducts) => {
   return {
     type: GET_USER_PRODUCTS,
-    products
+    userProducts
   }
 }
 
@@ -18,12 +18,12 @@ const getAllUserProducts = (products) => {
 export const fetchAllUserProducts = () => async(dispatch) => {
   const token = window.localStorage.getItem('token');
 
-  const {data: products} = await axios.get(`/api/cart`, {
+  const {data: userProducts} = await axios.get(`/api/cart`, {
     headers: {
       authorization: token
     }
   })
-  dispatch(getAllUserProducts(products))
+  dispatch(getAllUserProducts(userProducts.products))
 }
 
 // INITIAL STATE
@@ -35,7 +35,7 @@ const initialState = [];
 const reducer = (state = initialState, action) => {
   switch(action.type) {
     case GET_USER_PRODUCTS:
-      return action.products
+      return action.userProducts
     default:
       return state
   }
