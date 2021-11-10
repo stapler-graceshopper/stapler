@@ -12,8 +12,7 @@ const singleProduct = (props) => {
   return (
     <div>
       <h3>Product Name: {name}</h3>
-      {/* img isn't working, fix when you can */}
-      {/* <img src={imgUrl} /> */}
+      <img src={imgUrl} />
       <Link to={linkDestination}>
         <button type="button" >VIEW PRODUCT</button>
       </Link>

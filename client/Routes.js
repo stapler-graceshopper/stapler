@@ -23,6 +23,7 @@ class Routes extends Component {
     const {isLoggedIn} = this.props
 
     const allUsersPath = this.props.userType === 'admin' ? <Route path="/AllUsers" component={AllUsers} /> : null
+    const createProductPath = this.props.userType === 'admin' ? <Route path="/create" component={AddProductForm} /> : null
 
     return (
       <div>
@@ -30,10 +31,13 @@ class Routes extends Component {
           <Switch>
             <Route path="/user" component={User} />
             <Route path="/home" component={Home} />
-            {allUsersPath}
             <Route exact path="/products/:productId" component={SelectedProductView} />
             <Route path="/products" component={AllProducts} />
-            <Route path="/create" component={AddProductForm} />
+
+            {/* Admin routes */}
+            {allUsersPath}
+            {createProductPath}
+
             <Redirect to="/home" />
           </Switch>
         ) : (

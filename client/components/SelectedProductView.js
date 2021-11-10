@@ -10,7 +10,7 @@ class SelectedProductView extends React.Component {
 
   componentDidMount() {
     const id = this.props.match.params.productId
-    this.props.fetchSingleProduct(id)
+    this.props.fetchSingleProduct(Number(id))
   }
 
   render() {
@@ -22,8 +22,7 @@ class SelectedProductView extends React.Component {
     return (
       <div>
         <h3>Product Name: {name}</h3>
-      {/* img isn't working, fix when you can */}
-      {/* <img src={imgUrl} /> */}
+      <img src={imgUrl} />
       <p>
         description: {description} <br />
         quantity: {quantity} <br />
