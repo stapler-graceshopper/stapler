@@ -27,6 +27,12 @@ export const fetchSingleProduct = (id) => async(dispatch) => {
   const {data} = await axios.get(`/api/products/${id}`)
   dispatch(getSingleProduct(data))
 }
+
+export const fetchModifiedProduct = (product) => async(dispatch) => {
+  const {data} = await axios.put(`/api/products/` , product)
+  dispatch(updateProduct(data))
+}
+
 // INITIAL STATE
 
 const initialState = {}
@@ -36,6 +42,8 @@ const initialState = {}
 const reducer = (state = initialState, action) => {
   switch(action.type) {
     case GET_SELECTED_PRODUCT:
+      return action.product
+    case UPDATE_PRODUCT:
       return action.product
     default:
       return state

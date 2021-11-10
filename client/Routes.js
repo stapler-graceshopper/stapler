@@ -5,6 +5,7 @@ import { Login, Signup } from './components/AuthForm';
 import Home from './components/Home';
 import {me} from './store'
 import User from './components/User'
+import AllProducts from './components/AllProducts';
 
 /**
  * COMPONENT
@@ -21,10 +22,10 @@ class Routes extends Component {
       <div>
         {isLoggedIn ? (
           <Switch>
+            {/* our routes go here */}
             <Route path="/user" component={User} />
             <Route path="/home" component={Home} />
-
-            {/* our routes go here */}
+            <Route path="/products" component={AllProducts} />
 
             <Redirect to="/home" />
           </Switch>

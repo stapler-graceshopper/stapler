@@ -5,6 +5,8 @@ const { getAllProducts } = require('../db/models/Product');
 
 // ALL ROUTES MOUNTED ON /api/products
 
+//  Dry Route Syntax. Combined all routes with '/:id' using .route() funciton
+
 productRouter.route('/')
 .get(async (req, res, next) => {
   try {
@@ -21,8 +23,13 @@ productRouter.route('/')
     next(error)
   }
 })
+.put(async(req, res, next) => {
+  try {
+    res.send(await Product.updadteProduct(req.body))
+  } catch(error) {
+    next(error)
+  }
 
-//  Dry Route Syntax. Combined all routes with '/:id' using .route() funciton
 
 productRouter.route('/:id')
   .get(async (req, res, next) => {
@@ -39,12 +46,6 @@ productRouter.route('/:id')
       next(error)
     }
   })
-  .put(async(req, res, next) => {
-    try {
-      res.send(await Product.updadteProduct(req.body, req.params.id))
-    } catch(error) {
-      next(error)
-    }
 })
 
 

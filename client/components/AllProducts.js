@@ -1,20 +1,45 @@
 import React from 'react'
-import store from '../store'
 import {connect} from 'react-redux'
+import SingleProduct from './SingleProduct'
+import {fetchAllProducts} from '../store/reducers/products'
 
-class AllProducts extends React.Component() {
+class AllProducts extends React.Component {
   constructor() {
     super()
   }
+
+  componentDidMount() {
+    this.props.fetchAllProducts()
+  }
+
+  render() {
+
+    const products = this.props.products || []
+
+    const allProductsDiv = products.length > 0 ? products.map(product => (
+      <SingleProduct key={product.id} product={product} /> )) : <span>No Products</span>
+
+    return (
+      <div>
+        <hr />
+        <h2>ALL PRODUCTS</h2>
+        {allProductsDiv}
+        <hr />
+      </div>
+    )
+  }
 }
 
+  const mapStateToProps = (state) => {
+    return {
+      products: state.products
+    }
+  }
 
-const mapStateToProps = (state) => {
-  return {}
-}
+  const mapDispatchToProps = (dispatch) =>{
+    return {
+      fetchAllProducts: () => dispatch(fetchAllProducts())
+    }
+  }
 
-const mapDispatchToProps = (dispatch) =>{
-  return {}
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(AllProducts)
+  export default connect(mapStateToProps, mapDispatchToProps)(AllProducts)
