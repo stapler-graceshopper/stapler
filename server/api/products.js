@@ -5,45 +5,47 @@ const { getAllProducts } = require('../db/models/Product');
 
 // ALL ROUTES MOUNTED ON /api/products
 
+//  Dry Route Syntax. Combined all routes with '/:id' using .route() funciton
 
-productRouter.get('/', (req, res, next) => {
+productRouter.route('/')
+.get(async (req, res, next) => {
   try {
-    res.send(Product.getAllProducts())
+     res.send(await Product.getAllProducts())
   } catch(error) {
     next(error)
   }
 })
+.post(async (req, res, next) => {
+  try {
+    console.log('!!!!!!!!!!!!!!!!!!!!!!!!THIS IS THE BODY', req.body)
+    res.send(await Product.addProduct(req.body))
+  } catch(error) {
+    next(error)
+  }
+})
+.put(async(req, res, next) => {
+  try {
+    res.send(await Product.updadteProduct(req.body))
+  } catch(error) {
+    next(error)
+  }
 
-//  Dry Route Syntax. Combined all routes with '/:id' using .route() funciton
 
 productRouter.route('/:id')
-  .get((req, res, next) => {
+  .get(async (req, res, next) => {
     try {
-      res.send(Product.getProduct(req.params.id))
+      res.send(await Product.getProduct(req.params.id))
     } catch(error) {
       next(error)
     }
   })
-  .delete((req, res, next) => {
+  .delete(async(req, res, next) => {
     try {
-      res.send(Product.removeProduct(req.params.id,))
+      res.send(await Product.removeProduct(req.params.id,))
     } catch(error) {
       next(error)
     }
   })
-  .post((req, res, next) => {
-    try {
-      res.send(Product.editProduct(req.params.id, req.body))
-    } catch(error) {
-      next(error)
-    }
-    })
-  .put((req, res, next) => {
-    try {
-      res.send(Product.editProduct(req.params.id, req.body))
-    } catch(error) {
-      next(error)
-    }
 })
 
 
