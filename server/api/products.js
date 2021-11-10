@@ -5,7 +5,6 @@ const { getAllProducts } = require('../db/models/Product');
 
 // ALL ROUTES MOUNTED ON /api/products
 
-
 productRouter.route('/')
 .get(async (req, res, next) => {
   try {
@@ -14,13 +13,14 @@ productRouter.route('/')
     next(error)
   }
 })
-.post(async(req, res, next) => {
+.post(async (req, res, next) => {
   try {
+    console.log('!!!!!!!!!!!!!!!!!!!!!!!!THIS IS THE BODY', req.body)
     res.send(await Product.addProduct(req.body))
   } catch(error) {
     next(error)
   }
-  })
+})
 
 //  Dry Route Syntax. Combined all routes with '/:id' using .route() funciton
 
@@ -41,7 +41,7 @@ productRouter.route('/:id')
   })
   .put(async(req, res, next) => {
     try {
-      res.send(await Product.editProduct(req.params.id, req.body))
+      res.send(await Product.updadteProduct(req.body, req.params.id))
     } catch(error) {
       next(error)
     }

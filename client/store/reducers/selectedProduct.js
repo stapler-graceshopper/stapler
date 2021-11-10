@@ -3,6 +3,7 @@ import axios from 'axios'
 // ACTION TYPES
 
 const GET_SELECTED_PRODUCT = 'GET_SELECTED_PRODUCT'
+const UPDATE_PRODUCT = 'UPDATE_PRODUCT'
 
 // ACTION CREATORS
 
@@ -10,6 +11,13 @@ const getSingleProduct = (product) => {
   return {
     type: GET_SELECTED_PRODUCT,
     product: product
+  }
+}
+
+const updateProduct = (data) => {
+  return {
+    type: UPDATE_PRODUCT,
+    product: data
   }
 }
 

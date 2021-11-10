@@ -3,10 +3,10 @@ import axios from 'axios'
 // ACTION TYPES
 
 const GET_PRODUCTS = 'GET_PRODUCTS'
-
 const DELETE_PRODUCT = 'DELETE_PRODUCT';
-
 const ADD_PRODUCT = 'ADD_PRODUCT';
+const UPDATE_PRODUCT = 'UPDATE_PRODUCT'
+
 // ACTION CREATORS
 
 const getAllProducts = (data) => {
@@ -29,6 +29,7 @@ const deleteProduct = (id) => {
     productId: id
   }
 }
+
 // THUNKS
 
 export const fetchAllProducts = () => async(dispatch) => {
@@ -42,10 +43,12 @@ export const fetchProductToBoDeleted = (id) => async(dispatch) => {
   fetchAllProducts()
 }
 
-export const createProduct = (data) => async(dispatch) => {
-  const product = await axios.post(`/api/products`, data)
-  dispatch(addProduct(product))
+export const createProduct = (product) => async(dispatch) => {
+  const {data} = await axios.post(`/api/products`, product)
+  dispatch(addProduct(data))
 }
+
+
 // INITIAL STATE
 
 const initialState = [];
@@ -60,6 +63,12 @@ const reducer = (state = initialState, action) => {
       return action.products
     case GET_PRODUCTS:
       return action.products
+    case UPDATE_PRODUCT:
+      return [...state]
+        .filter(product => {
+          return product.id !== action.product.id
+        })
+        .push(action.product)
     default:
       return state
   }
