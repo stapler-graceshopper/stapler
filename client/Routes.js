@@ -7,6 +7,7 @@ import {me} from './store'
 import User from './components/User'
 import AllProducts from './components/AllProducts';
 import AddProductForm from './components/AddProductForm';
+import SelectedProductView from './components/SelectedProductView';
 
 /**
  * COMPONENT
@@ -27,6 +28,7 @@ class Routes extends Component {
             <Route path="/user" component={User} />
             <Route path="/home" component={Home} />
             <Route path="/products" component={AllProducts} />
+            <Route exact path="/products/:productId" component={SelectedProductView} />
             <Route path="/create" component={AddProductForm} />
 
             <Redirect to="/home" />
