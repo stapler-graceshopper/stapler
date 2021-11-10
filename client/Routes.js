@@ -6,6 +6,7 @@ import Home from './components/Home';
 import {me} from './store'
 import User from './components/User'
 import AllProducts from './components/AllProducts';
+import AddProductForm from './components/AddProductForm';
 
 /**
  * COMPONENT
@@ -26,6 +27,7 @@ class Routes extends Component {
             <Route path="/user" component={User} />
             <Route path="/home" component={Home} />
             <Route path="/products" component={AllProducts} />
+            <Route path="/create" component={AddProductForm} />
 
             <Redirect to="/home" />
           </Switch>

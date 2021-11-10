@@ -58,6 +58,7 @@ const initialState = [];
 const reducer = (state = initialState, action) => {
   switch(action.type) {
     case ADD_PRODUCT:
+      console.log("I AM SCREAMING FROM THE PRODUCTS REDUCER")
       return [...state, action.product]
     case DELETE_PRODUCT:
       return action.products

@@ -17,7 +17,8 @@ class AllProducts extends React.Component {
     const products = this.props.products || []
 
     const allProductsDiv = products.length > 0 ? products.map(product => (
-      <SingleProduct key={product.id} product={product} /> )) : <span>No Products</span>
+      <SingleProduct key={product.id} product={product} />
+      )) : <span>No Products</span>
 
     return (
       <div>

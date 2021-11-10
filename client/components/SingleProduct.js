@@ -9,6 +9,8 @@ const singleProduct = (props) => {
   return (
     <div>
       <h3>Product Name: {name}</h3>
+      {/* img isn't working, fix when you can */}
+      {/* <img src={imgUrl} /> */}
       <p>
         description: {description} <br />
         quantity: {quantity} <br />
