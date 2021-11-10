@@ -38,13 +38,23 @@ export const fetchAllProducts = () => async(dispatch) => {
 }
 
 export const fetchProductToBoDeleted = (id) => async(dispatch) => {
-  const {data} = await axios.get(`/api/products/${id}`)
+  const token = window.localStorage.getItem('token');
+  const {data} = await axios.get(`/api/products/${id}`, {
+    headers: {
+      authorization: token
+    }
+  })
   await data.destroy();
   fetchAllProducts()
 }
 
 export const createProduct = (product) => async(dispatch) => {
-  const {data} = await axios.post(`/api/products`, product)
+  const token = window.localStorage.getItem('token');
+  const {data} = await axios.post(`/api/products`, product, {
+    headers: {
+      authorization: token
+    }
+  })
   dispatch(addProduct(data))
 }
 
@@ -58,7 +68,6 @@ const initialState = [];
 const reducer = (state = initialState, action) => {
   switch(action.type) {
     case ADD_PRODUCT:
-      console.log("I AM SCREAMING FROM THE PRODUCTS REDUCER")
       return [...state, action.product]
     case DELETE_PRODUCT:
       return action.products
