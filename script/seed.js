@@ -119,17 +119,10 @@ async function seed() {
  // DO NOT COMMENT IN UNTIL MANY TO MANY IS ESTABLISHED
 
 
-
-
-
  const seedWithRandom = async () => {
    try {
-     //  await db.sync({force: true})
      await uploadTestUsers(generateTestUsers())
      await uploadTestProducts(generateTestProducts())
-     //      // TO DO
-     //      // await uploadTestProducts()
-     //      // await createRandomCarts()
     } catch (error) {
       console.log(error)
     }
@@ -146,9 +139,7 @@ async function seed() {
       // import models for this to work
 
       for (let i = 0; i < products.length; i++) {
-        console.log(products[i])
         for (let j = 0; j < users.length; j++) {
-          console.log(users[j])
           // create associations randomly, at a low probability
           if (Math.random() > 0.975) {
             const user = users[j]
@@ -162,7 +153,7 @@ async function seed() {
     }
   }
 
-  createRandomCarts()
+  await createRandomCarts()
 
   console.log(`seeded ${products.length} products`)
   console.log(`seeded ${users.length} users`)
