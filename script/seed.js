@@ -1,7 +1,7 @@
 'use strict'
 
-const {db, models: {User} } = require('../server/db')
-const Product = require('../server/db/models/Product')
+const {db, models: {User, Product} } = require('../server/db')
+// const { Users} = require('../server/db/models')
 
 /**
  * seed - this function clears the database, updates tables to
@@ -119,62 +119,64 @@ async function seed() {
  // DO NOT COMMENT IN UNTIL MANY TO MANY IS ESTABLISHED
 
 
- // const createRandomCarts = async() => {
- //   try {
- //     console.log('ATTEMPTING ASSOCIATIONS')
- //     // import models for this to work
- //     const allProducts = await Product.findAll();
- //     const allUsers = await User.findAll();
- //     for (let i = 0; i < allProducts.length; i++) {
- //       for (let j = 0; j < allUsers.length; j++) {
- //         // create associations randomly, at a low probability
- //         if (Math.random() > 0.975) {
- //           await allUsers[j].addProduct(allProducts[i])
- //         }
- //       }
- //     }
- //   } catch (error) {
- //     console.log(error)
- //   }
- // }
 
 
 
  const seedWithRandom = async () => {
    try {
-    //  await db.sync({force: true})
+     //  await db.sync({force: true})
      await uploadTestUsers(generateTestUsers())
      await uploadTestProducts(generateTestProducts())
-//      // TO DO
-//      // await uploadTestProducts()
-//      // await createRandomCarts()
-   } catch (error) {
-     console.log(error)
-   }
- }
+     //      // TO DO
+     //      // await uploadTestProducts()
+     //      // await createRandomCarts()
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
- await seedWithRandom()
+  await seedWithRandom()
 
- const users =  await User.findAll()
- const products = await Product.findAll()
+  const users =  await User.findAll()
+  const products = await Product.findAll()
+
+  const createRandomCarts = async() => {
+    try {
+      console.log('ATTEMPTING ASSOCIATIONS')
+      // import models for this to work
+
+      for (let i = 0; i < products.length; i++) {
+        console.log(products[i])
+        for (let j = 0; j < users.length; j++) {
+          console.log(users[j])
+          // create associations randomly, at a low probability
+          if (Math.random() > 0.975) {
+            const user = users[j]
+            const prod = products[i]
+            await user.addProduct(prod)
+          }
+        }
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  createRandomCarts()
 
   console.log(`seeded ${products.length} products`)
   console.log(`seeded ${users.length} users`)
   console.log(`seeded successfully`)
   return {
     users,
-    products: {
-      paper: products[0],
-      stapler: products[1]
-    }
-
+    products
   }
 }
 
 /*
- We've separated the `seed` function from the `runSeed` function.
- This way we can isolate the error handling and exit trapping.
- The `seed` function is concerned only with modifying the database.
+We've separated the `seed` function from the `runSeed` function.
+This way we can isolate the error handling and exit trapping.
+The `seed` function is concerned only with modifying the database.
 */
 async function runSeed() {
   console.log('seeding...')
@@ -191,9 +193,9 @@ async function runSeed() {
 }
 
 /*
-  Execute the `seed` function, IF we ran this module directly (`node seed`).
-  `Async` functions always return a promise, so we can use `catch` to handle
-  any errors that might occur inside of `seed`.
+Execute the `seed` function, IF we ran this module directly (`node seed`).
+`Async` functions always return a promise, so we can use `catch` to handle
+any errors that might occur inside of `seed`.
 */
 if (module === require.main) {
   runSeed()
