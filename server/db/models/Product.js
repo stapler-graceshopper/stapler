@@ -63,8 +63,8 @@ Product.addProduct = async (data) => {
   return addedProduct
 }
 
-Product.updateProduct = async (data, id) => {
-  const product = await Product.findByPk(id);
+Product.updateProduct = async (data) => {
+  const product = await Product.findByPk(data.id);
   const update = await product.update(data)
   return update
 }
