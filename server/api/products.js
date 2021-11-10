@@ -1,6 +1,5 @@
 const productRouter = require('express').Router()
 const { models: { Product }} = require('../db');
-const { getAllProducts } = require('../db/models/Product');
 
 
 // ALL ROUTES MOUNTED ON /api/products
