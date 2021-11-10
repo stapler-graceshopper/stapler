@@ -29,7 +29,12 @@ export const fetchSingleProduct = (id) => async(dispatch) => {
 }
 
 export const fetchModifiedProduct = (product) => async(dispatch) => {
-  const {data} = await axios.put(`/api/products/` , product)
+  const token = window.localStorage.getItem('token')
+  const {data} = await axios.put(`/api/products/` , product, {
+    headers: {
+      authorization: token
+    }
+  })
   dispatch(updateProduct(data))
 }
 
