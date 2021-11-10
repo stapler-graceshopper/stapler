@@ -3,6 +3,7 @@ import axios from 'axios'
 // ACTION TYPES
 
 const GET_SELECTED_PRODUCT = 'GET_SELECTED_PRODUCT'
+const UPDATE_PRODUCT = 'UPDATE_PRODUCT'
 
 // ACTION CREATORS
 
@@ -13,12 +14,25 @@ const getSingleProduct = (product) => {
   }
 }
 
+const updateProduct = (data) => {
+  return {
+    type: UPDATE_PRODUCT,
+    product: data
+  }
+}
+
 // THUNKS
 
 export const fetchSingleProduct = (id) => async(dispatch) => {
   const {data} = await axios.get(`/api/products/${id}`)
   dispatch(getSingleProduct(data))
 }
+
+export const fetchModifiedProduct = (product) => async(dispatch) => {
+  const {data} = await axios.put(`/api/products/` , product)
+  dispatch(updateProduct(data))
+}
+
 // INITIAL STATE
 
 const initialState = {}
@@ -28,6 +42,8 @@ const initialState = {}
 const reducer = (state = initialState, action) => {
   switch(action.type) {
     case GET_SELECTED_PRODUCT:
+      return action.product
+    case UPDATE_PRODUCT:
       return action.product
     default:
       return state
