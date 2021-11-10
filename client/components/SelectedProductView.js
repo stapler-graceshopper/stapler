@@ -17,6 +17,8 @@ class SelectedProductView extends React.Component {
 
     const {id, name, description, imgUrl, quantity, itemNumber, inStock} = this.props.selectedProduct
 
+
+
     return (
       <div>
         <h3>Product Name: {name}</h3>

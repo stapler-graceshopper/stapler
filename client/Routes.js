@@ -31,8 +31,8 @@ class Routes extends Component {
             <Route path="/user" component={User} />
             <Route path="/home" component={Home} />
             {allUsersPath}
-            <Route path="/products" component={AllProducts} />
             <Route exact path="/products/:productId" component={SelectedProductView} />
+            <Route path="/products" component={AllProducts} />
             <Route path="/create" component={AddProductForm} />
             <Redirect to="/home" />
           </Switch>
