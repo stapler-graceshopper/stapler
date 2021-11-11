@@ -2,20 +2,12 @@ const productRouter = require("express").Router();
 const {
   models: { Product, User },
 } = require("../db");
+const {requireToken, isAdmin} = require('./gatekeepingMiddleware')
 
 // ALL ROUTES MOUNTED ON /api/products
 
 //  Dry Route Syntax. Combined all routes with '/:id' using .route() funciton
 
-const requireToken = async (req, res, next) => {
-  try {
-    const user = await User.findByToken(req.headers.authorization);
-    req.user = user;
-    next();
-  } catch (error) {
-    next(error)
-  }
-};
 
 productRouter
   .route("/")
@@ -26,24 +18,16 @@ productRouter
         next(error);
       }
     })
-    .post(requireToken, async (req, res, next) => {
+    .post(requireToken, isAdmin, async (req, res, next) => {
       try {
-        if (req.user.type === 'admin') {
         res.send(await Product.addProduct(req.body));
-        } else {
-          res.sendStatus(403)
-        }
       } catch (error) {
         next(error);
       }
     })
-    .put(requireToken, async (req, res, next) => {
+    .put(requireToken, isAdmin, async (req, res, next) => {
       try {
-        if (req.user.type === 'admin') {
         res.send(await Product.updateProduct(req.body));
-        } else {
-          res.sendStatus(403)
-        }
       } catch (error) {
         next(error);
       }
@@ -58,13 +42,9 @@ productRouter
         next(error);
       }
     })
-    .delete(requireToken, async (req, res, next) => {
+    .delete(requireToken, isAdmin, async (req, res, next) => {
       try {
-        if (req.user.type === 'admin') {
         res.send(await Product.removeProduct(req.params.id));
-        } else {
-          res.sendStatus(403)
-        }
       } catch (error) {
         next(error);
       }
