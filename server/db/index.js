@@ -4,7 +4,7 @@ const db = require('./db')
 
 const Product = require('./models/Product')
 const User = require('./models/User')
-const ShoppingCart = require('./models/ShopppingCart')
+const ShoppingCart = require('./models/ShoppingCart')
 
 //associations could go here!
 
