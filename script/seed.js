@@ -59,7 +59,7 @@ const makeUserType = () => {
     case 3:
       return 'admin'
     default:
-      return 'guest'
+      return 'customer'
   }
 }
 
@@ -79,7 +79,6 @@ const makeProduct = () => {
     name: makeRandomName(1),
     description: makeRandomName(10),
     price: Math.floor(Math.random() * (100000 - 1) + 1) / 100 ,
-    inStock: true,
     quantity: makeRandomNumber()
   }
   return product

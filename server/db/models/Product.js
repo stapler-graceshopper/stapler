@@ -37,10 +37,13 @@ const Product = db.define("product", {
 
   quantity: {
     type: Sequelize.INTEGER,
+    allowNull: false,
     validate: {
+      notEmpty: true,
       isNumeric: true,
     },
   },
+
   itemNumber: {
     type: Sequelize.INTEGER,
     validate: {

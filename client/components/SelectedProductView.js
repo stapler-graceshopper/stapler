@@ -15,19 +15,17 @@ class SelectedProductView extends React.Component {
 
   render() {
 
-    const {id, name, description, imgUrl, quantity, itemNumber, inStock} = this.props.selectedProduct
-
-
+    const {id, name, description, imgUrl, quantity, itemNumber, price} = this.props.selectedProduct
 
     return (
       <div>
         <h3>Product Name: {name}</h3>
+        <span>Price: ${price} </span>
       <img src={imgUrl} />
       <p>
         description: {description} <br />
         quantity: {quantity} <br />
         itemNumber: {itemNumber} <br />
-        inStock: {inStock ? 'true' : 'false'} <br />
       </p>
       </div>
     )
