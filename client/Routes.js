@@ -9,6 +9,7 @@ import AllProducts from './components/AllProducts';
 import AddProductForm from './components/AddProductForm';
 import SelectedProductView from './components/SelectedProductView';
 import AllUsers from './components/AllUsers'
+import cart from './components/cart'
 
 
 /**
@@ -32,11 +33,16 @@ class Routes extends Component {
             <Route path="/user" component={User} />
             <Route path="/home" component={Home} />
             <Route exact path="/products/:productId" component={SelectedProductView} />
+
             <Route path="/products" component={AllProducts} />
 
             {/* Admin routes */}
             {allUsersPath}
             {createProductPath}
+
+
+            <Route path="/create" component={AddProductForm} />
+            <Route path="/cart" component={cart} />
 
             <Redirect to="/home" />
           </Switch>
@@ -45,8 +51,12 @@ class Routes extends Component {
             <Route path='/' exact component={ Login } />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
+
             <Route exact path="/products/:productId" component={SelectedProductView} />
             <Route path="/products" component={AllProducts} />
+
+            <Route path="/cart" component={cart} />
+
           </Switch>
         )}
       </div>
