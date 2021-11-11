@@ -34,7 +34,7 @@ router.post('/:id', requireToken, async (req,res,next) => {
 
     //make sure component updates on submit
     if (!itemCreated) {
-      updatedItem = await itemInCart.update({quantity: Number(req.body.quantity)})
+      updatedItem = await itemInCart.update({quantity: itemInCart.quantity + Number(req.body.quantity)})
     } else {
         await user.addProduct(product)
         updatedItem = await itemInCart.update({quantity: Number(req.body.quantity)})
@@ -46,6 +46,18 @@ router.post('/:id', requireToken, async (req,res,next) => {
   }
 })
 
+router.delete('/:id', requireToken, async (req,res,next) => {
+  try {
+    const user = await User.findByPk(req.user.id)
+    const product = await Product.findByPk(req.params.id)
+
+    await user.removeProduct(product)
+
+    res.status(202).send('Product removed from user');
+  } catch (error) {
+    next(error)
+  }
+})
 
 
 module.exports = router
