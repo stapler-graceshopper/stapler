@@ -1,17 +1,38 @@
 'use strict'
+//  run npm install random-words
 
 const {db, models: {User, Product} } = require('../server/db')
-// const { Users} = require('../server/db/models')
 
-/**
- * seed - this function clears the database, updates tables to
- *      match the models, and populates the database.
- */
-
-// IMPORT USER MODEL HERE
 const randomWords = require('random-words');
 
-// username, password, type, email, image, address
+//  Create Developer accounts for testing
+
+
+const createDeveloperAccounts = async() => {
+  const admin = {
+    username: 'admin',
+    password: '123',
+    type: 'admin',
+    email: 'admin@admin.com',
+    address: makeRandomAddress()
+  }
+
+  const customer = {
+      username: 'customer',
+      password: '123',
+      type: 'customer',
+      email: makeRandomEmail(),
+      address: makeRandomAddress()
+  }
+
+  await User.create(admin)
+  await User.create(customer)
+}
+
+
+// Random Field Makers
+
+
 const makeRandomName = (num = 2, joiningStr = ' ') => {
   const name = randomWords(num).join(joiningStr);
   return name
@@ -38,7 +59,7 @@ const makeUserType = () => {
     case 3:
       return 'admin'
     default:
-      return 'guest'
+      return 'customer'
   }
 }
 
@@ -57,12 +78,20 @@ const makeProduct = () => {
   const product = {
     name: makeRandomName(1),
     description: makeRandomName(10),
-    inStock: true,
+    price: Math.floor(Math.random() * (100000 - 1) + 1) / 100 ,
     quantity: makeRandomNumber()
   }
   return product
 }
-// generate 100 test users by default
+
+const makeRandomNumber = (num = 1000) => {
+  const randomNum = Math.floor(Math.random() * num)
+  return randomNum
+}
+
+// Model Generators
+
+// generate 100 by default
 const generateTestUsers = (thisMany = 100) => {
   const arrayOfTestUsers = []
   for (let i = 0; i < thisMany; i++) {
@@ -71,6 +100,7 @@ const generateTestUsers = (thisMany = 100) => {
   return arrayOfTestUsers;
 }
 
+// generate 100 by default
 const generateTestProducts = (thisMany = 100) => {
   const arrayOfTestProducts = []
   for (let i = 0; i < thisMany; i++) {
@@ -79,6 +109,8 @@ const generateTestProducts = (thisMany = 100) => {
   return arrayOfTestProducts;
 }
 
+// Upload to DB
+
 const uploadTestUsers = async(data) => {
   if (!Array.isArray(data)) {
     console.log('uploadTestUsers requires an Array');
@@ -86,7 +118,6 @@ const uploadTestUsers = async(data) => {
   }
   await Promise.all(data.map(async (user) => {
     console.log(`USER: ${user.username} \n is being created`)
-    // import user model or this won't work
     const singleUser = await User.create(user)
     return singleUser
   }))
@@ -99,19 +130,12 @@ const uploadTestProducts = async(data) => {
   }
   await Promise.all(data.map(async (product) => {
     console.log(`PRODUCT: ${product.name} \n is being created`)
-    // import user model or this won't work
     const singleProduct = await Product.create(product)
     return singleProduct
   }))
 }
 
-const makeRandomNumber = (num = 1000) => {
-  const randomNum = Math.floor(Math.random() * num)
-  return randomNum
-}
-// for when we have both models finished, to create random shoping carts
-
-// DO NOT COMMENT IN UNTIL MANY TO MANY IS ESTABLISHED
+// Create associations
 
 const createRandomCarts = async() => {
   try {
@@ -133,10 +157,7 @@ const createRandomCarts = async() => {
   }
 }
 
-async function syncDB() {
-  await db.sync({ force: true }) // clears db and matches models to tables
-  console.log('The Database has been Synced!')
-}
+// Calls lower level functions
 
 const seedWithRandom = async () => {
   try {
@@ -146,11 +167,20 @@ const seedWithRandom = async () => {
     console.log(`seeded users`)
     console.log(`seeded successfully`)
     await createRandomCarts()
+    // admin and customer both PW:123
+    await createDeveloperAccounts();
   } catch (error) {
     console.log(error)
   }
 }
 
+// Sync the database. Clear the database if force:true
+
+async function syncDB() {
+  await db.sync({ force: true }) // clears db and matches models to tables
+  console.log('The Database has been Synced!')
+}
+// Main function for running everything (exported)
 
  async function runSeed() {
    console.log('seeding...')
@@ -166,7 +196,6 @@ const seedWithRandom = async () => {
       console.log('db connection closed')
     }
   }
-
   /*
   Execute the `seed` function, IF we ran this module directly (`node seed`).
   `Async` functions always return a promise, so we can use `catch` to handle

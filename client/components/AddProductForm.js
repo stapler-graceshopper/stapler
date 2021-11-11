@@ -13,7 +13,6 @@ class AddProductForm extends React.Component {
       description: "",
       quantity: "",
       itemNumber: "",
-      inStock: false,
     };
   }
 
@@ -32,7 +31,6 @@ class AddProductForm extends React.Component {
     // if(this.state.name === '') {
     //* write code for on screen error msg here
     // } else {
-    this.setInStock();
     const newProduct = { ...this.state };
     this.props.createProduct(newProduct);
     //reset state
@@ -41,16 +39,9 @@ class AddProductForm extends React.Component {
       description: "",
       quantity: "",
       itemNumber: "",
-      inStock: false,
     });
     console.log("got here, end of handleSubmit");
     // }
-  }
-
-  setInStock() {
-    this.state.quantity > 0
-      ? this.setState({ inStock: true })
-      : this.setState({ inStock: false });
   }
 
   render() {

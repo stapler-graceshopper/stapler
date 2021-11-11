@@ -11,10 +11,22 @@ const Product = db.define("product", {
   name: {
     type: Sequelize.STRING,
     allowNull: false,
+    validate: {
+      notEmpty: true
+    }
   },
 
   description: {
     type: Sequelize.TEXT,
+  },
+
+  price: {
+    type: Sequelize.FLOAT,
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+      isNumeric: true
+    }
   },
 
   imgUrl: {
@@ -25,20 +37,18 @@ const Product = db.define("product", {
 
   quantity: {
     type: Sequelize.INTEGER,
+    allowNull: false,
     validate: {
+      notEmpty: true,
       isNumeric: true,
     },
   },
+
   itemNumber: {
     type: Sequelize.INTEGER,
     validate: {
       isNumeric: true,
     },
-  },
-
-  inStock: {
-    type: Sequelize.BOOLEAN,
-    defaultValue: true,
   },
 });
 
