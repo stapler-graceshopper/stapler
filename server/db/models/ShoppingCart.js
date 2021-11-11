@@ -6,7 +6,7 @@ const ShoppingCart = db.define('shoppingCart', {
   quantity: {
     type: Sequelize.INTEGER,
     allowNull: false,
-    defaultValue: 1, //to do seed file should randomize this value
+    defaultValue: 0, //to do seed file should randomize this value
     validate: {
       notEmpty: true
     }

@@ -12,7 +12,6 @@ User.belongsToMany(Product,{through: ShoppingCart})
 Product.belongsToMany(User,{through: ShoppingCart})
 
 
-
 module.exports = {
   db,
   models: {
