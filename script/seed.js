@@ -5,6 +5,31 @@ const {db, models: {User, Product} } = require('../server/db')
 
 const randomWords = require('random-words');
 
+//  Create Developer accounts for testing
+
+
+const createDeveloperAccounts = async() => {
+  const admin = {
+    username: 'admin',
+    password: '123',
+    type: 'admin',
+    email: 'admin@admin.com',
+    address: makeRandomAddress()
+  }
+
+  const customer = {
+      username: 'customer',
+      password: '123',
+      type: 'customer',
+      email: makeRandomEmail(),
+      address: makeRandomAddress()
+  }
+
+  await User.create(admin)
+  await User.create(customer)
+}
+
+
 // Random Field Makers
 
 
@@ -53,6 +78,7 @@ const makeProduct = () => {
   const product = {
     name: makeRandomName(1),
     description: makeRandomName(10),
+    price: Math.floor(Math.random() * (100000 - 1) + 1) / 100 ,
     inStock: true,
     quantity: makeRandomNumber()
   }
@@ -132,13 +158,6 @@ const createRandomCarts = async() => {
   }
 }
 
-// Sync the database. Clear the database if force:true
-
-async function syncDB() {
-  await db.sync({ force: true }) // clears db and matches models to tables
-  console.log('The Database has been Synced!')
-}
-
 // Calls lower level functions
 
 const seedWithRandom = async () => {
@@ -149,11 +168,19 @@ const seedWithRandom = async () => {
     console.log(`seeded users`)
     console.log(`seeded successfully`)
     await createRandomCarts()
+    // admin and customer both PW:123
+    await createDeveloperAccounts();
   } catch (error) {
     console.log(error)
   }
 }
 
+// Sync the database. Clear the database if force:true
+
+async function syncDB() {
+  await db.sync({ force: true }) // clears db and matches models to tables
+  console.log('The Database has been Synced!')
+}
 // Main function for running everything (exported)
 
  async function runSeed() {
