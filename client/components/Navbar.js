@@ -21,7 +21,9 @@ const Navbar = ({handleClick, isLoggedIn, userType}) => (
           {userType === 'admin' ?
           <Link to="/create">Create Product</Link> :
           null}
-
+          <Link to="/products">Products</Link>
+          <Link to="/create">Create New</Link>
+          <Link to="cart">Cart</Link>
           <a href="#" onClick={handleClick}>
             Logout
           </a>
