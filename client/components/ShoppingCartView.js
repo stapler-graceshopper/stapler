@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import { fetchShoppingCart } from '../store/reducers/shoppingCart'
-import productInsideCart from './productInsideCart'
+import ProductInsideCart from './productInsideCart'
 
 class ShoppingCartView extends React.Component{
   constructor() {
@@ -9,7 +9,8 @@ class ShoppingCartView extends React.Component{
   }
 
   componentDidMount() {
-    fetchShoppingCart()
+    console.log(this.props.user)
+    this.props.fetchShoppingCart()
   }
 
   render() {
@@ -17,11 +18,11 @@ class ShoppingCartView extends React.Component{
 
     return(
       <div>
-        {this.props.shoppingCart.map((product)=>{
-          return (
-            <productInsideCart key={product.id} product={product} />
+        <h2>This is your shopping cart</h2>
+        {this.props.shoppingCart.map(product => (
+            <ProductInsideCart key={product.id} product={product} />
           )
-        })}
+        )}
       </div>
     )
 
@@ -30,6 +31,7 @@ class ShoppingCartView extends React.Component{
 
 const mapStateToProps = (state) => {
   return {
+    user: state.auth,
     shoppingCart: state.shoppingCart
   }
 }
