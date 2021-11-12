@@ -15,8 +15,9 @@ class SelectedProductView extends React.Component {
   }
 
   handleAddToCart(event, id, amount = 1) {
-    if (!user.type === 'guest') {
     event.preventDefault;
+    if (!this.props.user.type === 'guest') {
+      console.log('running add to cart as non-guest')
     this.props.postItemToCart(id, amount)
     } else {
 
@@ -38,7 +39,9 @@ class SelectedProductView extends React.Component {
           itemNumber: {itemNumber} <br />
         </p>
         <hr />
-        <button type="button" onClick={(event, id, amount)=>{this.handleAddToCart(event, id, amount)}}>Add To Cart</button>
+        <button
+          type="submit"
+          onSubmit={(event) => (this.handleAddToCart(event, id, amount))}>Add To Cart</button>
       </div>
     )
 
