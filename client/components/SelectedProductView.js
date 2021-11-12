@@ -6,9 +6,14 @@ import { postItemToCart } from "../store/reducers/shoppingCart";
 class SelectedProductView extends React.Component {
   constructor() {
     super();
-    this.state = {};
+
+    //make sure to add a range for the qty
+    this.state = {
+      quantity: 1
+    };
 
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
@@ -16,11 +21,17 @@ class SelectedProductView extends React.Component {
     this.props.fetchSingleProduct(Number(id));
   }
 
+  handleChange(evt) {
+    this.setState({
+      [evt.target.name]: evt.target.value
+    })
+  }
+
   handleSubmit(evt) {
     evt.preventDefault();
 
     //qty is 1 by default, change when you add qty to component
-    this.props.postItem(this.props.selectedProduct.id, 1);
+    this.props.postItem(this.props.selectedProduct.id, this.state.quantity);
   }
 
   render() {
@@ -37,9 +48,12 @@ class SelectedProductView extends React.Component {
           quantity: {quantity} <br />
           itemNumber: {itemNumber} <br />
         </p>
-        <button type="submit" onClick={this.handleSubmit}>
-          Add ToCart
-        </button>
+        <form onSubmit={this.handleSubmit}>
+          <label htmlFor='quantity'>Quantity</label>
+          <input type='number' name='quantity' value={this.state.quantity} onChange={this.handleChange}/>
+
+          <button type="submit">Add To Cart</button>
+        </form>
       </div>
     );
   }
@@ -51,10 +65,10 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch, { history }) => {
   return {
     fetchSingleProduct: id => dispatch(fetchSingleProduct(id)),
-    postItem: (id, amount) => dispatch(postItemToCart(id, amount)),
+    postItem: (id, amount) => dispatch(postItemToCart(id, amount, history)),
   };
 };
 

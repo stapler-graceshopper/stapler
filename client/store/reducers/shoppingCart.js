@@ -31,7 +31,7 @@ export const fetchShoppingCart = () => async(dispatch) => {
 }
 
 //might not work because of how body and header is sent
-export const postItemToCart = (id, amount) => async(dispatch) => {
+export const postItemToCart = (id, amount, history) => async(dispatch) => {
   try {
     const token = window.localStorage.getItem("token")
 
@@ -43,6 +43,7 @@ export const postItemToCart = (id, amount) => async(dispatch) => {
     })
 
     fetchShoppingCart()
+    history.push('/shoppingCart')
   } catch (error) {
     console.log(error)
   }
