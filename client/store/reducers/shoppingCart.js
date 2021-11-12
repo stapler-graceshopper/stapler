@@ -15,6 +15,20 @@ const getShoppingCart = (data) => {
 
 // THUNKS
 
+export const fetchShoppingCart = () => async(dispatch) => {
+  try{
+    const token = window.localStorage.getItem("token");
+    const {data} = await axios.get('/api/shoppingcart', {
+      headers: {
+        authorization: token
+      }
+    })
+    dispatch(getShoppingCart(data))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 // INITIAL STATE
 
 const initialState = []
