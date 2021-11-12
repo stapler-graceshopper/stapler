@@ -34,8 +34,9 @@ export const fetchShoppingCart = () => async(dispatch) => {
 export const postItemToCart = (id, amount) => async(dispatch) => {
   try {
     const token = window.localStorage.getItem("token")
-    await axios.post(`/api/shoppingcart:${id}`, {
-      body: {quantity: amount},
+
+    console.log(token)
+    await axios.post(`/api/shoppingCart/${id}`, {quantity: amount}, {
       headers: {
         authorization: token
       }
