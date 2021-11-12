@@ -12,8 +12,7 @@ class ShoppingCartView extends React.Component{
   }
 
   componentDidMount() {
-    console.log(this.props.user)
-    this.props.fetchShoppingCart()
+      this.props.fetchShoppingCart()
   }
 
   handleDelete(evt, id) {
