@@ -2,23 +2,24 @@ const router = require('express').Router()
 const { models: { User, Product, ShoppingCart }} = require('../db')
 const { requireToken, isAdmin } = require("./gatekeepingMiddleware");
 
-//removed requireToken, will need it later
+// Routes for /shoppingcart
+
 router.get('/', requireToken, async (req, res, next) => {
   try {
-      const userProducts = await User.findOne({
+      const cart = await User.findOne({
         include: { model: Product },
         where: {
           id: req.user.id
         }
       })
-      res.json(userProducts)
+      res.json(cart.products)
   } catch (err) {
     next(err)
   }
 })
 
 //slug is id of product
-router.post('/:id', requireToken, async (req,res,next) => {
+router.post('/:id', requireToken, async (req, res, next) => {
   try {
     const user = await User.findByPk(req.user.id)
     const product = await Product.findByPk(req.params.id)
