@@ -30,7 +30,6 @@ class SelectedProductView extends React.Component {
   handleSubmit(evt) {
     evt.preventDefault();
 
-    //qty is 1 by default, change when you add qty to component
     this.props.postItem(this.props.selectedProduct.id, this.state.quantity);
   }
 
@@ -50,7 +49,7 @@ class SelectedProductView extends React.Component {
         </p>
         <form onSubmit={this.handleSubmit}>
           <label htmlFor='quantity'>Quantity</label>
-          <input type='number' name='quantity' value={this.state.quantity} onChange={this.handleChange}/>
+          <input type='number' min="1" max={quantity} name='quantity' value={this.state.quantity} onChange={this.handleChange}/>
 
           <button type="submit">Add To Cart</button>
         </form>
