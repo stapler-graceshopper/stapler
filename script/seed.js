@@ -1,7 +1,7 @@
 'use strict'
 //  run npm install random-words
 
-const {db, models: {User, Product} } = require('../server/db')
+const {db, models: {User, Product, ShoppingCart} } = require('../server/db')
 
 const randomWords = require('random-words');
 
@@ -157,6 +157,12 @@ const createRandomCarts = async() => {
   }
 }
 
+const createRandomQuantities = async () => {
+  const carts = await ShoppingCart.findAll();
+  const cartQuantities = carts.map(cart => cart.quantity)
+  // fin later
+}
+
 // Calls lower level functions
 
 const seedWithRandom = async () => {
@@ -166,9 +172,9 @@ const seedWithRandom = async () => {
     console.log(`seeded products`)
     console.log(`seeded users`)
     console.log(`seeded successfully`)
+    await createDeveloperAccounts();
     await createRandomCarts()
     // admin and customer both PW:123
-    await createDeveloperAccounts();
   } catch (error) {
     console.log(error)
   }
