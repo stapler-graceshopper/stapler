@@ -73,12 +73,17 @@ const reducer = (state = initialState, action) => {
       return action.cart
     // need some logic for ADD ITEM to cover both logged in and guest users.
     case ADD_ITEM_TO_CART:
+      //  First check to see if the item is already in our cart
       let idxOfItem = stateByIDs.findIndex(action.product.id)
       if (idxOfItem) {
+        // if item is already in cart :
+        // also: i'm not sure i'm allowed to alter the state like this but
+        //    I can't test it until the component is ready
         state[idxOfItem].shoppingCart.quantity += action.amount
         return state
       } else {
         //  This sets up a property on the incoming item to mimic what you would get if you used an api route and Eager Loading
+        action.product.shoppingCart = {}
         action.product.shoppingCart.quantity = action.amount
         return [...state, action.product]
       }
