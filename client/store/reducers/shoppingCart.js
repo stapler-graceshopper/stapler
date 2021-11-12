@@ -6,12 +6,13 @@ const GET_SHOPPING_CART = 'GET_SHOPPING_CART'
 
 // ACTION CREATORS
 
-const getShoppingCart = (data) => {
+const getShoppingCart = (items) => {
   return {
     type: GET_SHOPPING_CART,
-    cart: data
+    cart: items
   }
 }
+
 
 // THUNKS
 
@@ -28,6 +29,24 @@ export const fetchShoppingCart = () => async(dispatch) => {
     console.log(error)
   }
 }
+
+//might not work because of how body and header is sent
+export const postItemToCart = (id, amount) => async(dispatch) => {
+  try {
+    const token = window.localStorage.getItem("token")
+    await axios.post(`/api/shoppingcart:${id}`, {
+      body: {quantity: amount},
+      headers: {
+        authorization: token
+      }
+    })
+
+    fetchShoppingCart()
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 
 // INITIAL STATE
 
