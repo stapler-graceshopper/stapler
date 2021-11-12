@@ -5,7 +5,6 @@ import { createProduct } from "../store/reducers/products";
 class AddProductForm extends React.Component {
   constructor() {
     super();
-    this.setInStock = this.setInStock.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
@@ -13,6 +12,7 @@ class AddProductForm extends React.Component {
       description: "",
       quantity: "",
       itemNumber: "",
+      price: ""
     };
   }
 
@@ -39,13 +39,14 @@ class AddProductForm extends React.Component {
       description: "",
       quantity: "",
       itemNumber: "",
+      price: ""
     });
     console.log("got here, end of handleSubmit");
     // }
   }
 
   render() {
-    const { name, description, quantity, itemNumber } = this.state;
+    const { name, description, quantity, itemNumber, price } = this.state;
     const { handleChange, handleSubmit } = this;
 
     if (this.props.user.type === "admin") {
@@ -76,6 +77,14 @@ class AddProductForm extends React.Component {
             onChange={handleChange}
             name="itemNumber"
             value={itemNumber}
+          />
+
+          <label htmlFor="price">PRICE</label>
+          <input
+            type="text"
+            onChange={handleChange}
+            name="price"
+            value={price}
           />
 
           <br />
