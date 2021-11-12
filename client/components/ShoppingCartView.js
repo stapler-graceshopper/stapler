@@ -9,8 +9,11 @@ class ShoppingCartView extends React.Component{
   }
 
   componentDidMount() {
-    console.log(this.props.user)
+    if (!this.props.user.type === 'guest') {
     this.props.fetchShoppingCart()
+    } else {
+
+    }
   }
 
   render() {
