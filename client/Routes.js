@@ -9,7 +9,7 @@ import AllProducts from './components/AllProducts';
 import AddProductForm from './components/AddProductForm';
 import SelectedProductView from './components/SelectedProductView';
 import AllUsers from './components/AllUsers'
-
+import ShoppingCartView from './components/ShoppingCartView';
 
 /**
  * COMPONENT
@@ -33,6 +33,7 @@ class Routes extends Component {
             <Route path="/home" component={Home} />
             <Route exact path="/products/:productId" component={SelectedProductView} />
             <Route path="/products" component={AllProducts} />
+            <Route path="/shoppingCart" component={ShoppingCartView} />
 
             {/* Admin routes */}
             {allUsersPath}
@@ -47,6 +48,7 @@ class Routes extends Component {
             <Route path="/signup" component={Signup} />
             <Route exact path="/products/:productId" component={SelectedProductView} />
             <Route path="/products" component={AllProducts} />
+            <Route path="/shoppingCart" component={ShoppingCartView} />
           </Switch>
         )}
       </div>

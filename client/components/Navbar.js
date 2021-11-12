@@ -13,6 +13,7 @@ const Navbar = ({handleClick, isLoggedIn, userType}) => (
           <Link to="/home">Home</Link>
           <Link to="/user">User Info</Link>
           <Link to="/products">Products</Link>
+          <Link to="/shoppingCart">Shopping Cart</Link>
 
           {/* Admin links */}
           {userType === 'admin' ?
@@ -32,6 +33,7 @@ const Navbar = ({handleClick, isLoggedIn, userType}) => (
           <Link to="/login">Login</Link>
           <Link to="/signup">Sign Up</Link>
           <Link to="/products">Products</Link>
+          <Link to="/shoppingCart">Shopping Cart</Link>
         </div>
       )}
     </nav>
