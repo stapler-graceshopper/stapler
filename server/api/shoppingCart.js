@@ -2,7 +2,7 @@ const router = require('express').Router()
 const { models: { User, Product, ShoppingCart }} = require('../db')
 const { requireToken, isAdmin } = require("./gatekeepingMiddleware");
 
-// Routes for /shoppingcart
+// Routes for /api/shoppingcart
 
 router.get('/', requireToken, async (req, res, next) => {
   try {
@@ -24,7 +24,6 @@ router.post('/:id', requireToken, async (req, res, next) => {
     const user = await User.findByPk(req.user.id)
     const product = await Product.findByPk(req.params.id)
     let updatedItem;
-
 
     const [itemInCart, itemCreated] = await ShoppingCart.findOrCreate({
       where: {
