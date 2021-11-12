@@ -12,7 +12,10 @@ User.belongsToMany(Product,{through: ShoppingCart})
 Product.belongsToMany(User,{through: ShoppingCart})
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6040e7a924163f285a54900226ea57eb9ac938e3
 module.exports = {
   db,
   models: {
