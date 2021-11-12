@@ -42,6 +42,7 @@ export const postItemToCart = (id, amount) => async(dispatch) => {
   try {
     const token = window.localStorage.getItem("token")
     if (token) {
+      //might need to make body the second argument
       const {data} = await axios.post(`/api/shoppingcart:${id}`, {
         quantity: amount,
         headers: {
