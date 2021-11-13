@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { fetchSingleProduct } from "../store/reducers/selectedProduct";
-import { postItemToCart } from "../store/reducers/shoppingCart";
+import { postItemToCart, updateItemInCart } from "../store/reducers/shoppingCart";
 
 class SelectedProductView extends React.Component {
   constructor() {
@@ -30,7 +30,15 @@ class SelectedProductView extends React.Component {
   handleSubmit(evt) {
     evt.preventDefault();
 
-    this.props.postItem(this.props.selectedProduct.id, this.state.quantity);
+    const ifItemInCart = this.props.shoppingCart.filter(product => product.id === this.props.selectedProduct.id);
+
+    if (ifItemInCart.length === 0) {
+      this.props.postItem(this.props.selectedProduct.id, this.state.quantity);
+    } else {
+      this.props.updateItem(this.props.selectedProduct.id, (ifItemInCart[0].shoppingCart.quantity + this.state.quantity))
+
+    }
+
   }
 
   render() {
@@ -61,6 +69,7 @@ class SelectedProductView extends React.Component {
 const mapStateToProps = state => {
   return {
     selectedProduct: state.selectedProduct,
+    shoppingCart: state.shoppingCart
   };
 };
 
@@ -68,6 +77,7 @@ const mapDispatchToProps = (dispatch, { history }) => {
   return {
     fetchSingleProduct: id => dispatch(fetchSingleProduct(id)),
     postItem: (id, amount) => dispatch(postItemToCart(id, amount, history)),
+    updateItem: (id, amount) => dispatch(updateItemInCart(id, amount))
   };
 };
 

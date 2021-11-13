@@ -2,6 +2,8 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
+import {clearCart} from '../store/reducers/shoppingCart'
+
 // const allUsersPath = this.props.userType === 'admin' ? <Route path="/AllUsers" component={AllUsers} /> : null
 const Navbar = ({handleClick, isLoggedIn, userType}) => (
   <div>
@@ -47,7 +49,7 @@ const Navbar = ({handleClick, isLoggedIn, userType}) => (
 const mapState = state => {
   return {
     isLoggedIn: !!state.auth.id,
-    userType: state.auth.type
+    userType: state.auth.type,
   }
 }
 
@@ -55,6 +57,7 @@ const mapDispatch = dispatch => {
   return {
     handleClick() {
       dispatch(logout())
+      dispatch(clearCart())
     }
   }
 }
