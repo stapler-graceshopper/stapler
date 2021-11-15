@@ -8,12 +8,8 @@ class ProductInsideHistory extends React.Component {
 
   }
 
-
   render() {
   const product = this.props.product
-
-  console.log(this.props)
-
   const {id, name, description, imgUrl} = product
   const {quantity, purchasePrice, purchaseDate} = product.shoppingCart
   const linkDestination = `/products/${id}`
@@ -21,14 +17,15 @@ class ProductInsideHistory extends React.Component {
   return (
     <div>
       <h3>Product Name: {name}</h3>
+      <div><img src={imgUrl} /></div>
       <div>Purchse Price: ${purchasePrice} </div>
       <div>Purchse Quantity: {quantity} </div>
       <div>Purchse Date: {purchaseDate} </div>
-      <div><img src={imgUrl} /></div>
 
       <Link to={linkDestination}>
         <button type="button" >VIEW PRODUCT</button>
       </Link>
+      <br/>
     </div>
   )
   }

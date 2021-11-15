@@ -137,6 +137,18 @@ export const deleteItemInCart = id => async dispatch => {
   }
 };
 
+export const checkoutCart = (userId) => async dispatch => {
+  try {
+    const token = window.localStorage.getItem("token");
+
+    if (token) {
+
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 // INITIAL STATE
 
 const initialState = [];

@@ -23,6 +23,51 @@ router.get("/", requireToken, async (req, res, next) => {
   }
 });
 
+// Routes for /api/shoppingcart/history
+
+router.get("/history", requireToken, async (req, res, next) => {
+  try {
+    const cart = await User.findOne({
+      include: { model: Product },
+      where: {
+        id: req.user.id,
+      },
+    });
+
+    const history = cart.products.filter(product => product.shoppingCart.purchased === true)
+
+    res.json(history);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.put('/checkout', requireToken, async (req,res,next) => {
+  try {
+    const itemsInCart = await User.findOne({
+      include: [{ model: Product }],
+      where: {
+        id: req.user.id,
+      },
+    });
+
+    console.log(itemsInCart)
+
+    purchasedItems = itemsInCart.products.filter(product => product.shoppingCart.purchased === false)
+
+    purchasedItems.forEach(async product => {
+      const newQty = product.quantity - product.shoppingCart.quantity;
+
+      await product.update({quantity: newQty})
+      await product.shoppingCart.update({purchased: true})
+    })
+
+    res.sendStatus(200)
+  } catch (error) {
+    next(error)
+  }
+})
+
 //slug is id of product
 router.route("/:id")
   .post(requireToken, async (req, res, next) => {
@@ -88,23 +133,6 @@ router.route("/:id")
 
 
 
-// Routes for /api/shoppingcart/history
 
-router.get("/history", requireToken, async (req, res, next) => {
-  try {
-    const cart = await User.findOne({
-      include: { model: Product },
-      where: {
-        id: req.user.id,
-      },
-    });
-
-    const history = cart.products.filter(product => product.shoppingCart.purchased === true)
-
-    res.json(history);
-  } catch (err) {
-    next(err);
-  }
-});
 
 module.exports = router;
