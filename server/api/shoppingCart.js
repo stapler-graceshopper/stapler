@@ -14,7 +14,10 @@ router.get("/", requireToken, async (req, res, next) => {
         id: req.user.id,
       },
     });
-    res.json(cart.products);
+
+    const itemInCart = cart.products.filter(product => product.shoppingCart.purchased === false)
+
+    res.json(itemInCart);
   } catch (err) {
     next(err);
   }
@@ -82,5 +85,26 @@ router.route("/:id")
       next(error)
     }
   })
+
+
+
+// Routes for /api/shoppingcart/history
+
+router.get("/history", requireToken, async (req, res, next) => {
+  try {
+    const cart = await User.findOne({
+      include: { model: Product },
+      where: {
+        id: req.user.id,
+      },
+    });
+
+    const history = cart.products.filter(product => product.shoppingCart.purchased === true)
+
+    res.json(history);
+  } catch (err) {
+    next(err);
+  }
+});
 
 module.exports = router;
