@@ -150,14 +150,14 @@ const reducer = (state = initialState, action) => {
     case DELETE_ITEM_IN_CART:
       return [...state.filter(product => product.id !== action.itemId)];
     case ADD_ITEM_TO_CART:
-      const newItem = {
+      {const newItem = {
         ...action.item,
-        shoppingCart: { quantity: action.quantity },
+        shoppingCart: { quantity: Number(action.quantity) },
       };
 
-      return [...state, newItem];
+      return [...state, newItem];}
     case UPDATE_ITEM_IN_CART:
-      const newState = state.map(product => {
+      {const newState = state.map(product => {
         if (product.id === action.itemId) {
           const newProduct = { ...product };
 
@@ -168,7 +168,7 @@ const reducer = (state = initialState, action) => {
           return product;
         }
       });
-      return newState;
+      return newState;}
     case CLEAR_CART:
       return action.cart
     default:
