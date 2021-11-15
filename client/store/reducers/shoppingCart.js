@@ -54,7 +54,7 @@ export const fetchShoppingCart = () => async dispatch => {
     const token = window.localStorage.getItem("token");
 
     if (token) {
-      const { data } = await axios.get("/api/shoppingcart", {
+      const { data } = await axios.get("/api/shoppingCart", {
         headers: {
           authorization: token,
         },
