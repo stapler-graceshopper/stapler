@@ -10,6 +10,7 @@ import AddProductForm from './components/AddProductForm';
 import SelectedProductView from './components/SelectedProductView';
 import AllUsers from './components/AllUsers'
 import ShoppingCartView from './components/ShoppingCartView';
+import CartHistory from './components/CartHistory';
 
 /**
  * COMPONENT
@@ -33,7 +34,9 @@ class Routes extends Component {
             <Route path="/home" component={Home} />
             <Route exact path="/products/:productId" component={SelectedProductView} />
             <Route path="/products" component={AllProducts} />
+            <Route exact path='/shoppingCart/history' component={CartHistory}/>
             <Route path="/shoppingCart" component={ShoppingCartView} />
+
 
             {/* Admin routes */}
             {allUsersPath}
