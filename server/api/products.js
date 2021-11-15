@@ -6,7 +6,7 @@ const {requireToken, isAdmin} = require('./gatekeepingMiddleware')
 
 // ALL ROUTES MOUNTED ON /api/products
 
-//  Dry Route Syntax. Combined all routes with '/:id' using .route() funciton
+//  Shorthand Route Syntax. Combined all routes with '/:id' using .route() funciton
 
 
 productRouter
