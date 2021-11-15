@@ -1,53 +1,66 @@
-import axios from 'axios'
+import axios from "axios";
 
 // ACTION TYPES
 
-const GET_SELECTED_PRODUCT = 'GET_SELECTED_PRODUCT'
-const UPDATE_PRODUCT = 'UPDATE_PRODUCT'
+const GET_SELECTED_PRODUCT = "GET_SELECTED_PRODUCT";
+const UPDATE_PRODUCT = "UPDATE_PRODUCT";
 
 // ACTION CREATORS
 
-const getSingleProduct = (product) => {
+const getSingleProduct = product => {
   return {
     type: GET_SELECTED_PRODUCT,
-    product: product
-  }
-}
+    product: product,
+  };
+};
 
-const updateProduct = (data) => {
+const updateProduct = data => {
   return {
     type: UPDATE_PRODUCT,
-    product: data
-  }
-}
+    product: data,
+  };
+};
 
 // THUNKS
 
-export const fetchSingleProduct = (id) => async(dispatch) => {
-  const {data} = await axios.get(`/api/products/${id}`)
-  dispatch(getSingleProduct(data))
-}
+export const fetchSingleProduct = id => async dispatch => {
+  try {
+    const { data } = await axios.get(`/api/products/${id}`);
+    dispatch(getSingleProduct(data));
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-export const fetchModifiedProduct = (product) => async(dispatch) => {
-  const {data} = await axios.put(`/api/products/` , product)
-  dispatch(updateProduct(data))
-}
+export const fetchModifiedProduct = product => async dispatch => {
+  try {
+    const token = window.localStorage.getItem("token");
+    const { data } = await axios.put(`/api/products/`, product, {
+      headers: {
+        authorization: token,
+      },
+    });
+    dispatch(updateProduct(data));
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 // INITIAL STATE
 
-const initialState = {}
+const initialState = {};
 
 // REDUCER
 
 const reducer = (state = initialState, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case GET_SELECTED_PRODUCT:
-      return action.product
+      return action.product;
     case UPDATE_PRODUCT:
-      return action.product
+      return action.product;
     default:
-      return state
+      return state;
   }
-}
+};
 
-export default reducer
+export default reducer;

@@ -23,8 +23,8 @@ const User = db.define('user', {
     }
   },
   type: {
-    type: Sequelize.ENUM('guest', 'admin', 'engineer', 'loggedIn'),
-    defaultValue: 'guest'
+    type: Sequelize.ENUM('guest', 'customer', 'admin'),
+    defaultValue: 'customer'
   },
   email: {
     type: Sequelize.STRING,

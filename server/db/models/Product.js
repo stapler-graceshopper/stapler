@@ -11,10 +11,22 @@ const Product = db.define("product", {
   name: {
     type: Sequelize.STRING,
     allowNull: false,
+    validate: {
+      notEmpty: true
+    }
   },
 
   description: {
     type: Sequelize.TEXT,
+  },
+
+  price: {
+    type: Sequelize.FLOAT,
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+      isNumeric: true
+    }
   },
 
   imgUrl: {
@@ -25,20 +37,18 @@ const Product = db.define("product", {
 
   quantity: {
     type: Sequelize.INTEGER,
+    allowNull: false,
     validate: {
+      notEmpty: true,
       isNumeric: true,
     },
   },
+
   itemNumber: {
     type: Sequelize.INTEGER,
     validate: {
       isNumeric: true,
     },
-  },
-
-  inStock: {
-    type: Sequelize.BOOLEAN,
-    defaultValue: true,
   },
 });
 
@@ -63,16 +73,8 @@ Product.addProduct = async (data) => {
   return addedProduct
 }
 
-// Product.updateProduct = async ( data, id) => {
-//   const prodToBeUpdated =  await Product.findByPk(id);
-//   if(prodToBeUpdated){
-//     await prodToBeUpdated.update(data);
-//     return prodToBeUpdated
-//   }
-// }
-
-Product.updateProduct = async (data, id) => {
-  const product = await Product.findByPk(id);
+Product.updateProduct = async (data) => {
+  const product = await Product.findByPk(data.id);
   const update = await product.update(data)
   return update
 }

@@ -1,95 +1,114 @@
-import React from 'react'
-import {connect} from 'react-redux'
-import {createProduct} from '../store/reducers/products'
+import React from "react";
+import { connect } from "react-redux";
+import { createProduct } from "../store/reducers/products";
 
 class AddProductForm extends React.Component {
   constructor() {
-    super()
-    this.setInStock = this.setInStock.bind(this)
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
+    super();
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
-      name: '',
-      description: '',
-      quantity: '',
-      itemNumber: '',
-      inStock: false
-    }
+      name: "",
+      description: "",
+      quantity: "",
+      itemNumber: "",
+      price: ""
+    };
   }
 
-  // componentDidMount()
-
+  // componentDidMount() {
+  // }
 
   handleChange(event) {
     this.setState({
-      [event.target.name]: event.target.value
-    })
-    console.log(event.target.name + ': ' + event.target.value)
+      [event.target.name]: event.target.value,
+    });
+    console.log(event.target.name + ": " + event.target.value);
   }
 
   handleSubmit(event) {
     event.preventDefault();
     // if(this.state.name === '') {
-      //* write code for on screen error msg here
+    //* write code for on screen error msg here
     // } else {
-      this.setInStock()
-      const newProduct = {... this.state}
-      this.props.createProduct(newProduct)
-      //reset state
-      this.setState({
-        name: '',
-        description: '',
-        quantity: '',
-        itemNumber: '',
-        inStock: false
-      })
-      console.log('got here, end of handleSubmit')
+    const newProduct = { ...this.state };
+    this.props.createProduct(newProduct);
+    //reset state
+    this.setState({
+      name: "",
+      description: "",
+      quantity: "",
+      itemNumber: "",
+      price: ""
+    });
+    console.log("got here, end of handleSubmit");
     // }
   }
 
-  setInStock() {
-    this.state.quantity > 0 ?
-     this.setState({inStock: true})
-     : this.setState({inStock: false})
-  }
-
   render() {
+    const { name, description, quantity, itemNumber, price } = this.state;
+    const { handleChange, handleSubmit } = this;
 
-    const {name, description, quantity, itemNumber} = this.state;
-    const {handleChange, handleSubmit} = this;
+    if (this.props.user.type === "admin") {
+      return (
+        <form id="NewProductForm" onSubmit={handleSubmit}>
+          <label htmlFor="name">NAME</label>
+          <input type="text" onChange={handleChange} name="name" value={name} />
 
-    return (
-      <form id="NewProductForm" onSubmit={handleSubmit}>
-        <label htmlFor="name" >NAME</label>
-        <input type="text" onChange={handleChange} name="name" value={name} />
+          <label htmlFor="description">DESCRIPTION</label>
+          <input
+            type="text"
+            onChange={handleChange}
+            name="description"
+            value={description}
+          />
 
-        <label htmlFor="description" >DESCRIPTION</label>
-        <input type="text" onChange={handleChange} name="description" value={description} />
+          <label htmlFor="quantity">QUANTITY</label>
+          <input
+            type="text"
+            onChange={handleChange}
+            name="quantity"
+            value={quantity}
+          />
 
-        <label htmlFor="quantity" >QUANTITY</label>
-        <input type="text" onChange={handleChange} name="quantity" value={quantity} />
+          <label htmlFor="itemNumber">ITEM NUMBER</label>
+          <input
+            type="text"
+            onChange={handleChange}
+            name="itemNumber"
+            value={itemNumber}
+          />
 
-        <label htmlFor="itemNumber" >ITEM NUMBER</label>
-        <input type="text" onChange={handleChange} name="itemNumber" value={itemNumber} />
+          <label htmlFor="price">PRICE</label>
+          <input
+            type="text"
+            onChange={handleChange}
+            name="price"
+            value={price}
+          />
 
-        <br />
+          <br />
 
-        <button type="submit">Submit</button>
-      </form>
-    )
+          <button type="submit">Submit</button>
+        </form>
+      );
+    } else {
+      return <div>bad token</div>
+    }
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    products: state.products
-  }
-}
+    products: state.products,
+    user: state.auth,
+  };
+};
 
-const mapDispatchToProps = (dispatch) =>{
+const mapDispatchToProps = dispatch => {
   return {
-    createProduct: (product) => dispatch(createProduct(product))
-  }
-}
+    createProduct: product => dispatch(createProduct(product)),
+  };
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddProductForm)
+export default connect(mapStateToProps, mapDispatchToProps)(AddProductForm);

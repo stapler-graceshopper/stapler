@@ -9,7 +9,7 @@ import AllProducts from './components/AllProducts';
 import AddProductForm from './components/AddProductForm';
 import SelectedProductView from './components/SelectedProductView';
 import AllUsers from './components/AllUsers'
-
+import ShoppingCartView from './components/ShoppingCartView';
 
 /**
  * COMPONENT
@@ -23,6 +23,7 @@ class Routes extends Component {
     const {isLoggedIn} = this.props
 
     const allUsersPath = this.props.userType === 'admin' ? <Route path="/AllUsers" component={AllUsers} /> : null
+    const createProductPath = this.props.userType === 'admin' ? <Route path="/create" component={AddProductForm} /> : null
 
     return (
       <div>
@@ -30,10 +31,14 @@ class Routes extends Component {
           <Switch>
             <Route path="/user" component={User} />
             <Route path="/home" component={Home} />
-            {allUsersPath}
-            <Route path="/products" component={AllProducts} />
             <Route exact path="/products/:productId" component={SelectedProductView} />
-            <Route path="/create" component={AddProductForm} />
+            <Route path="/products" component={AllProducts} />
+            <Route path="/shoppingCart" component={ShoppingCartView} />
+
+            {/* Admin routes */}
+            {allUsersPath}
+            {createProductPath}
+
             <Redirect to="/home" />
           </Switch>
         ) : (
@@ -41,6 +46,9 @@ class Routes extends Component {
             <Route path='/' exact component={ Login } />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
+            <Route exact path="/products/:productId" component={SelectedProductView} />
+            <Route path="/products" component={AllProducts} />
+            <Route path="/shoppingCart" component={ShoppingCartView} />
           </Switch>
         )}
       </div>
