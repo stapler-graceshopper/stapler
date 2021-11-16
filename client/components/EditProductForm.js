@@ -1,8 +1,20 @@
 import React from "react";
 import { connect } from "react-redux";
-import {  } from "../store/reducers/products";
-import { clearSelectedProduct } from '../store/reducers/selectedProduct'
+import { fetchAllProducts } from "../store/reducers/products";
+import { clearSelectedProduct, fetchModifiedProduct } from '../store/reducers/selectedProduct'
 import AllProductsTable from "./AllProductsTable";
+
+const clearEmptyObjectKeys = (obj) => {
+  try {
+    Object.keys(obj).forEach(key => {
+      if (obj[key] === '' || key === 'err') {
+        delete obj[key]
+      }
+    })
+  } catch (err) {
+    console.log(err)
+  }
+}
 
 class EditProductForm extends React.Component {
   constructor() {
@@ -29,22 +41,33 @@ class EditProductForm extends React.Component {
     console.log(event.target.name + ": " + event.target.value);
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault();
-    // if(this.state.name === '') {
-    //* write code for on screen error msg here
-    // } else {
-    const editedProduct = { ...this.state };
-    // this.props.createProduct(newProduct);
-    //reset state
-    this.setState({
-      name: "",
-      description: "",
-      quantity: "",
-      itemNumber: "",
-      price: ""
-    });
-    console.log("got here, end of handleSubmit");
+    if (this.props.selectedProduct.id) {
+      const editedProduct = {
+        id: this.props.selectedProduct.id,
+        name: this.state.name,
+        description: this.state.description,
+        quantity: this.state.quantity,
+        itemNumber: this.state.itemNumber,
+        price: this.state.price
+      };
+      clearEmptyObjectKeys(editedProduct)
+      console.log('EDITED PRODUCT: ', editedProduct)
+      await this.props.fetchModifiedProduct(editedProduct)
+      await this.props.fetchAllProducts();
+
+      this.setState({
+        name: "",
+        description: "",
+        quantity: "",
+        itemNumber: "",
+        price: ""
+      });
+      console.log("got here, end of handleSubmit");
+    } else {
+      console.log('select a product before submitting changes')
+    }
     // }
   }
 
@@ -137,7 +160,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    clearSelectedProduct: () => dispatch(clearSelectedProduct())
+    clearSelectedProduct: () => dispatch(clearSelectedProduct()),
+    fetchModifiedProduct: (product) => dispatch(fetchModifiedProduct(product)),
+    fetchAllProducts: () => dispatch(fetchAllProducts())
   };
 };
 

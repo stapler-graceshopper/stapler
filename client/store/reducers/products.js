@@ -103,12 +103,14 @@ const reducer = (state = initialState, action) => {
       return [...state, action.product];
     case DELETE_PRODUCT:
       return action.products;
-    case UPDATE_PRODUCT:
-      return [...state]
-        .filter(product => {
-          return product.id !== action.product.id;
-        })
-        .push(action.product);
+    // case UPDATE_PRODUCT: {
+    //   const newState = [...state]
+    //   newState.filter(product => {
+    //     return product.id !== action.product.id;
+    //   })
+    //   newState.push(action.product);
+    //   return newState;
+    // }
     default:
       return state;
   }

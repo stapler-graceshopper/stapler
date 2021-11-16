@@ -14,7 +14,6 @@ class AllProductsTable extends React.Component {
   }
 
   handleSelectProduct(event, id) {
-    console.log('click')
     event.preventDefault()
     this.props.fetchSingleProduct(id)
   }
@@ -27,6 +26,7 @@ class AllProductsTable extends React.Component {
         <table>
           <thead>
             <tr>
+              <th>ID</th>
               <th>Name</th>
               <th>Price</th>
               <th>Stock</th>
@@ -36,6 +36,7 @@ class AllProductsTable extends React.Component {
           <tbody>
             {this.props.products.map((product)=>(
               <tr key={product.id} >
+                <td>{product.id}</td>
                 <td>{product.name}</td>
                 <td>{product.price}</td>
                 <td>{product.quantity}</td>

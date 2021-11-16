@@ -42,11 +42,13 @@ export const fetchSingleProduct = id => async dispatch => {
 export const fetchModifiedProduct = product => async dispatch => {
   try {
     const token = window.localStorage.getItem("token");
+    console.log('!!!!!!!!!!!!!!!!!!!!!!!!')
     const { data } = await axios.put(`/api/products/`, product, {
       headers: {
         authorization: token,
       },
     });
+    await console.log('DATA FROM PUT REQUEST: ', data)
     dispatch(updateProduct(data));
   } catch (error) {
     console.log(error);

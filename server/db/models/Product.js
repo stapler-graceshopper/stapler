@@ -55,6 +55,7 @@ const Product = db.define("product", {
 
 Product.getAllProducts = async () => {
   const products = await Product.findAll();
+  products.sort((a,b)=>(a.id > b.id ? 1 : -1))
   return products;
 };
 
@@ -65,6 +66,7 @@ Product.getByCategory = async (category) => {
       where: {name: category}
     },
   })
+  products.sort((a,b)=>(a.id > b.id ? 1 : -1))
   return products
 }
 
