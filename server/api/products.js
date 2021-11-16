@@ -8,6 +8,14 @@ const {requireToken, isAdmin} = require('./gatekeepingMiddleware')
 
 //  Shorthand Route Syntax. Combined all routes with '/:id' using .route() funciton
 
+productRouter.get('/byCategory/:category', async(req, res, next) => {
+  try {
+    const products = await Product.getByCategory(req.params.category)
+    res.send(products)
+  } catch (error) {
+    next(error)
+  }
+})
 
 productRouter
   .route("/")
@@ -49,5 +57,6 @@ productRouter
         next(error);
       }
     });
+
 
 module.exports = productRouter;

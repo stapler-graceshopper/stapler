@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import SingleProduct from './SingleProduct'
-import { fetchAllProducts } from '../store/reducers/products'
+import { fetchAllProducts, fetchProductsByCategory } from '../store/reducers/products'
 import { fetchCategories } from '../store/reducers/categories'
 
 class AllProducts extends React.Component {
@@ -24,7 +24,13 @@ class AllProducts extends React.Component {
     await this.setState({
       [event.target.name]: event.target.value
     })
-    console.log(this.state.category)
+    if (this.state.category !== 'View All') {
+    await this.props.fetchProductsByCategory(this.state.category)
+    } else {
+      await this.props.fetchAllProducts();
+    }
+    // console.log(this.state.category)
+    // console.log('there are this many products on this page: ', this.props.products.length)
   }
 
   render() {
@@ -64,6 +70,7 @@ class AllProducts extends React.Component {
   const mapDispatchToProps = (dispatch) =>{
     return {
       fetchAllProducts: () => dispatch(fetchAllProducts()),
+      fetchProductsByCategory: (category) => dispatch(fetchProductsByCategory(category)),
       fetchCategories: () => {dispatch(fetchCategories())}
     }
   }
