@@ -43,9 +43,9 @@ class AllProducts extends React.Component {
 
     return (
       <div>
-        <label htmlFor="categories">Choose a Category</label>
-        <select name="category" onChange={this.onChange}>
-          <option key={-1} value="View All">View All</option>
+        <label htmlFor="categories" id="bold">Choose a Category</label>
+        <select className="button" name="category" onChange={this.onChange}>
+          <option key={-1} value="View All">VIEW ALL</option>
           {this.props.categories.map(category=>(
             <option key={category.name} value={category.name}>{category.name}</option>
           ))}

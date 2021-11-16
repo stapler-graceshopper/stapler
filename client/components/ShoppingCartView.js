@@ -30,9 +30,7 @@ class ShoppingCartView extends React.Component{
     return(
       <div>
         <h2 className="flex">This is your shopping cart</h2>
-        <button onClick={this.handleCheckout}>Checkout</button>
-        <br/>
-        <h2>This is your shopping cart</h2>
+        <button onClick={this.handleCheckout} className="checkout">Checkout</button>
         {this.props.shoppingCart.map(product => (
             <ProductInsideCart key={product.id} product={product} handleDelete={this.handleDelete}/>
           )

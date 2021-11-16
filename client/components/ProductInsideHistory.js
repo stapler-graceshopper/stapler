@@ -15,18 +15,19 @@ class ProductInsideHistory extends React.Component {
     const linkDestination = `/products/${id}`
 
   return (
-    <div>
-      <h3>Product Name: {name}</h3>
-      <div><img src={imgUrl} /></div>
-      <div>Purchase Price: ${purchasePrice} </div>
-      <div>Purchase Quantity: {quantity} </div>
-      <div>Purchase Total: ${purchasePrice * quantity} </div>
-      <div>Purchase Date: {purchaseDate} </div>
+    <div className="product">
+      <img src={imgUrl} />
+      <div className="info">
+        <h1>Product Name: {name}</h1>
+        <h1>Purchase Price: ${purchasePrice}</h1>
+        <h1>Purchase Quantity: {quantity}</h1>
+        <h1>Purchase Total: ${purchasePrice * quantity} </h1>
+        <h1>Purchase Date: {purchaseDate} </h1>
+      </div>
 
       <Link to={linkDestination}>
-        <button type="button" >VIEW PRODUCT</button>
+        <button type="button" className="button">VIEW PRODUCT</button>
       </Link>
-      <br/>
     </div>
   )
   }

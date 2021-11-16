@@ -37,9 +37,22 @@ form div {
 }
 
 .flex {
-  margin: 50px;
+  margin-top: 50px;
+  margin-bottom: 20px;
   display: flex;
   justify-content: center
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.inputText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .input:focus {
@@ -51,6 +64,19 @@ form div {
 }
 
 .button:hover {
+  background-color: rgb(236, 155, 32)
+}
+
+.checkout {
+  position:absolute;
+  left: 1100px;
+  top: 170px;
+  width: 100px;
+  height: 30px;
+  background-color: rgb(240, 170, 65)
+}
+
+.checkout:hover {
   background-color: rgb(236, 155, 32)
 }
 
@@ -83,6 +109,26 @@ form div {
   border: 5px solid rgb(13, 171, 199);
   background-color:rgba(13, 171, 199, 0.089);
   margin: 30px;
+}
+
+.list {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: auto;
+  width: 200px;
+  border: 5px solid rgb(13, 171, 199);
+  background-color:rgba(13, 171, 199, 0.089);
+}
+
+#bold {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.item {
+  margin: 10px;
+  font-weight: bold;
 }
 
 .product .info {

@@ -18,7 +18,7 @@ class CartHistory extends React.Component{
   render() {
     return(
       <div>
-        <h2>This is your shopping history</h2>
+        <h2 className="flex">This is your shopping history</h2>
         {this.props.cartHistory.map(product => (
             <ProductInsideHistory key={product.shoppingCart.id} product={product}/>
           )

@@ -47,33 +47,34 @@ class ViewCategories extends React.Component {
     return (
       <div>
 
-
-          <h3>All Categories</h3>
-          {categories.map((category)=>(
-            <div key={category.id || -1}>
-              <span>{category.name}</span>
-              <br />
-            </div>
-          ))}
-
+        <h3 className="flex">All Categories</h3>
+        <div className="flex">
+          <div className="list">
+            {categories.map((category)=>(
+              <div key={category.id || -1} className="item">
+                <div>{category.name}</div>
+              </div>
+            ))}
+          </div>
+         </div>
 
           <hr />
 
-          <h3>Add A Category</h3>
+          <h3 className="flex">Add A Category</h3>
 
-          <form onSubmit={this.handleAddCategory}>
-            <label htmlFor="Add a Category to the Database">Add a Category to the Database</label>
+          <form className="inputText" onSubmit={this.handleAddCategory}>
+            <label htmlFor="Add a Category to the Database" className="center">Add a Category to the Database</label>
             <input type="text" name="newCategory" value={this.state.newCategory} onChange={this.handleChange}/>
 
-            <button type="submit">Submit</button>
+            <button type="submit" className="button">Submit</button>
           </form>
           <hr />
-          <h3>Delete A Category</h3>
-          <form onSubmit={(event) => this.handleDeleteCategory(event, catsByName)}>
-            <label htmlFor="Delete a Category to the Database">Delete a Category from the Database</label>
+          <h3 className="flex">Delete A Category</h3>
+          <form className="inputText" onSubmit={(event) => this.handleDeleteCategory(event, catsByName)}>
+            <label htmlFor="Delete a Category to the Database" className="center">Delete a Category from the Database</label>
             <input type="text" name="deleteCategory" value={this.state.deleteCategory} onChange={this.handleChange}/>
 
-            <button type="submit">Submit</button>
+            <button type="submit" className="button">Submit</button>
           </form>
 
       </div>

@@ -14,13 +14,9 @@ const Navbar = ({handleClick, isLoggedIn, userType}) => (
           <Link to="/home"className="link">Home</Link>
           <Link to="/user" className="link">User Info</Link>
           <Link to="/products" className="link">Products</Link>
-          <img src="STAPLER.png" id="logo"/>
           <Link to="/shoppingCart" className="link">Shopping Cart</Link>
-          <Link to="/home">Home</Link>
-          <Link to="/user">User Info</Link>
-          <Link to="/products">Products</Link>
-          <Link to='/shoppingCart/history'>Purchase History</Link>
-          <Link to="/shoppingCart">Shopping Cart</Link>
+          <img src="STAPLER.png" id="logo"/>
+          <Link to='/shoppingCart/history' className="link">Purchase History</Link>
 
           {/* Admin links */}
           {userType === 'admin' ?
@@ -30,7 +26,7 @@ const Navbar = ({handleClick, isLoggedIn, userType}) => (
           <Link to="/create" className="link">Create Product</Link> :
           null}
           {userType === 'admin' ?
-          <Link to="/category">View Categories</Link> :
+          <Link to="/category" className="link">View Categories</Link> :
           null}
 
           <a href="#" onClick={handleClick} className="link">
