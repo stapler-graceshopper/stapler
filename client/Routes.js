@@ -12,6 +12,8 @@ import AllUsers from './components/AllUsers'
 import ShoppingCartView from './components/ShoppingCartView';
 import CartHistory from './components/CartHistory';
 import ConfirmationPage from './components/ConfirmationPage'
+import ViewCategories from './components/ViewCategories';
+
 
 /**
  * COMPONENT
@@ -26,6 +28,7 @@ class Routes extends Component {
 
     const allUsersPath = this.props.userType === 'admin' ? <Route path="/AllUsers" component={AllUsers} /> : null
     const createProductPath = this.props.userType === 'admin' ? <Route path="/create" component={AddProductForm} /> : null
+    const createViewCategories = this.props.userType === 'admin' ? <Route path='/category' component={ViewCategories} /> : null
 
     return (
       <div>
@@ -43,6 +46,7 @@ class Routes extends Component {
             {/* Admin routes */}
             {allUsersPath}
             {createProductPath}
+            {createViewCategories}
 
             <Redirect to="/home" />
           </Switch>

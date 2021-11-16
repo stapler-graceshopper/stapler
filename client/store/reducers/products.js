@@ -3,6 +3,7 @@ import axios from "axios";
 // ACTION TYPES
 
 const GET_PRODUCTS = "GET_PRODUCTS";
+const GET_PRODUCTS_BY_CATEGORY = "GET_PRODUCTS_BY_CATEGORY"
 const DELETE_PRODUCT = "DELETE_PRODUCT";
 const ADD_PRODUCT = "ADD_PRODUCT";
 const UPDATE_PRODUCT = "UPDATE_PRODUCT";
@@ -15,6 +16,13 @@ const getAllProducts = data => {
     products: data,
   };
 };
+
+const getProductsByCategory = (data) => {
+  return {
+    type: GET_PRODUCTS_BY_CATEGORY,
+    products: data
+  }
+}
 
 const addProduct = data => {
   return {
@@ -40,6 +48,15 @@ export const fetchAllProducts = () => async dispatch => {
     console.log(error);
   }
 };
+
+export const fetchProductsByCategory = (category) => async (dispatch) => {
+  try {
+    const {data} = await axios.get(`/api/products/byCategory/${category}`)
+    dispatch(getProductsByCategory(data))
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 export const fetchProductToBoDeleted = id => async dispatch => {
   try {
@@ -78,11 +95,13 @@ const initialState = [];
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case GET_PRODUCTS:
+      return action.products;
+    case GET_PRODUCTS_BY_CATEGORY:
+      return action.products;
     case ADD_PRODUCT:
       return [...state, action.product];
     case DELETE_PRODUCT:
-      return action.products;
-    case GET_PRODUCTS:
       return action.products;
     case UPDATE_PRODUCT:
       return [...state]

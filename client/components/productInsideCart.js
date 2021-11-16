@@ -26,7 +26,6 @@ class ProductInsideCart extends React.Component {
 
   handleSubmit(evt) {
     evt.preventDefault();
-
     this.props.updateItem(this.props.product.id, this.state.quantity);
   }
 
