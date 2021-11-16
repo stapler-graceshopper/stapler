@@ -30,7 +30,15 @@ class SelectedProductView extends React.Component {
   handleSubmit(evt) {
     evt.preventDefault();
 
-    const ifItemInCart = this.props.shoppingCart.filter(product => product.id === this.props.selectedProduct.id);
+    const ifItemInCart = this.props.shoppingCart.filter(product => {
+      if (product.id === this.props.selectedProduct.id) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+
+
 
     if (ifItemInCart.length === 0) {
       this.props.postItem(this.props.selectedProduct.id, Number(this.state.quantity));

@@ -1,15 +1,36 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import SingleProduct from './SingleProduct'
-import { fetchAllProducts } from '../store/reducers/products'
+import { fetchAllProducts, fetchProductsByCategory } from '../store/reducers/products'
+import { fetchCategories } from '../store/reducers/categories'
 
 class AllProducts extends React.Component {
   constructor() {
     super()
+    this.onChange = this.onChange.bind(this)
+    this.state = {
+      category: 'View All'
+    }
   }
 
   componentDidMount() {
     this.props.fetchAllProducts()
+    this.props.fetchCategories()
+  }
+
+  async onChange(event) {
+    //  If you do not await here, Console.logging state return the wrong value
+    event.preventDefault()
+    await this.setState({
+      [event.target.name]: event.target.value
+    })
+    if (this.state.category !== 'View All') {
+    await this.props.fetchProductsByCategory(this.state.category)
+    } else {
+      await this.props.fetchAllProducts();
+    }
+    // console.log(this.state.category)
+    // console.log('there are this many products on this page: ', this.props.products.length)
   }
 
   render() {
@@ -22,6 +43,13 @@ class AllProducts extends React.Component {
 
     return (
       <div>
+        <label htmlFor="categories">Choose a Category</label>
+        <select name="category" onChange={this.onChange}>
+          <option key={-1} value="View All">View All</option>
+          {this.props.categories.map(category=>(
+            <option key={category.name} value={category.name}>{category.name}</option>
+          ))}
+        </select>
         <hr />
         <h2 className="flex">ALL PRODUCTS</h2>
         {allProductsDiv}
@@ -33,13 +61,17 @@ class AllProducts extends React.Component {
 
   const mapStateToProps = (state) => {
     return {
-      products: state.products
+      products: state.products,
+      categories: state.categories
+
     }
   }
 
   const mapDispatchToProps = (dispatch) =>{
     return {
-      fetchAllProducts: () => dispatch(fetchAllProducts())
+      fetchAllProducts: () => dispatch(fetchAllProducts()),
+      fetchProductsByCategory: (category) => dispatch(fetchProductsByCategory(category)),
+      fetchCategories: () => {dispatch(fetchCategories())}
     }
   }
 

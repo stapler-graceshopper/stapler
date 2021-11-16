@@ -8,56 +8,87 @@ const { requireToken, isAdmin } = require("./gatekeepingMiddleware");
 
 router.get("/", requireToken, async (req, res, next) => {
   try {
-    const cart = await User.findOne({
-      include: { model: Product },
-      where: {
-        id: req.user.id,
-      },
-    });
-    res.json(cart.products);
+    const cart = await Product.findAll({
+      include: {model: ShoppingCart, where: {
+        userId: req.user.id,
+        purchased: false
+      }},
+    })
+
+    res.json(cart);
   } catch (err) {
     next(err);
   }
 });
 
+// Routes for /api/shoppingcart/history
+
+router.get("/history", requireToken, async (req, res, next) => {
+  try {
+    const history = await Product.findAll({
+      include: {model: ShoppingCart, where: {
+        userId: req.user.id,
+        purchased: true
+      }},
+    })
+
+    res.json(history);
+  } catch (err) {
+    next(err);
+  }
+});
+
+
+router.put('/checkout', requireToken, async (req,res,next) => {
+  try {
+    const itemsInCart = await Product.findAll({
+      include: {model: ShoppingCart, where: {
+        userId: req.user.id,
+        purchased: false
+      }},
+    })
+
+    itemsInCart.forEach(async product => {
+      const newQty = product.quantity - product.shoppingCart.quantity;
+      const date = Date.now()
+
+      await product.update({quantity: newQty})
+      await product.shoppingCart.update({purchased: true, purchasePrice: product.price, purchaseDate: date})
+    })
+
+
+    res.sendStatus(200)
+  } catch (error) {
+    next(error)
+  }
+})
+
 //slug is id of product
 router.route("/:id")
   .post(requireToken, async (req, res, next) => {
     try {
-      const user = await User.findByPk(req.user.id);
-      const product = await Product.findByPk(req.params.id);
-      let updatedItem;
+      const addedItem = await ShoppingCart.create({
+        userId: req.user.id,
+        productId: req.params.id,
+        quantity: req.body.quantity
+      })
 
-      const [itemInCart, itemCreated] = await ShoppingCart.findOrCreate({
-        where: {
-          userId: req.user.id,
-          productId: req.params.id,
-        },
-      });
-
-      //make sure component updates on submit
-      if (!itemCreated) {
-        updatedItem = await itemInCart.update({
-          quantity: itemInCart.quantity + Number(req.body.quantity),
-        });
-      } else {
-        await user.addProduct(product);
-        updatedItem = await itemInCart.update({
-          quantity: Number(req.body.quantity),
-        });
-      }
-
-      res.send(updatedItem);
+      res.send(addedItem);
     } catch (error) {
       next(error);
     }
   })
   .delete(requireToken, async (req, res, next) => {
     try {
-      const user = await User.findByPk(req.user.id);
-      const product = await Product.findByPk(req.params.id);
+      const itemInCart = await ShoppingCart.findOne({
+        where: {
+          userId: req.user.id,
+          productId: req.params.id,
+          purchased: false
+        }
+      })
 
-      await user.removeProduct(product);
+      itemInCart.destroy();
 
       res.status(202).send("Product removed from user");
     } catch (error) {
@@ -70,6 +101,7 @@ router.route("/:id")
         where: {
           userId: req.user.id,
           productId: req.params.id,
+          purchased: false
         },
       })
 
@@ -82,5 +114,9 @@ router.route("/:id")
       next(error)
     }
   })
+
+
+
+
 
 module.exports = router;
