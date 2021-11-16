@@ -1,5 +1,7 @@
 import axios from "axios";
 
+const LOCAL_CART = 'LOCAL_CART'
+
 // ACTION TYPES
 
 const GET_SHOPPING_CART = "GET_SHOPPING_CART";
@@ -60,6 +62,14 @@ export const fetchShoppingCart = () => async dispatch => {
         },
       });
       dispatch(getShoppingCart(data));
+    } else {
+      let currentCart = window.localStorage.getItem(LOCAL_CART);
+      currentCart = JSON.parse(currentCart)
+
+      if (currentCart) {
+        dispatch(getShoppingCart(currentCart))
+      }
+
     }
   } catch (error) {
     console.log(error);
@@ -89,6 +99,16 @@ export const postItemToCart = (id, amount, history) => async dispatch => {
     } else {
       item.shoppingCart = { quantity: amount };
 
+      let currentCart = window.localStorage.getItem(LOCAL_CART);
+      currentCart = JSON.parse(currentCart)
+
+      if (currentCart) {
+        currentCart.push(item);
+        window.localStorage.setItem(LOCAL_CART, JSON.stringify(currentCart))
+      } else {
+        window.localStorage.setItem(LOCAL_CART, JSON.stringify([item]))
+      }
+
       dispatch(addItemToCart(item, amount));
     }
 
@@ -112,6 +132,19 @@ export const updateItemInCart = (id, amount) => async dispatch => {
           },
         }
       );
+    } else {
+      let currentCart = window.localStorage.getItem(LOCAL_CART);
+      currentCart = JSON.parse(currentCart)
+
+      currentCart = currentCart.map(item => {
+        if (item.id === id) {
+          item.shoppingCart.quantity = Number(amount)
+        }
+
+        return item;
+      })
+
+      window.localStorage.setItem(LOCAL_CART, JSON.stringify(currentCart))
     }
     dispatch(updateItemFromCart(id, amount));
   } catch (error) {
@@ -129,6 +162,13 @@ export const deleteItemInCart = id => async dispatch => {
           authorization: token,
         },
       });
+    } else {
+      let currentCart = window.localStorage.getItem(LOCAL_CART);
+      currentCart = JSON.parse(currentCart)
+
+      currentCart = currentCart.filter(item => item.id !== id)
+
+      window.localStorage.setItem(LOCAL_CART, JSON.stringify(currentCart))
     }
 
     dispatch(deleteItemFromCart(id));
