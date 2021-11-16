@@ -3,6 +3,7 @@ const db = require("../db");
 const jwt = require("jsonwebtoken");
 const axios = require("axios");
 const { Switch } = require("react-router");
+const Category = require("./Categories");
 
 const defaultImageUrl = 'https://i5.walmartimages.com/asr/4182b507-3510-472d-bbcf-b9b1fa2683a4.d61796fa6f1dcddf3bf27a8defae4ca9.jpeg?odnHeight=372&odnWidth=372&odnBg=FFFFFF'
 
@@ -56,6 +57,16 @@ Product.getAllProducts = async () => {
   const products = await Product.findAll();
   return products;
 };
+
+Product.getByCategory = async (category) => {
+  const products = await Product.findAll({
+    include: {
+      model: Category,
+      where: {name: category}
+    },
+  })
+  return products
+}
 
 Product.getProduct = async (id) => {
   const product = await Product.findByPk(id);

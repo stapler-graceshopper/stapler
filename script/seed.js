@@ -1,9 +1,19 @@
 'use strict'
 //  run npm install random-words
 
-const {db, models: {User, Product} } = require('../server/db')
+const {db, models: {User, Product, Category} } = require('../server/db')
 
 const randomWords = require('random-words');
+
+//  Create Categories for testing
+
+const avaliableCategories = [
+  'writing utensils',
+  'paper products',
+  'furniture',
+  'editing supplies',
+  'electronics'
+]
 
 //  Create Developer accounts for testing
 
@@ -89,7 +99,9 @@ const makeRandomNumber = (num = 1000) => {
   return randomNum
 }
 
+
 // Model Generators
+
 
 // generate 100 by default
 const generateTestUsers = (thisMany = 100) => {
@@ -110,6 +122,15 @@ const generateTestProducts = (thisMany = 100) => {
 }
 
 // Upload to DB
+
+const uploadCategories = async(data) => {
+  // avaliableCategories is a global variable at the top of this file.
+  await Promise.all(data.map(async (str) => {
+    console.log(`Category: ${str} \n is being created`)
+    const category = await Category.create({name: str})
+    return category
+  }))
+}
 
 const uploadTestUsers = async(data) => {
   if (!Array.isArray(data)) {
@@ -157,15 +178,31 @@ const createRandomCarts = async() => {
   }
 }
 
+const associateCategory = async() => {
+  try {
+    const allCategories = await Category.findAll();
+    const allProducts = await Product.findAll();
+    for (let i = 0; i < allProducts.length; i++ ) {
+      let randomIdx = Math.floor(Math.random() * allCategories.length)
+      await allProducts[i].addCategory(allCategories[randomIdx])
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 // Calls lower level functions
 
 const seedWithRandom = async () => {
   try {
     await uploadTestUsers(generateTestUsers())
     await uploadTestProducts(generateTestProducts())
+    await uploadCategories(avaliableCategories)
     console.log(`seeded products`)
     console.log(`seeded users`)
+    console.log('seeded categories')
     console.log(`seeded successfully`)
+    await associateCategory()
     await createRandomCarts()
     // admin and customer both PW:123
     await createDeveloperAccounts();
