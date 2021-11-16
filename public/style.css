@@ -10,12 +10,112 @@ label {
   display: block;
 }
 
+.nav {
+  align-items: flex-end;
+  justify-content: space-evenly;
+  display: flex;
+}
+
 nav a {
-  display: inline-block;
   margin: 1em;
 }
 
 form div {
   margin: 1em;
   display: inline-block;
+}
+
+#logo {
+  height: 100px;
+}
+
+#form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 5px solid rgb(13, 171, 199);
+}
+
+.flex {
+  margin: 50px;
+  display: flex;
+  justify-content: center
+}
+
+.input:focus {
+  background-color: rgba(130, 222, 238, 0.466);
+}
+
+.button {
+  background-color: rgb(240, 170, 65)
+}
+
+.button:hover {
+  background-color: rgb(236, 155, 32)
+}
+
+.link {
+  color: black;
+}
+
+.link:hover {
+  font-weight: bold
+}
+
+.user {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: 200px;
+  border: 5px solid rgb(13, 171, 199);
+  background-color:rgba(13, 171, 199, 0.089);
+  margin: 30px;
+}
+
+.product {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: 300px;
+  border: 5px solid rgb(13, 171, 199);
+  background-color:rgba(13, 171, 199, 0.089);
+  margin: 30px;
+}
+
+.product .info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user > img {
+  width: 200px;
+  height: 200px;
+}
+
+.product > img {
+  width: 300px;
+  height: 300px;
+}
+
+.user h1 {
+  font-size: 25px;
+}
+
+.product h1 {
+  font-size: 25px;
+}
+
+.product #itemNumber {
+  font-weight: bold;
+  position: absolute;
+  top: 0px;
+  right: 10px;
+}
+
+.product p {
+  font-weight: bold;
 }

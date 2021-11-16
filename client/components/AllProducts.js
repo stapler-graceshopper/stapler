@@ -39,7 +39,7 @@ class AllProducts extends React.Component {
 
     const allProductsDiv = products.length > 0 ? products.map(product => (
       <SingleProduct key={product.id} product={product} />
-      )) : <span>No Products</span>
+      )) : <span className="flex">No Products</span>
 
     return (
       <div>
@@ -51,7 +51,7 @@ class AllProducts extends React.Component {
           ))}
         </select>
         <hr />
-        <h2>ALL PRODUCTS</h2>
+        <h2 className="flex">ALL PRODUCTS</h2>
         {allProductsDiv}
         <hr />
       </div>

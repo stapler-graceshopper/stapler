@@ -37,23 +37,23 @@ class ProductInsideCart extends React.Component {
     const linkDestination = `/products/${id}`
 
   return (
-    <div>
-      <h3>Product Name: {name}</h3>
-      <span>Price: ${price} </span>
+    <div className="product">
       <img src={imgUrl} />
+      <div className="info">
+        <h1>Product Name: {name}</h1>
+        <h1>Price: ${price}</h1>
+      </div>
       <Link to={linkDestination}>
-        <button type="button" >VIEW PRODUCT</button>
+        <button type="button"className="button" >VIEW PRODUCT</button>
       </Link>
       <br />
       <div>
         <form onSubmit={this.handleSubmit}>
           <label htmlFor='quantity'>Quantity</label>
           <input type='number' min="1" max={quantity} name='quantity' value={this.state.quantity} onChange={this.handleChange}/>
-
-          <button type="submit">Update Quantity</button>
+          <button type="submit" className="button">Update Quantity</button>
         </form>
-
-        <button type='submit' onClick={(evt) => this.props.handleDelete(evt, id)}>Remove From Cart</button>
+         <button type='submit'onClick={(evt) => this.props.handleDelete(evt, id)} className="button">Remove From Cart</button>
       </div>
     </div>
   )

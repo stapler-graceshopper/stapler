@@ -8,11 +8,13 @@ class User extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="user">
         <img src={this.props.user.image}/>
-        <h1>Username: {this.props.user.username}</h1>
-        <h1>Email: {this.props.user.email}</h1>
-        <h1>Address: {this.props.user.address}</h1>
+        <div className="info">
+          <h1>Username: {this.props.user.username}</h1>
+          <h1>Email: {this.props.user.email}</h1>
+          <h1>Address: {this.props.user.address}</h1>
+        </div>
       </div>
     );
   }
