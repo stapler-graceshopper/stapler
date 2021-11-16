@@ -6,7 +6,7 @@ const {requireToken, isAdmin} = require('./gatekeepingMiddleware')
 
 // ALL ROUNTES MOUNTED ON /api/category
 
-router.get('/', requireToken, isAdmin, async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
     const allCategories = await Category.getAll()
     res.send(allCategories);
@@ -15,19 +15,19 @@ router.get('/', requireToken, isAdmin, async (req, res, next) => {
   }
 });
 
-router.post('/:name', requireToken, isAdmin, async (req, res, next) => {
+router.post('/:name', async (req, res, next) => {
   try {
-    await Category.create({name: req.params.name})
-    res.sendStatus(201)
+    const newCategory = await Category.addCategory(req.params.name)
+    res.send(newCategory)
   } catch (error) {
     next(error)
   }
 })
 
-router.delete('/:name', requireToken, isAdmin, async (req, res, next) => {
+router.delete('/:name', async (req, res, next) => {
   try {
-    const categoryToDelete = await category.findOne({where: {name = req.params.name}})
-    await Category.destroy(categoryToDelete)
+    await Category.removeCategory(req.params.name)
+    res.sendStatus(202)
   } catch (error) {
     next(error)
   }

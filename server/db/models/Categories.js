@@ -15,16 +15,17 @@ const Category = db.define("category", {
 //  Class methods for Api s
 
 Category.getAll = async function () {
-  const categories = await Category.findall();
+  const categories = await Category.findAll();
   return categories;
 }
 
 Category.addCategory = async function(str) {
-  await Category.create({name: str})
+  const newCategory = await Category.create({name: str})
+  return newCategory
 }
 
 Category.removeCategory = async function(str) {
-  const category = await category.findOne({where:{name: str}})
+  const category = await Category.findOne({where:{name: str}})
   await category.destroy()
 }
 
