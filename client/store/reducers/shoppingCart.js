@@ -137,13 +137,21 @@ export const deleteItemInCart = id => async dispatch => {
   }
 };
 
-export const checkoutCart = (userId) => async dispatch => {
+export const checkoutCart = (history) => async dispatch => {
   try {
     const token = window.localStorage.getItem("token");
 
     if (token) {
+      await axios.put('/api/shoppingCart/checkout', {}, {
+        headers: {
+          authorization: token,
+        },
+      })
 
+      dispatch(clearCart())
+      history.push('/confirmation')
     }
+
   } catch (error) {
     console.log(error)
   }

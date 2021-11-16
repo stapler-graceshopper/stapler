@@ -9,10 +9,10 @@ class ProductInsideHistory extends React.Component {
   }
 
   render() {
-  const product = this.props.product
-  const {id, name, description, imgUrl} = product
-  const {quantity, purchasePrice, purchaseDate} = product.shoppingCart
-  const linkDestination = `/products/${id}`
+    const product = this.props.product
+    const {id, name, description, imgUrl} = product
+    const {quantity, purchasePrice, purchaseDate} = product.shoppingCart
+    const linkDestination = `/products/${id}`
 
   return (
     <div>

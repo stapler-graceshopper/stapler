@@ -38,26 +38,23 @@ router.get("/history", requireToken, async (req, res, next) => {
   }
 });
 
-//update by unique id-----
+
 router.put('/checkout', requireToken, async (req,res,next) => {
   try {
-    const itemsInCart = await User.findOne({
-      include: [{ model: Product }],
-      where: {
-        id: req.user.id,
-      },
-    });
+    const itemsInCart = await Product.findAll({
+      include: {model: ShoppingCart, where: {
+        userId: req.user.id,
+        purchased: false
+      }},
+    })
 
-    console.log(itemsInCart)
-
-    purchasedItems = itemsInCart.products.filter(product => product.shoppingCart.purchased === false)
-
-    purchasedItems.forEach(async product => {
+    itemsInCart.forEach(async product => {
       const newQty = product.quantity - product.shoppingCart.quantity;
 
       await product.update({quantity: newQty})
       await product.shoppingCart.update({purchased: true})
     })
+
 
     res.sendStatus(200)
   } catch (error) {
@@ -82,16 +79,21 @@ router.route("/:id")
   })
   .delete(requireToken, async (req, res, next) => {
     try {
-      const user = await User.findByPk(req.user.id);
-      const product = await Product.findByPk(req.params.id);
+      const itemInCart = await ShoppingCart.findOne({
+        where: {
+          userId: req.user.id,
+          productId: req.params.id,
+          purchased: false
+        }
+      })
 
-      await user.removeProduct(product);
+      itemInCart.destroy();
 
       res.status(202).send("Product removed from user");
     } catch (error) {
       next(error);
     }
-  })//update by unique id-----
+  })
   .put(requireToken, async (req, res,next) => {
     try {
       const itemInCart = await ShoppingCart.findOne({

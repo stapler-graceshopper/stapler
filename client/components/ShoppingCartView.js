@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import { fetchShoppingCart, deleteItemInCart } from '../store/reducers/shoppingCart'
+import { fetchShoppingCart, deleteItemInCart, checkoutCart } from '../store/reducers/shoppingCart'
 import ProductInsideCart from './productInsideCart'
 
 
@@ -9,6 +9,7 @@ class ShoppingCartView extends React.Component{
     super()
 
     this.handleDelete = this.handleDelete.bind(this)
+    this.handleCheckout = this.handleCheckout.bind(this)
   }
 
   componentDidMount() {
@@ -20,9 +21,16 @@ class ShoppingCartView extends React.Component{
     this.props.deleteItem(id)
   }
 
+  handleCheckout(evt) {
+    evt.preventDefault();
+    this.props.checkoutCart();
+  }
+
   render() {
     return(
       <div>
+        <button onClick={this.handleCheckout}>Checkout</button>
+        <br/>
         <h2>This is your shopping cart</h2>
         {this.props.shoppingCart.map(product => (
             <ProductInsideCart key={product.id} product={product} handleDelete={this.handleDelete}/>
@@ -41,10 +49,11 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, {history}) => {
   return {
     fetchShoppingCart: () => dispatch(fetchShoppingCart()),
-    deleteItem: (id) => dispatch(deleteItemInCart(id))
+    deleteItem: (id) => dispatch(deleteItemInCart(id)),
+    checkoutCart: () => dispatch(checkoutCart(history))
   }
 }
 

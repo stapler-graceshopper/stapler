@@ -11,6 +11,7 @@ import SelectedProductView from './components/SelectedProductView';
 import AllUsers from './components/AllUsers'
 import ShoppingCartView from './components/ShoppingCartView';
 import CartHistory from './components/CartHistory';
+import ConfirmationPage from './components/ConfirmationPage'
 
 /**
  * COMPONENT
@@ -36,6 +37,7 @@ class Routes extends Component {
             <Route path="/products" component={AllProducts} />
             <Route exact path='/shoppingCart/history' component={CartHistory}/>
             <Route path="/shoppingCart" component={ShoppingCartView} />
+            <Route path='/confirmation' component={ConfirmationPage}/>
 
 
             {/* Admin routes */}
