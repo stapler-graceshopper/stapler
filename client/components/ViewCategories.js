@@ -70,7 +70,7 @@ class ViewCategories extends React.Component {
           <hr />
           <h3>Delete A Category</h3>
           <form onSubmit={(event) => this.handleDeleteCategory(event, catsByName)}>
-            <label htmlFor="Delete a Category to the Database">Delete a Category to the Database</label>
+            <label htmlFor="Delete a Category to the Database">Delete a Category from the Database</label>
             <input type="text" name="deleteCategory" value={this.state.deleteCategory} onChange={this.handleChange}/>
 
             <button type="submit">Submit</button>
