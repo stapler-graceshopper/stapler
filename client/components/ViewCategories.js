@@ -32,16 +32,16 @@ class ViewCategories extends React.Component {
     }
   }
 
-  handleDeleteCategory(event) {
+  handleDeleteCategory(event, cats) {
     event.preventDefault();
-    if (this.state.deleteCategory !== "") {
+    if (cats.includes(this.state.deleteCategory)) {
       this.props.removeCategory(this.state.deleteCategory)
-      this.setState({deleteCategory: ""})
     }
+    this.setState({deleteCategory: ""})
   }
 
   render() {
-
+    const catsByName = this.props.categories.map(cat => cat.name)
     const categories = this.props.categories
 
     return (
@@ -69,7 +69,7 @@ class ViewCategories extends React.Component {
           </form>
           <hr />
           <h3>Delete A Category</h3>
-          <form onSubmit={this.handleDeleteCategory}>
+          <form onSubmit={(event) => this.handleDeleteCategory(event, catsByName)}>
             <label htmlFor="Delete a Category to the Database">Delete a Category to the Database</label>
             <input type="text" name="deleteCategory" value={this.state.deleteCategory} onChange={this.handleChange}/>
 
@@ -84,7 +84,8 @@ class ViewCategories extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    categories: state.categories
+    categories: state.categories,
+
   }
 }
 
