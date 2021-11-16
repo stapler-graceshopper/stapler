@@ -45,21 +45,20 @@ class SelectedProductView extends React.Component {
       this.props.selectedProduct;
 
     return (
-      <div>
-        <h3>Product Name: {name}</h3>
-        <span>Price: ${price} </span>
+      <div className="product">
         <img src={imgUrl} />
-        <p>
-          description: {description} <br />
-          quantity: {quantity} <br />
-          itemNumber: {itemNumber} <br />
-        </p>
-        <form onSubmit={this.handleSubmit}>
-          <label htmlFor='quantity'>Quantity</label>
-          <input type='number' min="1" max={quantity} name='quantity' value={this.state.quantity} onChange={this.handleChange}/>
-
-          <button type="submit">Add To Cart</button>
-        </form>
+        <div className="info">
+          <h1>Product Name: {name}</h1>
+          <h1>Price: ${price}</h1>
+          <h1>quantity: {quantity}</h1>
+          <p>description: {description}</p>
+          <form onSubmit={this.handleSubmit}>
+            <label htmlFor='quantity'>Quantity</label>
+            <input type='number' min="1" max={quantity} name='quantity' value={this.state.quantity} onChange={this.handleChange}/>
+            <button type="submit" className="button">Add To Cart</button>
+          </form>
+        </div>
+        <p id="itemNumber">itemNumber: {id}</p>
       </div>
     );
   }

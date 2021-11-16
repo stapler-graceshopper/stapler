@@ -23,7 +23,7 @@ class ShoppingCartView extends React.Component{
   render() {
     return(
       <div>
-        <h2>This is your shopping cart</h2>
+        <h2 className="flex">This is your shopping cart</h2>
         {this.props.shoppingCart.map(product => (
             <ProductInsideCart key={product.id} product={product} handleDelete={this.handleDelete}/>
           )
