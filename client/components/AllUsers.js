@@ -16,7 +16,7 @@ class AllUsers extends React.Component {
       <div>
         {this.props.users.map(user => {
     return (
-      <div key={user.id}>
+      <div key={user.id} className="user">
         <img src={user.image}/>
         <h1>Username: {user.username}</h1>
         <h1>Email: {user.email}</h1>

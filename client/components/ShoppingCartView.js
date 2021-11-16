@@ -29,6 +29,7 @@ class ShoppingCartView extends React.Component{
   render() {
     return(
       <div>
+        <h2 className="flex">This is your shopping cart</h2>
         <button onClick={this.handleCheckout}>Checkout</button>
         <br/>
         <h2>This is your shopping cart</h2>

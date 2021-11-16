@@ -11,40 +11,40 @@ const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
   if (name === "signup") {
     return (
-      <div>
-        <form onSubmit={handleSubmit} name={name}>
+      <div className="flex">
+        <form onSubmit={handleSubmit} name={name} id="form">
           <div>
             <label htmlFor="username">
               <small>Username</small>
             </label>
-            <input name="username" type="text" />
+            <input name="username" type="text" className="input"/>
           </div>
           <div>
             <label htmlFor="password">
               <small>Password</small>
             </label>
-            <input name="password" type="password" />
+            <input name="password" type="password" className="input"/>
           </div>
           <div>
             <label htmlFor="email">
               <small>Email</small>
             </label>
-            <input name="email" type="text" />
+            <input name="email" type="text" className="input"/>
           </div>
           <div>
             <label htmlFor="image">
               <small>Image</small>
             </label>
-            <input name="image" type="text" />
+            <input name="image" type="text" className="input"/>
           </div>
           <div>
             <label htmlFor="address">
               <small>Address</small>
             </label>
-            <input name="address" type="text" />
+            <input name="address" type="text" className="input"/>
           </div>
           <div>
-            <button type="submit">{displayName}</button>
+            <button type="submit"  className="button">{displayName}</button>
           </div>
           {error && error.response && <div> {error.response.data} </div>}
         </form>
@@ -52,22 +52,22 @@ const AuthForm = props => {
     )
   } else {
     return (
-      <div>
-        <form onSubmit={handleSubmit} name={name}>
+      <div className="flex">
+        <form onSubmit={handleSubmit} name={name} id="form">
           <div>
             <label htmlFor="username">
               <small>Username</small>
             </label>
-            <input name="username" type="text" />
+            <input name="username" type="text" className="input"/>
           </div>
           <div>
             <label htmlFor="password">
               <small>Password</small>
             </label>
-            <input name="password" type="password" />
+            <input name="password" type="password" className="input"/>
           </div>
           <div>
-            <button type="submit">{displayName}</button>
+            <button type="submit" className="button">{displayName}</button>
           </div>
           {error && error.response && <div> {error.response.data} </div>}
         </form>

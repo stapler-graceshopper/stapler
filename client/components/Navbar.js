@@ -7,11 +7,15 @@ import {clearCart} from '../store/reducers/shoppingCart'
 // const allUsersPath = this.props.userType === 'admin' ? <Route path="/AllUsers" component={AllUsers} /> : null
 const Navbar = ({handleClick, isLoggedIn, userType}) => (
   <div>
-    <h1>FS-App-Template</h1>
     <nav>
       {isLoggedIn ? (
-        <div>
+        <div className="nav">
           {/* The navbar will show these links after you log in */}
+          <Link to="/home"className="link">Home</Link>
+          <Link to="/user" className="link">User Info</Link>
+          <Link to="/products" className="link">Products</Link>
+          <img src="STAPLER.png" id="logo"/>
+          <Link to="/shoppingCart" className="link">Shopping Cart</Link>
           <Link to="/home">Home</Link>
           <Link to="/user">User Info</Link>
           <Link to="/products">Products</Link>
@@ -20,26 +24,27 @@ const Navbar = ({handleClick, isLoggedIn, userType}) => (
 
           {/* Admin links */}
           {userType === 'admin' ?
-          <Link to="/AllUsers">All Users</Link> :
+          <Link to="/AllUsers" className="link">All Users</Link> :
           null}
           {userType === 'admin' ?
-          <Link to="/create">Create Product</Link> :
+          <Link to="/create" className="link">Create Product</Link> :
           null}
           {userType === 'admin' ?
           <Link to="/category">View Categories</Link> :
           null}
 
-          <a href="#" onClick={handleClick}>
+          <a href="#" onClick={handleClick} className="link">
             Logout
           </a>
         </div>
       ) : (
-        <div>
+        <div className="nav">
           {/* The navbar will show these links before you log in */}
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
-          <Link to="/products">Products</Link>
-          <Link to="/shoppingCart">Shopping Cart</Link>
+          <Link to="/login" className="link">Login</Link>
+          <Link to="/signup" className="link">Sign Up</Link>
+          <img src="STAPLER.png" id="logo"/>
+          <Link to="/products" className="link">Products</Link>
+          <Link to="/shoppingCart" className="link">Shopping Cart</Link>
         </div>
       )}
     </nav>

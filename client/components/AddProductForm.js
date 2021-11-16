@@ -51,46 +51,56 @@ class AddProductForm extends React.Component {
 
     if (this.props.user.type === "admin") {
       return (
-        <form id="NewProductForm" onSubmit={handleSubmit}>
-          <label htmlFor="name">NAME</label>
-          <input type="text" onChange={handleChange} name="name" value={name} />
-
-          <label htmlFor="description">DESCRIPTION</label>
-          <input
-            type="text"
-            onChange={handleChange}
-            name="description"
-            value={description}
-          />
-
-          <label htmlFor="quantity">QUANTITY</label>
-          <input
-            type="text"
-            onChange={handleChange}
-            name="quantity"
-            value={quantity}
-          />
-
-          <label htmlFor="itemNumber">ITEM NUMBER</label>
-          <input
-            type="text"
-            onChange={handleChange}
-            name="itemNumber"
-            value={itemNumber}
-          />
-
-          <label htmlFor="price">PRICE</label>
-          <input
-            type="text"
-            onChange={handleChange}
-            name="price"
-            value={price}
-          />
-
-          <br />
-
-          <button type="submit">Submit</button>
-        </form>
+        <div className="flex">
+          <form id="form" onSubmit={handleSubmit}>
+            <div>
+            <label htmlFor="name"><small>NAME</small></label>
+            <input type="text" onChange={handleChange} name="name" value={name}
+            className="input"/>
+            </div>
+            <div>
+            <label htmlFor="description"><small>DESCRIPTION</small></label>
+            <input
+              type="text"
+              onChange={handleChange}
+              name="description"
+              value={description}
+              className="input"
+            />
+            </div>
+            <div>
+            <label htmlFor="quantity"><small>QUANTITY</small></label>
+            <input
+              type="text"
+              onChange={handleChange}
+              name="quantity"
+              value={quantity}
+              className="input"
+            />
+            </div>
+            <div>
+            <label htmlFor="itemNumber"><small>ITEM NUMBER</small></label>
+            <input
+              type="text"
+              onChange={handleChange}
+              name="itemNumber"
+              value={itemNumber}
+              className="input"
+            />
+            </div>
+            <div>
+            <label htmlFor="price"><small>PRICE</small></label>
+            <input
+              type="text"
+              onChange={handleChange}
+              name="price"
+              value={price}
+              className="input"
+            />
+            </div>
+            <button type="submit" className="button">Submit</button>
+          </form>
+        </div>
       );
     } else {
       return <div>bad token</div>

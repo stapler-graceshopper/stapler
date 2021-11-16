@@ -11,19 +11,18 @@ const singleProduct = (props) => {
 
 
   return (
-    <div>
-      <h3>Product Name: {name}</h3>
-      <span>Price: ${price} </span>
+    <div className="product">
       <img src={imgUrl} />
-      <Link to={linkDestination}>
-        <button type="button" >VIEW PRODUCT</button>
-      </Link>
-      <br />
-      <p>
-        description: {description} <br />
-        quantity: {quantity} <br />
-        itemNumber: {id} <br />
-      </p>
+      <div className="info">
+        <h1>Product Name: {name}</h1>
+        <h1>Price: ${price} </h1>
+        <h1>quantity: {quantity}</h1>
+        <p>description: {description}</p>
+        <Link to={linkDestination}>
+          <button type="button" className="button">VIEW PRODUCT</button>
+        </Link>
+      </div>
+      <p id="itemNumber">itemNumber: {id}</p>
     </div>
   )
 }
