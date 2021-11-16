@@ -8,8 +8,11 @@ const ShoppingCart = require('./models/ShoppingCart')
 
 //associations could go here!
 
-User.belongsToMany(Product,{through: ShoppingCart})
-Product.belongsToMany(User,{through: ShoppingCart})
+User.belongsToMany(Product,{through: {model: ShoppingCart, unique: false}})
+Product.belongsToMany(User,{through: {model: ShoppingCart, unique: false}})
+
+Product.hasOne(ShoppingCart)
+ShoppingCart.belongsTo(Product)
 
 
 module.exports = {

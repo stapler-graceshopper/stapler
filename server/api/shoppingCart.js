@@ -8,16 +8,14 @@ const { requireToken, isAdmin } = require("./gatekeepingMiddleware");
 
 router.get("/", requireToken, async (req, res, next) => {
   try {
-    const cart = await User.findOne({
-      include: { model: Product },
-      where: {
-        id: req.user.id,
-      },
-    });
+    const cart = await Product.findAll({
+      include: {model: ShoppingCart, where: {
+        userId: req.user.id,
+        purchased: false
+      }},
+    })
 
-    const itemInCart = cart.products.filter(product => product.shoppingCart.purchased === false)
-
-    res.json(itemInCart);
+    res.json(cart);
   } catch (err) {
     next(err);
   }
@@ -27,14 +25,12 @@ router.get("/", requireToken, async (req, res, next) => {
 
 router.get("/history", requireToken, async (req, res, next) => {
   try {
-    const cart = await User.findOne({
-      include: { model: Product },
-      where: {
-        id: req.user.id,
-      },
-    });
-
-    const history = cart.products.filter(product => product.shoppingCart.purchased === true)
+    const history = await Product.findAll({
+      include: {model: ShoppingCart, where: {
+        userId: req.user.id,
+        purchased: true
+      }},
+    })
 
     res.json(history);
   } catch (err) {
@@ -42,6 +38,7 @@ router.get("/history", requireToken, async (req, res, next) => {
   }
 });
 
+//update by unique id-----
 router.put('/checkout', requireToken, async (req,res,next) => {
   try {
     const itemsInCart = await User.findOne({
@@ -72,30 +69,13 @@ router.put('/checkout', requireToken, async (req,res,next) => {
 router.route("/:id")
   .post(requireToken, async (req, res, next) => {
     try {
-      const user = await User.findByPk(req.user.id);
-      const product = await Product.findByPk(req.params.id);
-      let updatedItem;
+      const addedItem = await ShoppingCart.create({
+        userId: req.user.id,
+        productId: req.params.id,
+        quantity: req.body.quantity
+      })
 
-      const [itemInCart, itemCreated] = await ShoppingCart.findOrCreate({
-        where: {
-          userId: req.user.id,
-          productId: req.params.id,
-        },
-      });
-
-      //make sure component updates on submit
-      if (!itemCreated) {
-        updatedItem = await itemInCart.update({
-          quantity: itemInCart.quantity + Number(req.body.quantity),
-        });
-      } else {
-        await user.addProduct(product);
-        updatedItem = await itemInCart.update({
-          quantity: Number(req.body.quantity),
-        });
-      }
-
-      res.send(updatedItem);
+      res.send(addedItem);
     } catch (error) {
       next(error);
     }
@@ -111,13 +91,14 @@ router.route("/:id")
     } catch (error) {
       next(error);
     }
-  })
+  })//update by unique id-----
   .put(requireToken, async (req, res,next) => {
     try {
       const itemInCart = await ShoppingCart.findOne({
         where: {
           userId: req.user.id,
           productId: req.params.id,
+          purchased: false
         },
       })
 

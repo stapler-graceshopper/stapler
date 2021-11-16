@@ -16,6 +16,8 @@ class CartHistory extends React.Component{
 
 
   render() {
+    console.log(this.props.cartHistory)
+
     return(
       <div>
         <h2>This is your shopping history</h2>

@@ -31,10 +31,11 @@ class ProductInsideCart extends React.Component {
   }
 
   render() {
-  const product = this.props.product
-  const {id, name, description, imgUrl, quantity, price} = product
-  const quantityInCart = product.shoppingCart.quantity
-  const linkDestination = `/products/${id}`
+
+    const product = this.props.product
+    const {id, name, description, imgUrl, quantity, price} = product
+    const quantityInCart = product.shoppingCart.quantity
+    const linkDestination = `/products/${id}`
 
   return (
     <div>
