@@ -18,9 +18,10 @@ class ProductInsideHistory extends React.Component {
     <div>
       <h3>Product Name: {name}</h3>
       <div><img src={imgUrl} /></div>
-      <div>Purchse Price: ${purchasePrice} </div>
-      <div>Purchse Quantity: {quantity} </div>
-      <div>Purchse Date: {purchaseDate} </div>
+      <div>Purchase Price: ${purchasePrice} </div>
+      <div>Purchase Quantity: {quantity} </div>
+      <div>Purchase Total: ${purchasePrice * quantity} </div>
+      <div>Purchase Date: {purchaseDate} </div>
 
       <Link to={linkDestination}>
         <button type="button" >VIEW PRODUCT</button>

@@ -50,9 +50,10 @@ router.put('/checkout', requireToken, async (req,res,next) => {
 
     itemsInCart.forEach(async product => {
       const newQty = product.quantity - product.shoppingCart.quantity;
+      const date = Date.now()
 
       await product.update({quantity: newQty})
-      await product.shoppingCart.update({purchased: true})
+      await product.shoppingCart.update({purchased: true, purchasePrice: product.price, purchaseDate: date})
     })
 
 
