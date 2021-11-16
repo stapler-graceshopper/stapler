@@ -4,6 +4,7 @@ import axios from "axios";
 
 const GET_SELECTED_PRODUCT = "GET_SELECTED_PRODUCT";
 const UPDATE_PRODUCT = "UPDATE_PRODUCT";
+const CLEAR_SELECTED = "CLEAR_SELECTED";
 
 // ACTION CREATORS
 
@@ -20,6 +21,12 @@ const updateProduct = data => {
     product: data,
   };
 };
+
+export const clearSelectedProduct = () => {
+  return {
+    type: CLEAR_SELECTED,
+  }
+}
 
 // THUNKS
 
@@ -58,6 +65,8 @@ const reducer = (state = initialState, action) => {
       return action.product;
     case UPDATE_PRODUCT:
       return action.product;
+    case CLEAR_SELECTED:
+      return {}
     default:
       return state;
   }

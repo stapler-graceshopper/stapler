@@ -28,6 +28,9 @@ const Navbar = ({handleClick, isLoggedIn, userType}) => (
           {userType === 'admin' ?
           <Link to="/category">View Categories</Link> :
           null}
+          {userType === 'admin' ?
+          <Link to="/editProduct">Edit Product</Link> :
+          null}
 
           <a href="#" onClick={handleClick}>
             Logout
