@@ -1,8 +1,8 @@
 const router = require("express").Router();
 const {
-  models: { User, Product, ShoppingCart },
+  models: { Product, ShoppingCart },
 } = require("../db");
-const { requireToken, isAdmin } = require("./gatekeepingMiddleware");
+const { requireToken } = require("./gatekeepingMiddleware");
 
 // Routes for /api/shoppingcart
 

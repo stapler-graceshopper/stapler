@@ -16,9 +16,6 @@ class AddProductForm extends React.Component {
     };
   }
 
-  // componentDidMount() {
-  // }
-
   handleChange(event) {
     this.setState({
       [event.target.name]: event.target.value,
@@ -28,12 +25,8 @@ class AddProductForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    // if(this.state.name === '') {
-    //* write code for on screen error msg here
-    // } else {
     const newProduct = { ...this.state };
     this.props.createProduct(newProduct);
-    //reset state
     this.setState({
       name: "",
       description: "",
@@ -42,7 +35,6 @@ class AddProductForm extends React.Component {
       price: ""
     });
     console.log("got here, end of handleSubmit");
-    // }
   }
 
   render() {

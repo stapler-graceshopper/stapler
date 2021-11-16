@@ -31,13 +31,6 @@ const addProduct = data => {
   };
 };
 
-const deleteProduct = id => {
-  return {
-    type: DELETE_PRODUCT,
-    productId: id,
-  };
-};
-
 // THUNKS
 
 export const fetchAllProducts = () => async dispatch => {
@@ -58,7 +51,7 @@ export const fetchProductsByCategory = (category) => async (dispatch) => {
   }
 }
 
-export const fetchProductToBoDeleted = id => async dispatch => {
+export const fetchProductToBoDeleted = id => async () => {
   try {
     const token = window.localStorage.getItem("token");
     const { data } = await axios.get(`/api/products/${id}`, {

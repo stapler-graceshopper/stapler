@@ -1,10 +1,11 @@
+// eslint-disable-next-line no-unused-vars
 import React from 'react'
 import {connect} from 'react-redux'
+// eslint-disable-next-line no-unused-vars
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 import {clearCart} from '../store/reducers/shoppingCart'
 
-// const allUsersPath = this.props.userType === 'admin' ? <Route path="/AllUsers" component={AllUsers} /> : null
 const Navbar = ({handleClick, isLoggedIn, userType}) => (
   <div>
     <nav>
@@ -48,9 +49,6 @@ const Navbar = ({handleClick, isLoggedIn, userType}) => (
   </div>
 )
 
-/**
- * CONTAINER
- */
 const mapState = state => {
   return {
     isLoggedIn: !!state.auth.id,

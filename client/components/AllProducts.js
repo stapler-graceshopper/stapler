@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+// eslint-disable-next-line no-unused-vars
 import SingleProduct from './SingleProduct'
 import { fetchAllProducts, fetchProductsByCategory } from '../store/reducers/products'
 import { fetchCategories } from '../store/reducers/categories'
@@ -19,7 +20,6 @@ class AllProducts extends React.Component {
   }
 
   async onChange(event) {
-    //  If you do not await here, Console.logging state return the wrong value
     event.preventDefault()
     await this.setState({
       [event.target.name]: event.target.value
@@ -29,8 +29,6 @@ class AllProducts extends React.Component {
     } else {
       await this.props.fetchAllProducts();
     }
-    // console.log(this.state.category)
-    // console.log('there are this many products on this page: ', this.props.products.length)
   }
 
   render() {

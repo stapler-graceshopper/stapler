@@ -1,7 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
+// eslint-disable-next-line no-unused-vars
 import {Link} from 'react-router-dom'
-import {updateItemInCart, deleteItemInCart} from '../store/reducers/shoppingCart'
+import {updateItemInCart} from '../store/reducers/shoppingCart'
 
 class ProductInsideCart extends React.Component {
   constructor() {
@@ -32,8 +33,7 @@ class ProductInsideCart extends React.Component {
   render() {
 
     const product = this.props.product
-    const {id, name, description, imgUrl, quantity, price} = product
-    const quantityInCart = product.shoppingCart.quantity
+    const {id, name, imgUrl, quantity, price} = product
     const linkDestination = `/products/${id}`
 
   return (

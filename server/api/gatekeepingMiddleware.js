@@ -1,5 +1,5 @@
 const {
-  models: { Product, User },
+  models: { User },
 } = require("../db");
 
 //makes sure user is logged in

@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import { fetchShoppingCart, deleteItemInCart, checkoutCart } from '../store/reducers/shoppingCart'
+// eslint-disable-next-line no-unused-vars
 import ProductInsideCart from './productInsideCart'
 
 
@@ -32,7 +33,6 @@ class ShoppingCartView extends React.Component{
         <h2 className="flex">This is your shopping cart</h2>
         {this.props.user.type ? <button onClick={this.handleCheckout} className="checkout">Checkout</button> : null}
         <br/>
-        <h2>This is your shopping cart</h2>
         {this.props.shoppingCart.map(product => (
             <ProductInsideCart key={product.id} product={product} handleDelete={this.handleDelete}/>
           )
