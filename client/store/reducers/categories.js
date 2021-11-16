@@ -42,8 +42,18 @@ export const fetchCategories = () => async (dispatch) => {
 
 export const postNewCategory = (name) => async (dispatch) => {
   try {
-    const {data} = await axios.post(`/api/category/${name}`)
-    dispatch(addCategory(data))
+    const token = window.localStorage.getItem("token");
+
+    if (token) {
+      const {data} = await axios.post(`/api/category/${name}`, {}, {
+        headers: {
+          authorization: token,
+        },
+      })
+      dispatch(addCategory(data))
+    }
+
+
   } catch (error) {
     console.log(error)
   }
@@ -51,8 +61,17 @@ export const postNewCategory = (name) => async (dispatch) => {
 
 export const removeCategory = (name) => async (dispatch) => {
   try {
-    await axios.delete(`/api/category/${name}`)
-    dispatch(deleteCategory(name))
+    const token = window.localStorage.getItem("token");
+
+    if(token) {
+      await axios.delete(`/api/category/${name}`, {
+        headers: {
+          authorization: token,
+        },
+      })
+      dispatch(deleteCategory(name))
+    }
+
   } catch (error) {
     console.log (error)
   }

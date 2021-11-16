@@ -15,7 +15,7 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.post('/:name', async (req, res, next) => {
+router.post('/:name', requireToken, isAdmin, async (req, res, next) => {
   try {
     const newCategory = await Category.addCategory(req.params.name)
     res.send(newCategory)
@@ -24,7 +24,7 @@ router.post('/:name', async (req, res, next) => {
   }
 })
 
-router.delete('/:name', async (req, res, next) => {
+router.delete('/:name', requireToken, isAdmin, async (req, res, next) => {
   try {
     await Category.removeCategory(req.params.name)
     res.sendStatus(202)
