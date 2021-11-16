@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import { fetchCartHistory } from '../store/reducers/cartHistory'
+// eslint-disable-next-line no-unused-vars
 import ProductInsideHistory from './ProductInsideHistory'
 
 

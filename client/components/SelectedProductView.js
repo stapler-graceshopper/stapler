@@ -7,7 +7,6 @@ class SelectedProductView extends React.Component {
   constructor() {
     super();
 
-    //make sure to add a range for the qty
     this.state = {
       quantity: 1
     };
@@ -49,7 +48,7 @@ class SelectedProductView extends React.Component {
   }
 
   render() {
-    const { id, name, description, imgUrl, quantity, itemNumber, price } =
+    const { id, name, description, imgUrl, quantity, price } =
       this.props.selectedProduct;
 
     return (

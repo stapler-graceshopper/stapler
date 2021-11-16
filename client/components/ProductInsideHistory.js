@@ -1,4 +1,5 @@
 import React from 'react'
+// eslint-disable-next-line no-unused-vars
 import {Link} from 'react-router-dom'
 
 
@@ -10,7 +11,7 @@ class ProductInsideHistory extends React.Component {
 
   render() {
     const product = this.props.product
-    const {id, name, description, imgUrl} = product
+    const {id, name, imgUrl} = product
     const {quantity, purchasePrice, purchaseDate} = product.shoppingCart
     const linkDestination = `/products/${id}`
 
