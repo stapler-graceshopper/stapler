@@ -8,7 +8,7 @@ const { requireToken } = require("./gatekeepingMiddleware");
 
 router.get("/", requireToken, async (req, res, next) => {
   try {
-    const cart = await Product.fetchHistoryOrCart("cart", req.user.id)
+    const cart = await Product.fetchHistoryOrCart("cart", req.user.id);
 
     res.json(cart);
   } catch (err) {
@@ -20,7 +20,7 @@ router.get("/", requireToken, async (req, res, next) => {
 
 router.get("/history", requireToken, async (req, res, next) => {
   try {
-    const history = await Product.fetchHistoryOrCart('history', req.user.id)
+    const history = await Product.fetchHistoryOrCart("history", req.user.id);
 
     res.json(history);
   } catch (err) {
@@ -28,34 +28,55 @@ router.get("/history", requireToken, async (req, res, next) => {
   }
 });
 
-
-router.put('/checkout', requireToken, async (req,res,next) => {
+router.put("/checkout", requireToken, async (req, res, next) => {
   try {
-    const itemsInCart = await Product.fetchHistoryOrCart('cart', req.user.id)
+    const itemsInCart = await Product.fetchHistoryOrCart("cart", req.user.id);
 
     itemsInCart.forEach(async product => {
       const newQty = product.quantity - product.shoppingCart.quantity;
-      const date = Date.now()
+      const date = Date.now();
 
-      await product.update({quantity: newQty})
-      await product.shoppingCart.update({purchased: true, purchasePrice: product.price, purchaseDate: date})
-    })
+      await product.update({ quantity: newQty });
+      await product.shoppingCart.update({
+        purchased: true,
+        purchasePrice: product.price,
+        purchaseDate: date,
+      });
+    });
 
-    res.sendStatus(202)
+    res.sendStatus(202);
   } catch (error) {
-    next(error)
+    next(error);
   }
-})
+});
+
+router.put("/guestCheckout", async (req, res, next) => {
+  try {
+    const itemsInCart = req.body;
+
+    itemsInCart.forEach(async item => {
+      const fetchItem = await Product.findByPk(item.id);
+      const newQty = item.quantity - item.shoppingCart.quantity;
+
+      await fetchItem.update({ quantity: newQty });
+    });
+
+    res.sendStatus(202);
+  } catch (error) {
+    next(error);
+  }
+});
 
 //slug is id of product
-router.route("/:id")
+router
+  .route("/:id")
   .post(requireToken, async (req, res, next) => {
     try {
       const addedItem = await ShoppingCart.create({
         userId: req.user.id,
         productId: req.params.id,
-        quantity: req.body.quantity
-      })
+        quantity: req.body.quantity,
+      });
 
       res.send(addedItem);
     } catch (error) {
@@ -68,9 +89,9 @@ router.route("/:id")
         where: {
           userId: req.user.id,
           productId: req.params.id,
-          purchased: false
-        }
-      })
+          purchased: false,
+        },
+      });
 
       itemInCart.destroy();
 
@@ -79,28 +100,24 @@ router.route("/:id")
       next(error);
     }
   })
-  .put(requireToken, async (req, res,next) => {
+  .put(requireToken, async (req, res, next) => {
     try {
       const itemInCart = await ShoppingCart.findOne({
         where: {
           userId: req.user.id,
           productId: req.params.id,
-          purchased: false
+          purchased: false,
         },
-      })
+      });
 
       const updatedItemInCart = await itemInCart.update({
-        quantity: req.body.quantity
-      })
+        quantity: req.body.quantity,
+      });
 
       res.send(updatedItemInCart);
     } catch (error) {
-      next(error)
+      next(error);
     }
-  })
-
-
-
-
+  });
 
 module.exports = router;

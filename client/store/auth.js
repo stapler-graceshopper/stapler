@@ -8,6 +8,7 @@ const TOKEN = "token";
 const SET_AUTH = "SET_AUTH";
 const UPDATE_USER = "UPDATE_USER";
 
+
 //ACTION CREATORS
 
 const setAuth = auth => ({ type: SET_AUTH, auth });
@@ -65,6 +66,7 @@ export default function (state = {}, action) {
       return action.auth;
     case UPDATE_USER:
       return action.user;
+
     default:
       return state;
   }

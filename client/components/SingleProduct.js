@@ -1,13 +1,12 @@
 // eslint-disable-next-line no-unused-vars
-import React from 'react'
+import React from "react";
 // eslint-disable-next-line no-unused-vars
-import {Link} from 'react-router-dom'
+import { Link } from "react-router-dom";
 
-const singleProduct = (props) => {
-
-  const product = props.product
-  let {id, name, description, imgUrl, quantity, price} = product
-  const linkDestination = `/products/${id}`
+const singleProduct = props => {
+  const product = props.product;
+  let { id, name, description, imgUrl, quantity, price } = product;
+  const linkDestination = `/products/${id}`;
 
   price = price || 0;
 
@@ -20,12 +19,14 @@ const singleProduct = (props) => {
         <h1>quantity: {quantity}</h1>
         <p>description: {description}</p>
         <Link to={linkDestination}>
-          <button type="button" className="button">VIEW PRODUCT</button>
+          <button type="button" className="button">
+            VIEW PRODUCT
+          </button>
         </Link>
       </div>
       <p id="itemNumber">itemNumber: {id}</p>
     </div>
-  )
-}
+  );
+};
 
 export default singleProduct;

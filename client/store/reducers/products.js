@@ -4,11 +4,11 @@ import { authenticateRequest } from "../gatekeepingMiddleware";
 // ACTION TYPES
 
 const GET_PRODUCTS = "GET_PRODUCTS";
-const GET_PRODUCTS_BY_CATEGORY = "GET_PRODUCTS_BY_CATEGORY"
+const GET_PRODUCTS_BY_CATEGORY = "GET_PRODUCTS_BY_CATEGORY";
 const DELETE_PRODUCT = "DELETE_PRODUCT";
 const ADD_PRODUCT = "ADD_PRODUCT";
 const UPDATE_PRODUCT = "UPDATE_PRODUCT";
-const DELETE_SELECTED = "DELETE_SELECTED"
+const DELETE_SELECTED = "DELETE_SELECTED";
 
 // ACTION CREATORS
 
@@ -55,13 +55,15 @@ export const fetchProductsByCategory = category => async dispatch => {
 
 export const createProduct = product => async dispatch => {
   try {
-    const newProduct = await authenticateRequest('post', `/api/products`, product)
+    const newProduct = await authenticateRequest(
+      "post",
+      `/api/products`,
+      product
+    );
 
     if (newProduct) {
       dispatch(addProduct(newProduct));
     }
-
-
   } catch (error) {
     console.log(error);
   }
@@ -83,16 +85,16 @@ const reducer = (state = initialState, action) => {
       return [...state, action.product];
     case UPDATE_PRODUCT: {
       {
-        let newState = [...state]
+        let newState = [...state];
         newState = newState.filter(product => {
           return product.id !== action.product.id;
-        })
+        });
         newState.push(action.product);
         return newState;
       }
     }
     case DELETE_SELECTED:
-      return [...state].filter(product => product.id !== action.id)
+      return [...state].filter(product => product.id !== action.id);
     default:
       return state;
   }
