@@ -1,6 +1,7 @@
 import axios from "axios";
+import { authenticateRequest } from "../gatekeepingMiddleware";
 
-const LOCAL_CART = 'LOCAL_CART'
+const LOCAL_CART = "LOCAL_CART";
 
 // ACTION TYPES
 
@@ -8,7 +9,7 @@ const GET_SHOPPING_CART = "GET_SHOPPING_CART";
 const UPDATE_ITEM_IN_CART = "UPDATE_ITEM_IN_CART";
 const DELETE_ITEM_IN_CART = "DELETE_ITEM_IN_CART";
 const ADD_ITEM_TO_CART = "ADD_ITEM_TO_CART";
-const CLEAR_CART = 'CLEAR_CART'
+const CLEAR_CART = "CLEAR_CART";
 
 // ACTION CREATORS
 
@@ -45,31 +46,25 @@ const addItemToCart = (item, quantity) => {
 export const clearCart = () => {
   return {
     type: CLEAR_CART,
-    cart: []
-  }
-}
+    cart: [],
+  };
+};
 
 // THUNKS
 
 export const fetchShoppingCart = () => async dispatch => {
   try {
-    const token = window.localStorage.getItem("token");
+    const cart = await authenticateRequest("get", "/api/shoppingCart");
 
-    if (token) {
-      const { data } = await axios.get("/api/shoppingCart", {
-        headers: {
-          authorization: token,
-        },
-      });
-      dispatch(getShoppingCart(data));
+    if (cart) {
+      dispatch(getShoppingCart(cart));
     } else {
       let currentCart = window.localStorage.getItem(LOCAL_CART);
-      currentCart = JSON.parse(currentCart)
+      currentCart = JSON.parse(currentCart);
 
       if (currentCart) {
-        dispatch(getShoppingCart(currentCart))
+        dispatch(getShoppingCart(currentCart));
       }
-
     }
   } catch (error) {
     console.log(error);
@@ -78,35 +73,27 @@ export const fetchShoppingCart = () => async dispatch => {
 
 export const postItemToCart = (id, amount, history) => async dispatch => {
   try {
-    const token = window.localStorage.getItem("token");
+    const newItem = await authenticateRequest(
+      "post",
+      `/api/shoppingCart/${id}`,
+      { quantity: amount }
+    );
 
-    const { data: item } = await axios.get(`/api/products/${id}`);
-
-    if (token) {
-      const { data: cart } = await axios.post(
-        `/api/shoppingCart/${id}`,
-        { quantity: amount },
-        {
-          headers: {
-            authorization: token,
-          },
-        }
-      );
-
-      item.shoppingCart = cart.quantity;
-
-      dispatch(addItemToCart(item, amount));
+    if (newItem) {
+      dispatch(addItemToCart(newItem, amount));
     } else {
+      const { data: item } = await axios.get(`/api/products/${id}`);
+
       item.shoppingCart = { quantity: amount };
 
       let currentCart = window.localStorage.getItem(LOCAL_CART);
-      currentCart = JSON.parse(currentCart)
+      currentCart = JSON.parse(currentCart);
 
       if (currentCart) {
         currentCart.push(item);
-        window.localStorage.setItem(LOCAL_CART, JSON.stringify(currentCart))
+        window.localStorage.setItem(LOCAL_CART, JSON.stringify(currentCart));
       } else {
-        window.localStorage.setItem(LOCAL_CART, JSON.stringify([item]))
+        window.localStorage.setItem(LOCAL_CART, JSON.stringify([item]));
       }
 
       dispatch(addItemToCart(item, amount));
@@ -117,7 +104,7 @@ export const postItemToCart = (id, amount, history) => async dispatch => {
     console.log(error);
   }
 };
-
+//------left off here
 export const updateItemInCart = (id, amount) => async dispatch => {
   try {
     const token = window.localStorage.getItem("token");
@@ -134,17 +121,17 @@ export const updateItemInCart = (id, amount) => async dispatch => {
       );
     } else {
       let currentCart = window.localStorage.getItem(LOCAL_CART);
-      currentCart = JSON.parse(currentCart)
+      currentCart = JSON.parse(currentCart);
 
       currentCart = currentCart.map(item => {
         if (item.id === id) {
-          item.shoppingCart.quantity = Number(amount)
+          item.shoppingCart.quantity = Number(amount);
         }
 
         return item;
-      })
+      });
 
-      window.localStorage.setItem(LOCAL_CART, JSON.stringify(currentCart))
+      window.localStorage.setItem(LOCAL_CART, JSON.stringify(currentCart));
     }
     dispatch(updateItemFromCart(id, amount));
   } catch (error) {
@@ -164,11 +151,11 @@ export const deleteItemInCart = id => async dispatch => {
       });
     } else {
       let currentCart = window.localStorage.getItem(LOCAL_CART);
-      currentCart = JSON.parse(currentCart)
+      currentCart = JSON.parse(currentCart);
 
-      currentCart = currentCart.filter(item => item.id !== id)
+      currentCart = currentCart.filter(item => item.id !== id);
 
-      window.localStorage.setItem(LOCAL_CART, JSON.stringify(currentCart))
+      window.localStorage.setItem(LOCAL_CART, JSON.stringify(currentCart));
     }
 
     dispatch(deleteItemFromCart(id));
@@ -177,25 +164,28 @@ export const deleteItemInCart = id => async dispatch => {
   }
 };
 
-export const checkoutCart = (history) => async dispatch => {
+export const checkoutCart = history => async dispatch => {
   try {
     const token = window.localStorage.getItem("token");
 
     if (token) {
-      await axios.put('/api/shoppingCart/checkout', {}, {
-        headers: {
-          authorization: token,
-        },
-      })
+      await axios.put(
+        "/api/shoppingCart/checkout",
+        {},
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
 
-      dispatch(clearCart())
-      history.push('/confirmation')
+      dispatch(clearCart());
+      history.push("/confirmation");
     }
-
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
 // INITIAL STATE
 
@@ -209,15 +199,16 @@ const reducer = (state = initialState, action) => {
       return action.cart;
     case DELETE_ITEM_IN_CART:
       return [...state.filter(product => product.id !== action.itemId)];
-    case ADD_ITEM_TO_CART:
-      {const newItem = {
+    case ADD_ITEM_TO_CART: {
+      const newItem = {
         ...action.item,
         shoppingCart: { quantity: Number(action.quantity) },
       };
 
-      return [...state, newItem];}
-    case UPDATE_ITEM_IN_CART:
-      {const newState = state.map(product => {
+      return [...state, newItem];
+    }
+    case UPDATE_ITEM_IN_CART: {
+      const newState = state.map(product => {
         if (product.id === action.itemId) {
           const newProduct = { ...product };
 
@@ -228,9 +219,10 @@ const reducer = (state = initialState, action) => {
           return product;
         }
       });
-      return newState;}
+      return newState;
+    }
     case CLEAR_CART:
-      return action.cart
+      return action.cart;
     default:
       return state;
   }

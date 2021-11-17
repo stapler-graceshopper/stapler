@@ -36,8 +36,6 @@ class AllProducts extends React.Component {
     let products = this.props.products || []
     products = products.filter(product => product.quantity > 0)
 
-    console.log(products)
-
     const allProductsDiv = products.length > 0 ? products.map(product => (
       <SingleProduct key={product.id} product={product} />
       )) : <span className="flex">No Products</span>

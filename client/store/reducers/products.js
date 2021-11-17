@@ -1,4 +1,5 @@
 import axios from "axios";
+import { authenticateRequest } from "../gatekeepingMiddleware";
 
 // ACTION TYPES
 

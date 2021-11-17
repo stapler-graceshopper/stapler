@@ -1,4 +1,5 @@
 import axios from "axios";
+import { authenticateRequest } from "../gatekeepingMiddleware";
 
 // ACTION TYPES
 
@@ -17,14 +18,11 @@ const getAllUsers = users => {
 
 export const fetchAllUsers = () => async dispatch => {
   try {
-    const token = window.localStorage.getItem("token");
+    const users = await authenticateRequest("get", `/api/users`);
 
-    const { data: users } = await axios.get(`/api/users`, {
-      headers: {
-        authorization: token,
-      },
-    });
-    dispatch(getAllUsers(users));
+    if (users) {
+      dispatch(getAllUsers(users));
+    }
   } catch (error) {
     console.log(error);
   }

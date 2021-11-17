@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { authenticateRequest } from "../gatekeepingMiddleware";
 
 // Action type
 
@@ -39,14 +40,11 @@ const deleteUser = () => {
 
 export const fetchUser = (id) => async (dispatch) => {
   try {
-    const token = window.localStorage.getItem("token");
+    const user = await authenticateRequest('get', `/api/users/${id}`)
 
-    const {data} = await axios.get(`/api/users/${id}`, {
-      headers: {
-        authorization: token
-      }
-    })
-    dispatch(getUser(data))
+    if (user) {
+      dispatch(getUser(user))
+    }
   } catch (error) {
     console.log(error);
   }
@@ -54,13 +52,11 @@ export const fetchUser = (id) => async (dispatch) => {
 
 export const modifyUser = (id, user) => async (dispatch) => {
   try {
-    const token = window.localStorage.getItem("token");
-    const {data} = await axios.put(`/api/users/${id}`, user, {
-      headers: {
-        authorization: token
-      }
-    })
-    dispatch(updateUser(data))
+    const updatedUser = await authenticateRequest('put', `/api/users/${id}`, user)
+
+    if (updatedUser) {
+      dispatch(updateUser(updatedUser))
+    }
   } catch (error) {
     console.log(error)
   }
@@ -68,17 +64,14 @@ export const modifyUser = (id, user) => async (dispatch) => {
 
 export const removeUser = (id) => async (dispatch) => {
   try {
-    const token = window.localStorage.getItem("token");
-    const res = await axios.delete(`api/users/${id}`, {
-      headers: {
-        authorization: token
-      }
-    })
+    const res = await authenticateRequest('delete', `api/users/${id}`)
+
     if (res.status === 202) {
       dispatch(deleteUser())
     } else {
       console.log('CAUGHT ERROR: REQUEST FAILED')
     }
+
   } catch (error) {
     console.log(error)
   }
