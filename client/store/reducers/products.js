@@ -4,9 +4,9 @@ import axios from "axios";
 
 const GET_PRODUCTS = "GET_PRODUCTS";
 const GET_PRODUCTS_BY_CATEGORY = "GET_PRODUCTS_BY_CATEGORY"
-const DELETE_PRODUCT = "DELETE_PRODUCT";
 const ADD_PRODUCT = "ADD_PRODUCT";
 const UPDATE_PRODUCT = "UPDATE_PRODUCT";
+const DELETE_SELECTED = "DELETE_SELECTED"
 
 // ACTION CREATORS
 
@@ -51,20 +51,6 @@ export const fetchProductsByCategory = (category) => async (dispatch) => {
   }
 }
 
-export const fetchProductToBoDeleted = id => async () => {
-  try {
-    const token = window.localStorage.getItem("token");
-    const { data } = await axios.get(`/api/products/${id}`, {
-      headers: {
-        authorization: token,
-      },
-    });
-    await data.destroy();
-    fetchAllProducts();
-  } catch (error) {
-    console.log(error);
-  }
-};
 
 export const createProduct = product => async dispatch => {
   try {
@@ -94,16 +80,18 @@ const reducer = (state = initialState, action) => {
       return action.products;
     case ADD_PRODUCT:
       return [...state, action.product];
-    case DELETE_PRODUCT:
-      return action.products;
-    // case UPDATE_PRODUCT: {
-    //   const newState = [...state]
-    //   newState.filter(product => {
-    //     return product.id !== action.product.id;
-    //   })
-    //   newState.push(action.product);
-    //   return newState;
-    // }
+    case UPDATE_PRODUCT: {
+      {
+        let newState = [...state]
+        newState = newState.filter(product => {
+          return product.id !== action.product.id;
+        })
+        newState.push(action.product);
+        return newState;
+      }
+    }
+    case DELETE_SELECTED:
+      return [...state].filter(product => product.id !== action.id)
     default:
       return state;
   }

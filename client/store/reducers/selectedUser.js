@@ -29,9 +29,10 @@ const updateUser = (data) => {
   }
 }
 
-const deleteUser = () => {
+const deleteUser = (id) => {
   return {
     type: DELETE_USER,
+    id
   }
 }
 
@@ -75,7 +76,7 @@ export const removeUser = (id) => async (dispatch) => {
       }
     })
     if (res.status === 202) {
-      dispatch(deleteUser())
+      dispatch(deleteUser(id))
     } else {
       console.log('CAUGHT ERROR: REQUEST FAILED')
     }

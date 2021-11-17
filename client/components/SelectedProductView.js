@@ -6,11 +6,9 @@ import { postItemToCart, updateItemInCart } from "../store/reducers/shoppingCart
 class SelectedProductView extends React.Component {
   constructor() {
     super();
-
     this.state = {
       quantity: 1
     };
-
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }

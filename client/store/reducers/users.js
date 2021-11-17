@@ -3,6 +3,8 @@ import axios from "axios";
 // ACTION TYPES
 
 const GET_USERS = "GET_USERS";
+const UPDATE_USER = 'UPDATE_USER'
+const DELETE_USER = 'DELETE_USER'
 
 // ACTION CREATORS
 
@@ -40,6 +42,17 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_USERS:
       return action.users;
+    case UPDATE_USER:
+      {
+        let newState = [...state]
+        newState = newState.filter(user => {
+          return user.id !== action.user.id;
+        })
+        newState.push(action.user);
+        return newState;
+      }
+    case DELETE_USER:
+      return [...state].filter(user => user.id !== action.id)
     default:
       return state;
   }

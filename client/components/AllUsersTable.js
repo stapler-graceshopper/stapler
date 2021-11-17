@@ -12,12 +12,13 @@ class AllUsersTable extends React.Component {
     this.props.fetchAllUsers()
   }
 
-  handleSelectUser(event, id) {
+  handleSelectUser(id) {
     this.props.fetchUser(id)
   }
 
-
   render() {
+
+    const users = this.props.users.sort(((a,b)=>(a.id > b.id ? 1 : -1)))
 
     return (
       <div>
@@ -33,7 +34,7 @@ class AllUsersTable extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {this.props.users.map((user)=>(
+            {users.map((user)=>(
               <tr key={user.id} >
                 <td>{user.id}</td>
                 <td>{user.username}</td>
