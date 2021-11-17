@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import { fetchCartHistory } from '../store/reducers/cartHistory'
+// JOE_CR: Cool linting disable! Have you all been checking linter output?
 // eslint-disable-next-line no-unused-vars
 import ProductInsideHistory from './ProductInsideHistory'
 

@@ -4,6 +4,7 @@ import { fetchAllProducts } from "../store/reducers/products";
 import { clearSelectedProduct, fetchModifiedProduct, removeProduct } from '../store/reducers/selectedProduct'
 import AllProductsTable from "./AllProductsTable";
 
+// JOE_CR: Interesting utility! I see it is for removing keys for fields that were not filled out.
 const clearEmptyObjectKeys = (obj) => {
   try {
     Object.keys(obj).forEach(key => {
@@ -55,6 +56,7 @@ class EditProductForm extends React.Component {
       };
       clearEmptyObjectKeys(editedProduct)
       await this.props.fetchModifiedProduct(editedProduct)
+      // JOE_CR: I am seeing a lot of re-fetching happening.
       await this.props.fetchAllProducts();
 
       this.setState({

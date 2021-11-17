@@ -49,6 +49,7 @@ export const fetchSingleProduct = id => async dispatch => {
 export const fetchModifiedProduct = product => async dispatch => {
   try {
     const token = window.localStorage.getItem("token");
+    // JOE_CR: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     console.log('!!!!!!!!!!!!!!!!!!!!!!!!')
     const { data } = await axios.put(`/api/products/`, product, {
       headers: {

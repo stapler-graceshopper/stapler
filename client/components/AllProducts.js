@@ -21,9 +21,11 @@ class AllProducts extends React.Component {
 
   async onChange(event) {
     event.preventDefault()
+    // JOE_CR: Why does this setState have an await in front of it? Does that do anything?
     await this.setState({
       [event.target.name]: event.target.value
     })
+    // JOE_CR: Any reason for these awaits?
     if (this.state.category !== 'View All') {
     await this.props.fetchProductsByCategory(this.state.category)
     } else {

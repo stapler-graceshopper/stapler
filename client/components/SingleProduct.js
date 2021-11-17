@@ -15,6 +15,7 @@ const singleProduct = (props) => {
       <img src={imgUrl} />
       <div className="info">
         <h1>Product Name: {name}</h1>
+        {/* JOE_CR: You may want to use a method to specify how many decimal places are used to show the price. Something like .toFixed */}
         <h1>Price: ${price} </h1>
         <h1>quantity: {quantity}</h1>
         <p>description: {description}</p>

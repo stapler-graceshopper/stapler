@@ -18,6 +18,7 @@ productRouter.get('/byCategory/:category', async(req, res, next) => {
 })
 
 productRouter
+  // JOE_CR: This .route().get().post() thing is awesome. Today I learned!
   .route("/")
     .get(async (req, res, next) => {
       try {

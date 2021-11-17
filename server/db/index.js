@@ -9,10 +9,13 @@ const Category = require('./models/Categories')
 
 //associations could go here!
 
+// JOE_CR: What does unique:false do here?
 User.belongsToMany(Product,{through: {model: ShoppingCart, unique: false}})
 Product.belongsToMany(User,{through: {model: ShoppingCart, unique: false}})
 
 Product.hasOne(ShoppingCart)
+// JOE_CR: This association just feels wrong semantically even though it does model the information correctly.
+// I feel like "ShoppingCart" model would be more accurately described as "ShoppingCartItem".
 ShoppingCart.belongsTo(Product)
 
 Product.belongsToMany(Category, {through: 'ProductsToCategories'})

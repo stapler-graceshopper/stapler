@@ -49,8 +49,10 @@ class EditUserForm extends React.Component {
         address: this.state.address
       }
       clearEmptyObjectKeys(editedUser)
+      // JOE_CR: !!!!!!!!!!!!!!!!!! How else can you get your logging to stand out?
       console.log('!!!!!!!!',editedUser.id)
       await this.props.modifyUser(editedUser.id, editedUser)
+      // JOE_CR: Why a call to the fetchAllUsers() again?
       await this.props.fetchAllUsers();
       this.setState({
         username: "",
@@ -66,6 +68,7 @@ class EditUserForm extends React.Component {
     if (this.props.selectedUser.type !== 'admin') {
       this.props.removeUser(this.props.selectedUser.id)
     } else {
+      // JOE_CR: Nice!
       console.log('Cannot remove Admin Users')
     }
   }

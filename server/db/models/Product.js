@@ -2,9 +2,11 @@ const Sequelize = require("sequelize");
 const db = require("../db");
 const Category = require("./Categories");
 
+// JOE_CR: This is a simple pattern but effective -- configure a large value independently here
+// instead of embedding it in a more complicated object later on.
 const defaultImageUrl = 'https://i5.walmartimages.com/asr/4182b507-3510-472d-bbcf-b9b1fa2683a4.d61796fa6f1dcddf3bf27a8defae4ca9.jpeg?odnHeight=372&odnWidth=372&odnBg=FFFFFF'
 
-
+// JOE_CR: Great usage of extra validations on this model!
 const Product = db.define("product", {
   name: {
     type: Sequelize.STRING,
@@ -27,6 +29,7 @@ const Product = db.define("product", {
     }
   },
 
+  // JOE_CR: Maybe an "isUrl" validation can go here.
   imgUrl: {
     type: Sequelize.TEXT,
     defaultValue:
@@ -42,6 +45,7 @@ const Product = db.define("product", {
     },
   },
 
+  // JOE_CR: What does this column mean?
   itemNumber: {
     type: Sequelize.INTEGER,
     validate: {
@@ -56,6 +60,8 @@ Product.getAllProducts = async () => {
   return products;
 };
 
+// JOE_CR: Great usage of class methods across your models,
+// but this one feels very useful especially.
 Product.getByCategory = async (category) => {
   const products = await Product.findAll({
     include: {
