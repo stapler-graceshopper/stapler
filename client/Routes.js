@@ -61,6 +61,7 @@ class Routes extends Component {
             <Route exact path="/products/:productId" component={SelectedProductView} />
             <Route path="/products" component={AllProducts} />
             <Route path="/shoppingCart" component={ShoppingCartView} />
+            <Route path='/confirmation' component={ConfirmationPage}/>
           </Switch>
         )}
       </div>
