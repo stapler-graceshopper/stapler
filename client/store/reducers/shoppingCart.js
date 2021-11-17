@@ -176,18 +176,18 @@ export const checkoutCart = history => async dispatch => {
 
 export const guestCheckout = (cart, history) => async dispatch => {
   try {
-    const res = await axios.put('/api/shoppingCart/guestCheckout', cart);
+    const res = await axios.put("/api/shoppingCart/guestCheckout", cart);
 
     if (res.status === 202) {
       dispatch(clearCart());
 
-      window.localStorage.removeItem(LOCAL_CART)
+      window.localStorage.removeItem(LOCAL_CART);
       history.push("/confirmation");
     }
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
 // INITIAL STATE
 

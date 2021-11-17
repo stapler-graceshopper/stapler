@@ -1,20 +1,24 @@
 import React from "react";
 import { connect } from "react-redux";
 import { fetchAllProducts } from "../store/reducers/products";
-import { clearSelectedProduct, fetchModifiedProduct, removeProduct } from '../store/reducers/selectedProduct'
+import {
+  clearSelectedProduct,
+  fetchModifiedProduct,
+  removeProduct,
+} from "../store/reducers/selectedProduct";
 import AllProductsTable from "./AllProductsTable";
 
-const clearEmptyObjectKeys = (obj) => {
+const clearEmptyObjectKeys = obj => {
   try {
     Object.keys(obj).forEach(key => {
-      if (obj[key] === '' || key === 'err') {
-        delete obj[key]
+      if (obj[key] === "" || key === "err") {
+        delete obj[key];
       }
-    })
+    });
   } catch (err) {
-    console.log(err)
+    console.log(err);
   }
-}
+};
 
 class EditProductForm extends React.Component {
   constructor() {
@@ -27,12 +31,12 @@ class EditProductForm extends React.Component {
       description: "",
       quantity: "",
       itemNumber: "",
-      price: ""
+      price: "",
     };
   }
 
   componentDidMount() {
-    this.props.clearSelectedProduct()
+    this.props.clearSelectedProduct();
   }
 
   handleChange(event) {
@@ -50,24 +54,24 @@ class EditProductForm extends React.Component {
         description: this.state.description,
         quantity: this.state.quantity,
         itemNumber: this.state.itemNumber,
-        price: this.state.price
+        price: this.state.price,
       };
-      clearEmptyObjectKeys(editedProduct)
-      await this.props.fetchModifiedProduct(editedProduct)
+      clearEmptyObjectKeys(editedProduct);
+      await this.props.fetchModifiedProduct(editedProduct);
       this.setState({
         name: "",
         description: "",
         quantity: "",
         itemNumber: "",
-        price: ""
+        price: "",
       });
     } else {
-      console.log('select a product before submitting changes')
+      console.log("select a product before submitting changes");
     }
   }
 
   handleDelete() {
-    this.props.removeProduct(this.props.selectedProduct.id)
+    this.props.removeProduct(this.props.selectedProduct.id);
   }
 
   render() {
@@ -77,30 +81,35 @@ class EditProductForm extends React.Component {
     if (this.props.user.type === "admin") {
       return (
         <div>
-           { this.props.selectedProduct.name ?
-          <div className="product">
-            <img src={this.props.selectedProduct.imgUrl} />
-            <div className="info">
-              <h1>Product Name: {this.props.selectedProduct.name}</h1>
-              <h1>Price: ${this.props.selectedProduct.price} </h1>
-              <h1>quantity: {this.props.selectedProduct.quantity}</h1>
-              <p>description: {this.props.selectedProduct.description}</p>
+          {this.props.selectedProduct.name ? (
+            <div className="product">
+              <img src={this.props.selectedProduct.imgUrl} />
+              <div className="info">
+                <h1>Product Name: {this.props.selectedProduct.name}</h1>
+                <h1>Price: ${this.props.selectedProduct.price} </h1>
+                <h1>quantity: {this.props.selectedProduct.quantity}</h1>
+                <p>description: {this.props.selectedProduct.description}</p>
+              </div>
+              <p id="itemNumber">itemNumber: {this.props.selectedProduct.id}</p>
             </div>
-            <p id="itemNumber">itemNumber: {this.props.selectedProduct.id}</p>
-          </div>
-          :
-          <div>
-            <h3>No Product Selected</h3>
-            <h3>Choose A Product From The Table Below</h3>
-          </div>
-          }
+          ) : (
+            <div>
+              <h3>No Product Selected</h3>
+              <h3>Choose A Product From The Table Below</h3>
+            </div>
+          )}
           <hr />
 
           <hr />
           <h3>Edit Selected Product</h3>
           <form id="EditProductForm" onSubmit={handleSubmit}>
             <label htmlFor="name">CHANGE NAME</label>
-            <input type="text" onChange={handleChange} name="name" value={name} />
+            <input
+              type="text"
+              onChange={handleChange}
+              name="name"
+              value={name}
+            />
 
             <label htmlFor="description">CHANGE DESCRIPTION</label>
             <input
@@ -108,7 +117,7 @@ class EditProductForm extends React.Component {
               onChange={handleChange}
               name="description"
               value={description}
-              />
+            />
 
             <label htmlFor="quantity">CHANGE STOCK</label>
             <input
@@ -116,7 +125,7 @@ class EditProductForm extends React.Component {
               onChange={handleChange}
               name="quantity"
               value={quantity}
-              />
+            />
 
             <label htmlFor="itemNumber">CHANGE ITEM NUMBER</label>
             <input
@@ -124,7 +133,7 @@ class EditProductForm extends React.Component {
               onChange={handleChange}
               name="itemNumber"
               value={itemNumber}
-              />
+            />
 
             <label htmlFor="price">PRICE</label>
             <input
@@ -132,22 +141,27 @@ class EditProductForm extends React.Component {
               onChange={handleChange}
               name="price"
               value={price}
-              />
+            />
 
             <br />
 
-            <button type="submit" className="button">Submit</button>
+            <button type="submit" className="button">
+              Submit
+            </button>
           </form>
           <hr />
           <hr />
-          <button type="button" onClick={handleDelete} className="button"> DELETE PRODUCT </button>
+          <button type="button" onClick={handleDelete} className="button">
+            {" "}
+            DELETE PRODUCT{" "}
+          </button>
           <hr />
           <h3>AllProductsTable</h3>
-          <AllProductsTable/>
+          <AllProductsTable />
         </div>
       );
     } else {
-      return <div>bad token</div>
+      return <div>bad token</div>;
     }
   }
 }
@@ -163,9 +177,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     clearSelectedProduct: () => dispatch(clearSelectedProduct()),
-    fetchModifiedProduct: (product) => dispatch(fetchModifiedProduct(product)),
+    fetchModifiedProduct: product => dispatch(fetchModifiedProduct(product)),
     fetchAllProducts: () => dispatch(fetchAllProducts()),
-    removeProduct: (id) => dispatch(removeProduct(id))
+    removeProduct: id => dispatch(removeProduct(id)),
   };
 };
 

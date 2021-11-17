@@ -1,27 +1,25 @@
 import React from "react";
-import { connect } from "react-redux"
+import { connect } from "react-redux";
 import { fetchAllProducts } from "../store/reducers/products";
 import { fetchSingleProduct } from "../store/reducers/selectedProduct";
 
 class AllProductsTable extends React.Component {
   constructor() {
-    super()
-    this.handleSelectProduct = this.handleSelectProduct.bind(this)
+    super();
+    this.handleSelectProduct = this.handleSelectProduct.bind(this);
   }
 
   componentDidMount() {
-    this.props.fetchAllProducts()
+    this.props.fetchAllProducts();
   }
 
   handleSelectProduct(event, id) {
-    event.preventDefault()
-    this.props.fetchSingleProduct(id)
+    event.preventDefault();
+    this.props.fetchSingleProduct(id);
   }
 
-
   render() {
-
-    const products = this.props.products.sort(((a,b)=>(a.id > b.id ? 1 : -1)))
+    const products = this.props.products.sort((a, b) => (a.id > b.id ? 1 : -1));
 
     return (
       <div>
@@ -36,35 +34,39 @@ class AllProductsTable extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {products.map((product)=>(
-              <tr key={product.id} >
+            {products.map(product => (
+              <tr key={product.id}>
                 <td>{product.id}</td>
                 <td>{product.name}</td>
                 <td>{product.price}</td>
                 <td>{product.quantity}</td>
-                <td onClick={(event)=>this.handleSelectProduct(event, product.id)} className="button">Click to Select</td>
+                <td
+                  onClick={event => this.handleSelectProduct(event, product.id)}
+                  className="button"
+                >
+                  Click to Select
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-    )
-
+    );
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     products: state.products,
     selectedProduct: state.selectedProduct,
-    user: state.auth
+    user: state.auth,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     fetchAllProducts: () => dispatch(fetchAllProducts()),
-    fetchSingleProduct: (id) => dispatch(fetchSingleProduct(id))
+    fetchSingleProduct: id => dispatch(fetchSingleProduct(id)),
   };
 };
 

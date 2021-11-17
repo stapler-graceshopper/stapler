@@ -1,25 +1,24 @@
 import React from "react";
-import { connect } from "react-redux"
-import { fetchAllUsers } from '../store/reducers/users'
+import { connect } from "react-redux";
+import { fetchAllUsers } from "../store/reducers/users";
 import { fetchUser } from "../store/reducers/selectedUser";
 
 class AllUsersTable extends React.Component {
   constructor() {
-    super()
+    super();
   }
 
   componentDidMount() {
-    this.props.fetchAllUsers()
+    this.props.fetchAllUsers();
   }
 
   handleSelectUser(id) {
-    console.log(id)
-    this.props.fetchUser(id)
+    console.log(id);
+    this.props.fetchUser(id);
   }
 
   render() {
-
-    const users = this.props.users.sort(((a,b)=>(a.id > b.id ? 1 : -1)))
+    const users = this.props.users.sort((a, b) => (a.id > b.id ? 1 : -1));
 
     return (
       <div>
@@ -35,35 +34,39 @@ class AllUsersTable extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {users.map((user)=>(
-              <tr key={user.id} >
+            {users.map(user => (
+              <tr key={user.id}>
                 <td>{user.id}</td>
                 <td>{user.username}</td>
                 <td>{user.type}</td>
                 <td>{user.email}</td>
                 <td>{user.address}</td>
-                <td className="button" onClick={() => this.handleSelectUser(user.id)}>Click to Select</td>
+                <td
+                  className="button"
+                  onClick={() => this.handleSelectUser(user.id)}
+                >
+                  Click to Select
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-    )
-
+    );
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     users: state.users,
-    user: state.auth
+    user: state.auth,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     fetchAllUsers: () => dispatch(fetchAllUsers()),
-    fetchUser: (id) => dispatch(fetchUser(id))
+    fetchUser: id => dispatch(fetchUser(id)),
   };
 };
 
