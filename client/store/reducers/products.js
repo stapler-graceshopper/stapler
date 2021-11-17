@@ -52,30 +52,30 @@ export const fetchProductsByCategory = category => async dispatch => {
   }
 };
 
-export const fetchProductToBoDeleted = id => async () => {
-  try {
-    const token = window.localStorage.getItem("token");
-    const { data } = await axios.get(`/api/products/${id}`, {
-      headers: {
-        authorization: token,
-      },
-    });
-    await data.destroy();
-    fetchAllProducts();
-  } catch (error) {
-    console.log(error);
-  }
-};
+// export const fetchProductToBoDeleted = id => async () => {
+//   try {
+//     const token = window.localStorage.getItem("token");
+//     const { data } = await axios.get(`/api/products/${id}`, {
+//       headers: {
+//         authorization: token,
+//       },
+//     });
+//     await data.destroy();
+//     fetchAllProducts();
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
 export const createProduct = product => async dispatch => {
   try {
-    const token = window.localStorage.getItem("token");
-    const { data } = await axios.post(`/api/products`, product, {
-      headers: {
-        authorization: token,
-      },
-    });
-    dispatch(addProduct(data));
+    const newProduct = await authenticateRequest('post', `/api/products`, product)
+
+    if (newProduct) {
+      dispatch(addProduct(data));
+    }
+
+
   } catch (error) {
     console.log(error);
   }
