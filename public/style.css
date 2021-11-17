@@ -70,7 +70,6 @@ form div {
 
 .checkout {
   position: absolute;
-  left: 1100px;
   top: 230px;
   width: 100px;
   height: 30px;
@@ -166,3 +165,4 @@ form div {
 .product p {
   font-weight: bold;
 }
+
