@@ -41,13 +41,13 @@ form div {
   margin-top: 50px;
   margin-bottom: 20px;
   display: flex;
-  justify-content: center
+  justify-content: center;
 }
 
 .center {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
 .inputText {
@@ -61,24 +61,24 @@ form div {
 }
 
 .button {
-  background-color: rgb(240, 170, 65)
+  background-color: rgb(240, 170, 65);
 }
 
 .button:hover {
-  background-color: rgb(236, 155, 32)
+  background-color: rgb(236, 155, 32);
 }
 
 .checkout {
-  position:absolute;
+  position: absolute;
   left: 1100px;
   top: 230px;
   width: 100px;
   height: 30px;
-  background-color: rgb(240, 170, 65)
+  background-color: rgb(240, 170, 65);
 }
 
 .checkout:hover {
-  background-color: rgb(236, 155, 32)
+  background-color: rgb(236, 155, 32);
 }
 
 .link {
@@ -86,7 +86,7 @@ form div {
 }
 
 .link:hover {
-  font-weight: bold
+  font-weight: bold;
 }
 
 .user {
@@ -96,7 +96,7 @@ form div {
   flex-wrap: wrap;
   height: 200px;
   border: 5px solid rgb(13, 171, 199);
-  background-color:rgba(13, 171, 199, 0.089);
+  background-color: rgba(13, 171, 199, 0.089);
   margin: 30px;
 }
 
@@ -108,7 +108,7 @@ form div {
   flex-wrap: wrap;
   height: 300px;
   border: 5px solid rgb(13, 171, 199);
-  background-color:rgba(13, 171, 199, 0.089);
+  background-color: rgba(13, 171, 199, 0.089);
   margin: 30px;
 }
 
@@ -119,7 +119,7 @@ form div {
   height: auto;
   width: 200px;
   border: 5px solid rgb(13, 171, 199);
-  background-color:rgba(13, 171, 199, 0.089);
+  background-color: rgba(13, 171, 199, 0.089);
 }
 
 #bold {

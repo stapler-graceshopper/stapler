@@ -13,22 +13,20 @@ const authenticateRequest = async (request, url, body) => {
       if (request === "get") {
         const { data } = await axios.get(url, header);
         return data;
-      } else if (request === 'post') {
-        const {data} = await axios.post(url, body, header)
+      } else if (request === "post") {
+        const { data } = await axios.post(url, body, header);
         return data;
-      } else if (request === 'delete') {
-        const res = await axios.delete(url, header)
+      } else if (request === "delete") {
+        const res = await axios.delete(url, header);
         return res;
-      } else if (request === 'put') {
-        const {data} = await axios.put(url, body, header);
-        return data
+      } else if (request === "put") {
+        const { data } = await axios.put(url, body, header);
+        return data;
       }
     }
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 };
 
 export { authenticateRequest };
-
-

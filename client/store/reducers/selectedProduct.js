@@ -6,7 +6,7 @@ import { authenticateRequest } from "../gatekeepingMiddleware";
 const GET_SELECTED_PRODUCT = "GET_SELECTED_PRODUCT";
 const UPDATE_PRODUCT = "UPDATE_PRODUCT";
 const CLEAR_SELECTED = "CLEAR_SELECTED";
-const DELETE_SELECTED = "DELETE_SELECTED"
+const DELETE_SELECTED = "DELETE_SELECTED";
 
 // ACTION CREATORS
 
@@ -27,13 +27,13 @@ const updateProduct = data => {
 export const clearSelectedProduct = () => {
   return {
     type: CLEAR_SELECTED,
-  }
-}
+  };
+};
 
 const deleteProduct = id => {
   return {
     type: DELETE_SELECTED,
-    id
+    id,
   };
 };
 
@@ -50,12 +50,15 @@ export const fetchSingleProduct = id => async dispatch => {
 
 export const fetchModifiedProduct = product => async dispatch => {
   try {
-    const updatedProduct = await authenticateRequest('put', `/api/products/`, product)
-    
+    const updatedProduct = await authenticateRequest(
+      "put",
+      `/api/products/`,
+      product
+    );
+
     if (updatedProduct) {
       dispatch(updateProduct(updatedProduct));
     }
-    
   } catch (error) {
     console.log(error);
   }
@@ -63,12 +66,12 @@ export const fetchModifiedProduct = product => async dispatch => {
 
 export const removeProduct = id => async dispatch => {
   try {
-    const res = await authenticateRequest('delete', `/api/products/${id}`)
+    const res = await authenticateRequest("delete", `/api/products/${id}`);
 
     if (res.status === 202) {
-      dispatch(deleteProduct(id))
+      dispatch(deleteProduct(id));
     } else {
-      console.log('OOPS, something went wrong while attempting to delete')
+      console.log("OOPS, something went wrong while attempting to delete");
     }
   } catch (error) {
     console.log(error);
@@ -88,9 +91,9 @@ const reducer = (state = initialState, action) => {
     case UPDATE_PRODUCT:
       return action.product;
     case CLEAR_SELECTED:
-      return {}
+      return {};
     case DELETE_SELECTED:
-      return {}
+      return {};
     default:
       return state;
   }
