@@ -41,7 +41,7 @@ class AllUsersTable extends React.Component {
                 <td>{user.type}</td>
                 <td>{user.email}</td>
                 <td>{user.address}</td>
-                <button className="button" onClick={(event) => this.handleSelectUser(event, user.id)}>Click to Select</button>
+                <td className="button" onClick={(event) => this.handleSelectUser(event, user.id)}>Click to Select</td>
               </tr>
             ))}
           </tbody>
