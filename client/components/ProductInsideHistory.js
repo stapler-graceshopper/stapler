@@ -12,17 +12,20 @@ class ProductInsideHistory extends React.Component {
   render() {
     const product = this.props.product
     const {id, name, imgUrl} = product
-    const {quantity, purchasePrice, purchaseDate} = product.shoppingCart
+    let {quantity, purchasePrice, purchaseDate} = product.shoppingCart
     const linkDestination = `/products/${id}`
+
+    purchasePrice = purchasePrice || 0;
+    quantity = quantity || 0;
 
   return (
     <div className="product">
       <img src={imgUrl} />
       <div className="info">
         <h1>Product Name: {name}</h1>
-        <h1>Purchase Price: ${purchasePrice}</h1>
+        <h1>Purchase Price: ${purchasePrice.toFixed(2)}</h1>
         <h1>Purchase Quantity: {quantity}</h1>
-        <h1>Purchase Total: ${purchasePrice * quantity} </h1>
+        <h1>Purchase Total: ${(purchasePrice * quantity).toFixed(2)} </h1>
         <h1>Purchase Date: {purchaseDate} </h1>
       </div>
 

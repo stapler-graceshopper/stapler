@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { authenticateRequest } from "../gatekeepingMiddleware"
 
 // Action types
 
@@ -42,18 +43,11 @@ export const fetchCategories = () => async (dispatch) => {
 
 export const postNewCategory = (name) => async (dispatch) => {
   try {
-    const token = window.localStorage.getItem("token");
+    const category = await authenticateRequest("post", `/api/category/${name}`, {})
 
-    if (token) {
-      const {data} = await axios.post(`/api/category/${name}`, {}, {
-        headers: {
-          authorization: token,
-        },
-      })
-      dispatch(addCategory(data))
+    if (category) {
+      dispatch(addCategory(category))
     }
-
-
   } catch (error) {
     console.log(error)
   }
@@ -61,14 +55,9 @@ export const postNewCategory = (name) => async (dispatch) => {
 
 export const removeCategory = (name) => async (dispatch) => {
   try {
-    const token = window.localStorage.getItem("token");
+    const deleted = await authenticateRequest('delete', `/api/category/${name}`)
 
-    if(token) {
-      await axios.delete(`/api/category/${name}`, {
-        headers: {
-          authorization: token,
-        },
-      })
+    if (deleted) {
       dispatch(deleteCategory(name))
     }
 

@@ -33,15 +33,17 @@ class ProductInsideCart extends React.Component {
   render() {
 
     const product = this.props.product
-    const {id, name, imgUrl, quantity, price} = product
+    let {id, name, imgUrl, quantity, price} = product
     const linkDestination = `/products/${id}`
+
+    price = price || 0;
 
   return (
     <div className="product">
       <img src={imgUrl} />
       <div className="info">
         <h1>Product Name: {name}</h1>
-        <h1>Price: ${price}</h1>
+        <h1>Price: ${price.toFixed(2)}</h1>
       </div>
       <Link to={linkDestination}>
         <button type="button"className="button" >VIEW PRODUCT</button>

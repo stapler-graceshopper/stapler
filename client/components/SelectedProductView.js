@@ -24,7 +24,7 @@ class SelectedProductView extends React.Component {
     })
   }
 
-  handleSubmit(evt) {
+  async handleSubmit(evt) {
     evt.preventDefault();
 
     const ifItemInCart = this.props.shoppingCart.filter(product => {
@@ -40,7 +40,9 @@ class SelectedProductView extends React.Component {
     if (ifItemInCart.length === 0) {
       this.props.postItem(this.props.selectedProduct.id, Number(this.state.quantity));
     } else {
-      this.props.updateItem(this.props.selectedProduct.id, (Number(ifItemInCart[0].shoppingCart.quantity) + Number(this.state.quantity)))
+      await this.props.updateItem(this.props.selectedProduct.id, (Number(ifItemInCart[0].shoppingCart.quantity) + Number(this.state.quantity)))
+
+      this.props.redirectToCart()
     }
 
   }
@@ -80,7 +82,8 @@ const mapDispatchToProps = (dispatch, { history }) => {
   return {
     fetchSingleProduct: id => dispatch(fetchSingleProduct(id)),
     postItem: (id, amount) => dispatch(postItemToCart(id, amount, history)),
-    updateItem: (id, amount) => dispatch(updateItemInCart(id, amount))
+    updateItem: (id, amount) => dispatch(updateItemInCart(id, amount)),
+    redirectToCart: () => history.push('/shoppingCart')
   };
 };
 

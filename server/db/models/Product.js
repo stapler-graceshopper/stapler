@@ -39,6 +39,7 @@ const Product = db.define("product", {
     validate: {
       notEmpty: true,
       isNumeric: true,
+      min: 0
     },
   },
 
