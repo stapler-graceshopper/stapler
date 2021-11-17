@@ -21,6 +21,8 @@ class AllProductsTable extends React.Component {
 
   render() {
 
+    const products = this.props.products.sort(((a,b)=>(a.id > b.id ? 1 : -1)))
+
     return (
       <div>
         <table>
@@ -34,7 +36,7 @@ class AllProductsTable extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {this.props.products.map((product)=>(
+            {products.map((product)=>(
               <tr key={product.id} >
                 <td>{product.id}</td>
                 <td>{product.name}</td>

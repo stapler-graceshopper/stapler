@@ -39,7 +39,6 @@ class EditProductForm extends React.Component {
     this.setState({
       [event.target.name]: event.target.value,
     });
-    console.log(event.target.name + ": " + event.target.value);
   }
 
   async handleSubmit(event) {
@@ -55,8 +54,6 @@ class EditProductForm extends React.Component {
       };
       clearEmptyObjectKeys(editedProduct)
       await this.props.fetchModifiedProduct(editedProduct)
-      await this.props.fetchAllProducts();
-
       this.setState({
         name: "",
         description: "",
@@ -71,7 +68,6 @@ class EditProductForm extends React.Component {
 
   handleDelete() {
     this.props.removeProduct(this.props.selectedProduct.id)
-    this.props.fetchAllProducts()
   }
 
   render() {

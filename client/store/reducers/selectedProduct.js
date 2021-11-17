@@ -33,6 +33,7 @@ export const clearSelectedProduct = () => {
 const deleteProduct = id => {
   return {
     type: DELETE_SELECTED,
+    id
   };
 };
 
@@ -50,11 +51,11 @@ export const fetchSingleProduct = id => async dispatch => {
 export const fetchModifiedProduct = product => async dispatch => {
   try {
     const updatedProduct = await authenticateRequest('put', `/api/products/`, product)
-
+    
     if (updatedProduct) {
       dispatch(updateProduct(updatedProduct));
     }
-
+    
   } catch (error) {
     console.log(error);
   }
@@ -65,7 +66,7 @@ export const removeProduct = id => async dispatch => {
     const res = await authenticateRequest('delete', `/api/products/${id}`)
 
     if (res.status === 202) {
-      dispatch(deleteProduct())
+      dispatch(deleteProduct(id))
     } else {
       console.log('OOPS, something went wrong while attempting to delete')
     }

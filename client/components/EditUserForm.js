@@ -49,9 +49,7 @@ class EditUserForm extends React.Component {
         address: this.state.address
       }
       clearEmptyObjectKeys(editedUser)
-      console.log('!!!!!!!!',editedUser.id)
       await this.props.modifyUser(editedUser.id, editedUser)
-      await this.props.fetchAllUsers();
       this.setState({
         username: "",
         email: "",
