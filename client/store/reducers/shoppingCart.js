@@ -178,7 +178,7 @@ export const guestCheckout = (cart, history) => async dispatch => {
   try {
     const res = await axios.put('/api/shoppingCart/guestCheckout', cart);
 
-    if (res) {
+    if (res.status === 202) {
       dispatch(clearCart());
 
       window.localStorage.removeItem(LOCAL_CART)
