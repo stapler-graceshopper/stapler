@@ -1,4 +1,5 @@
 import axios from "axios";
+import { authenticateRequest } from "../gatekeepingMiddleware";
 
 // ACTION TYPES
 
@@ -48,15 +49,12 @@ export const fetchSingleProduct = id => async dispatch => {
 
 export const fetchModifiedProduct = product => async dispatch => {
   try {
-    const token = window.localStorage.getItem("token");
-    console.log('!!!!!!!!!!!!!!!!!!!!!!!!')
-    const { data } = await axios.put(`/api/products/`, product, {
-      headers: {
-        authorization: token,
-      },
-    });
-    await console.log('DATA FROM PUT REQUEST: ', data)
-    dispatch(updateProduct(data));
+    const updatedProduct = await authenticateRequest('put', `/api/products/`, product)
+
+    if (updatedProduct) {
+      dispatch(updateProduct(updatedProduct));
+    }
+
   } catch (error) {
     console.log(error);
   }
@@ -64,12 +62,8 @@ export const fetchModifiedProduct = product => async dispatch => {
 
 export const removeProduct = id => async dispatch => {
   try {
-    const token = window.localStorage.getItem("token");
-    const res = await axios.delete(`/api/products/${id}`, {
-      headers: {
-        authorization: token,
-      },
-    });
+    const res = await authenticateRequest('delete', `/api/products/${id}`)
+
     if (res.status === 202) {
       dispatch(deleteProduct())
     } else {

@@ -1,9 +1,8 @@
-import axios from "axios";
+import { authenticateRequest } from "../gatekeepingMiddleware";
 
 // ACTION TYPES
 
-const GET_CART_HISTORY = 'GET_CART_HISTORY';
-
+const GET_CART_HISTORY = "GET_CART_HISTORY";
 
 // ACTION CREATORS
 
@@ -18,14 +17,12 @@ const getCartHistory = items => {
 
 export const fetchCartHistory = () => async dispatch => {
   try {
-    const token = window.localStorage.getItem("token");
+    const history = await authenticateRequest(
+      "get",
+      "/api/shoppingCart/history"
+    );
 
-    if (token) {
-      const { data: history } = await axios.get("/api/shoppingCart/history", {
-        headers: {
-          authorization: token,
-        },
-      });
+    if (history) {
       dispatch(getCartHistory(history));
     }
   } catch (error) {
@@ -40,10 +37,10 @@ const initialState = [];
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_CART_HISTORY:
-      return action.history
+      return action.history;
     default:
-      return state
+      return state;
   }
-}
+};
 
-export default reducer
+export default reducer;

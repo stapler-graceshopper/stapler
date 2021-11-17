@@ -33,7 +33,8 @@ class AllProducts extends React.Component {
 
   render() {
 
-    const products = this.props.products || []
+    let products = this.props.products || []
+    products = products.filter(product => product.quantity > 0)
 
     const allProductsDiv = products.length > 0 ? products.map(product => (
       <SingleProduct key={product.id} product={product} />
