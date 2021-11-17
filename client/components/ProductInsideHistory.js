@@ -20,9 +20,9 @@ class ProductInsideHistory extends React.Component {
       <img src={imgUrl} />
       <div className="info">
         <h1>Product Name: {name}</h1>
-        <h1>Purchase Price: ${purchasePrice}</h1>
+        <h1>Purchase Price: ${purchasePrice.toFixed(2)}</h1>
         <h1>Purchase Quantity: {quantity}</h1>
-        <h1>Purchase Total: ${purchasePrice * quantity} </h1>
+        <h1>Purchase Total: ${(purchasePrice * quantity).toFixed(2)} </h1>
         <h1>Purchase Date: {purchaseDate} </h1>
       </div>
 
