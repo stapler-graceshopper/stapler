@@ -71,22 +71,22 @@ class EditProductForm extends React.Component {
   }
 
   render() {
-    const { name, description, quantity, itemNumber, price } = this.state;
+    const { name, description, quantity, itemNumber, price, id } = this.state;
     const { handleChange, handleSubmit, handleDelete } = this;
 
     if (this.props.user.type === "admin") {
       return (
         <div>
            { this.props.selectedProduct.name ?
-          <div>
-            <h3>Product Name: {this.props.selectedProduct.name}</h3>
-            <span>Price: ${this.props.selectedProduct.price} </span>
+          <div className="product">
             <img src={this.props.selectedProduct.imgUrl} />
-            <p>
-              description: {this.props.selectedProduct.description} <br />
-              quantity: {this.props.selectedProduct.quantity} <br />
-              itemNumber: {this.props.selectedProduct.itemNumber} <br />
-            </p>
+            <div className="info">
+              <h1>Product Name: {this.props.selectedProduct.name}</h1>
+              <h1>Price: ${this.props.selectedProduct.price} </h1>
+              <h1>quantity: {this.props.selectedProduct.quantity}</h1>
+              <p>description: {this.props.selectedProduct.description}</p>
+            </div>
+            <p id="itemNumber">itemNumber: {this.props.selectedProduct.id}</p>
           </div>
           :
           <div>
@@ -136,11 +136,11 @@ class EditProductForm extends React.Component {
 
             <br />
 
-            <button type="submit">Submit</button>
+            <button type="submit" className="button">Submit</button>
           </form>
           <hr />
           <hr />
-          <button type="button" onClick={handleDelete}> DELETE PRODUCT </button>
+          <button type="button" onClick={handleDelete} className="button"> DELETE PRODUCT </button>
           <hr />
           <h3>AllProductsTable</h3>
           <AllProductsTable/>

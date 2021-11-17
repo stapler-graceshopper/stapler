@@ -42,7 +42,7 @@ class AllProductsTable extends React.Component {
                 <td>{product.name}</td>
                 <td>{product.price}</td>
                 <td>{product.quantity}</td>
-                <td onClick={(event)=>this.handleSelectProduct(event, product.id)}>Click to Select</td>
+                <button onClick={(event)=>this.handleSelectProduct(event, product.id)} className="button">Click to Select</button>
               </tr>
             ))}
           </tbody>
