@@ -45,6 +45,7 @@ class AddProductForm extends React.Component {
       return (
         <div className="flex">
           <form id="form" onSubmit={handleSubmit}>
+            {/* JOE_CR: This component needs to be formatted better. Is everyone using an auto-formatter? */}
             <div>
             <label htmlFor="name"><small>NAME</small></label>
             <input type="text" onChange={handleChange} name="name" value={name}

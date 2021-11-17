@@ -51,6 +51,7 @@ export const fetchProductsByCategory = (category) => async (dispatch) => {
   }
 }
 
+// JOE_CR: ToBo
 export const fetchProductToBoDeleted = id => async () => {
   try {
     const token = window.localStorage.getItem("token");
