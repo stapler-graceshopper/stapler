@@ -1,13 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
 import { fetchSingleProduct } from "../store/reducers/selectedProduct";
-import { postItemToCart, updateItemInCart } from "../store/reducers/shoppingCart";
+import {
+  postItemToCart,
+  updateItemInCart,
+} from "../store/reducers/shoppingCart";
 
 class SelectedProductView extends React.Component {
   constructor() {
     super();
     this.state = {
-      quantity: 1
+      quantity: 1,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -20,8 +23,8 @@ class SelectedProductView extends React.Component {
 
   handleChange(evt) {
     this.setState({
-      [evt.target.name]: evt.target.value
-    })
+      [evt.target.name]: evt.target.value,
+    });
   }
 
   async handleSubmit(evt) {
@@ -35,16 +38,20 @@ class SelectedProductView extends React.Component {
       }
     });
 
-
-
     if (ifItemInCart.length === 0) {
-      this.props.postItem(this.props.selectedProduct.id, Number(this.state.quantity));
+      this.props.postItem(
+        this.props.selectedProduct.id,
+        Number(this.state.quantity)
+      );
     } else {
-      await this.props.updateItem(this.props.selectedProduct.id, (Number(ifItemInCart[0].shoppingCart.quantity) + Number(this.state.quantity)))
+      await this.props.updateItem(
+        this.props.selectedProduct.id,
+        Number(ifItemInCart[0].shoppingCart.quantity) +
+          Number(this.state.quantity)
+      );
 
-      this.props.redirectToCart()
+      this.props.redirectToCart();
     }
-
   }
 
   render() {
@@ -60,9 +67,18 @@ class SelectedProductView extends React.Component {
           <h1>quantity: {quantity}</h1>
           <p>description: {description}</p>
           <form onSubmit={this.handleSubmit}>
-            <label htmlFor='quantity'>Quantity</label>
-            <input type='number' min="1" max={quantity} name='quantity' value={this.state.quantity} onChange={this.handleChange}/>
-            <button type="submit" className="button">Add To Cart</button>
+            <label htmlFor="quantity">Quantity</label>
+            <input
+              type="number"
+              min="1"
+              max={quantity}
+              name="quantity"
+              value={this.state.quantity}
+              onChange={this.handleChange}
+            />
+            <button type="submit" className="button">
+              Add To Cart
+            </button>
           </form>
         </div>
         <p id="itemNumber">itemNumber: {id}</p>
@@ -74,7 +90,7 @@ class SelectedProductView extends React.Component {
 const mapStateToProps = state => {
   return {
     selectedProduct: state.selectedProduct,
-    shoppingCart: state.shoppingCart
+    shoppingCart: state.shoppingCart,
   };
 };
 
@@ -83,7 +99,7 @@ const mapDispatchToProps = (dispatch, { history }) => {
     fetchSingleProduct: id => dispatch(fetchSingleProduct(id)),
     postItem: (id, amount) => dispatch(postItemToCart(id, amount, history)),
     updateItem: (id, amount) => dispatch(updateItemInCart(id, amount)),
-    redirectToCart: () => history.push('/shoppingCart')
+    redirectToCart: () => history.push("/shoppingCart"),
   };
 };
 

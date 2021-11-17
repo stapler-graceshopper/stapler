@@ -12,7 +12,7 @@ class AddProductForm extends React.Component {
       description: "",
       quantity: "",
       itemNumber: "",
-      price: ""
+      price: "",
     };
   }
 
@@ -31,7 +31,7 @@ class AddProductForm extends React.Component {
       description: "",
       quantity: "",
       itemNumber: "",
-      price: ""
+      price: "",
     });
   }
 
@@ -44,56 +44,73 @@ class AddProductForm extends React.Component {
         <div className="flex">
           <form id="form" onSubmit={handleSubmit}>
             <div>
-            <label htmlFor="name"><small>NAME</small></label>
-            <input type="text" onChange={handleChange} name="name" value={name}
-            className="input"/>
+              <label htmlFor="name">
+                <small>NAME</small>
+              </label>
+              <input
+                type="text"
+                onChange={handleChange}
+                name="name"
+                value={name}
+                className="input"
+              />
             </div>
             <div>
-            <label htmlFor="description"><small>DESCRIPTION</small></label>
-            <input
-              type="text"
-              onChange={handleChange}
-              name="description"
-              value={description}
-              className="input"
-            />
+              <label htmlFor="description">
+                <small>DESCRIPTION</small>
+              </label>
+              <input
+                type="text"
+                onChange={handleChange}
+                name="description"
+                value={description}
+                className="input"
+              />
             </div>
             <div>
-            <label htmlFor="quantity"><small>QUANTITY</small></label>
-            <input
-              type="text"
-              onChange={handleChange}
-              name="quantity"
-              value={quantity}
-              className="input"
-            />
+              <label htmlFor="quantity">
+                <small>QUANTITY</small>
+              </label>
+              <input
+                type="text"
+                onChange={handleChange}
+                name="quantity"
+                value={quantity}
+                className="input"
+              />
             </div>
             <div>
-            <label htmlFor="itemNumber"><small>ITEM NUMBER</small></label>
-            <input
-              type="text"
-              onChange={handleChange}
-              name="itemNumber"
-              value={itemNumber}
-              className="input"
-            />
+              <label htmlFor="itemNumber">
+                <small>ITEM NUMBER</small>
+              </label>
+              <input
+                type="text"
+                onChange={handleChange}
+                name="itemNumber"
+                value={itemNumber}
+                className="input"
+              />
             </div>
             <div>
-            <label htmlFor="price"><small>PRICE</small></label>
-            <input
-              type="text"
-              onChange={handleChange}
-              name="price"
-              value={price}
-              className="input"
-            />
+              <label htmlFor="price">
+                <small>PRICE</small>
+              </label>
+              <input
+                type="text"
+                onChange={handleChange}
+                name="price"
+                value={price}
+                className="input"
+              />
             </div>
-            <button type="submit" className="button">Submit</button>
+            <button type="submit" className="button">
+              Submit
+            </button>
           </form>
         </div>
       );
     } else {
-      return <div>bad token</div>
+      return <div>bad token</div>;
     }
   }
 }

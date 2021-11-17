@@ -9,7 +9,7 @@ class User extends React.Component {
   render() {
     return (
       <div className="user">
-        <img src={this.props.user.image}/>
+        <img src={this.props.user.image} />
         <div className="info">
           <h1>Username: {this.props.user.username}</h1>
           <h1>Email: {this.props.user.email}</h1>

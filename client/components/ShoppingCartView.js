@@ -4,7 +4,7 @@ import {
   fetchShoppingCart,
   deleteItemInCart,
   checkoutCart,
-  guestCheckout
+  guestCheckout,
 } from "../store/reducers/shoppingCart";
 // eslint-disable-next-line no-unused-vars
 import ProductInsideCart from "./productInsideCart";
@@ -31,7 +31,7 @@ class ShoppingCartView extends React.Component {
     if (this.props.user.id) {
       this.props.checkoutCart();
     } else {
-      this.props.guestCheckout(this.props.shoppingCart)
+      this.props.guestCheckout(this.props.shoppingCart);
     }
   }
 
@@ -39,9 +39,11 @@ class ShoppingCartView extends React.Component {
     return (
       <div>
         <h2 className="flex">This is your shopping cart</h2>
-        <button onClick={this.handleCheckout} className="checkout">
-          Checkout
-        </button>
+        <div>
+          <button onClick={this.handleCheckout} className="checkout">
+            Checkout
+          </button>
+        </div>
         <br />
         {this.props.shoppingCart.map(product => (
           <ProductInsideCart
@@ -67,7 +69,7 @@ const mapDispatchToProps = (dispatch, { history }) => {
     fetchShoppingCart: () => dispatch(fetchShoppingCart()),
     deleteItem: id => dispatch(deleteItemInCart(id)),
     checkoutCart: () => dispatch(checkoutCart(history)),
-    guestCheckout: (cart) => dispatch(guestCheckout(cart, history))
+    guestCheckout: cart => dispatch(guestCheckout(cart, history)),
   };
 };
 

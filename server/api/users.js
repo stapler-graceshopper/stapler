@@ -12,67 +12,66 @@ router.get("/", requireToken, isAdmin, async (req, res, next) => {
       // send everything to anyone who asks!
       attributes: ["id", "username", "email", "type", "image", "address"],
     });
-    users.sort((a,b)=>(a.id > b.id ? 1 : -1))
+    users.sort((a, b) => (a.id > b.id ? 1 : -1));
     res.json(users);
   } catch (err) {
     next(err);
   }
 });
 
-router.get('/:id', requireToken, isAdmin, async(req, res, next) => {
+router.get("/:id", requireToken, isAdmin, async (req, res, next) => {
   try {
     const user = await User.findOne({
-      where: {id: req.params.id},
-      attributes: ["id", "username", "email", "type", "image", "address"]
-    })
-    if(user) {
-      res.send(user)
+      where: { id: req.params.id },
+      attributes: ["id", "username", "email", "type", "image", "address"],
+    });
+    if (user) {
+      res.send(user);
     } else {
-      res.sendStatus(400)
+      res.sendStatus(400);
     }
   } catch (error) {
-    next(error)
+    next(error);
   }
-})
+});
 
-router.put('/:id', requireToken, isAdmin, async(req, res, next) => {
+router.put("/:id", requireToken, isAdmin, async (req, res, next) => {
   try {
-    const {username, email, address} = req.body
-    const user = await User.findByPk(req.params.id)
-    if (user.type !== 'admin') {
+    const { username, email, address } = req.body;
+    const user = await User.findByPk(req.params.id);
+    if (user.type !== "admin") {
       const update = {
         username,
         email,
-        address
-      }
-      await user.update(update)
+        address,
+      };
+      await user.update(update);
       const updatedUser = await User.findOne({
-        where: {id: req.params.id},
-        attributes: ["id", "username", "email", "type", "image", "address"]
-      })
-      res.send(updatedUser)
+        where: { id: req.params.id },
+        attributes: ["id", "username", "email", "type", "image", "address"],
+      });
+      res.send(updatedUser);
     } else {
-      res.sendStatus(400)
+      res.sendStatus(400);
     }
   } catch (error) {
-    next (error)
+    next(error);
   }
-})
+});
 
-router.delete('/:id', requireToken, isAdmin, async(req, res, next) => {
+router.delete("/:id", requireToken, isAdmin, async (req, res, next) => {
   try {
-
-    const user = await User.findByPk(req.params.id)
-    console.log('USER: ', user)
-    if (user.type !== 'admin') {
-      await user.destroy()
-      res.sendStatus(202)
+    const user = await User.findByPk(req.params.id);
+    console.log("USER: ", user);
+    if (user.type !== "admin") {
+      await user.destroy();
+      res.sendStatus(202);
     } else {
-      res.sendStatus(400)
+      res.sendStatus(400);
     }
   } catch (error) {
-    next(error)
+    next(error);
   }
-})
+});
 
 module.exports = router;
