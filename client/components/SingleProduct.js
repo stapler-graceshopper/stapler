@@ -15,7 +15,7 @@ const singleProduct = (props) => {
       <img src={imgUrl} />
       <div className="info">
         <h1>Product Name: {name}</h1>
-        <h1>Price: ${price} </h1>
+        <h1>Price: ${price.toFixed(2)} </h1>
         <h1>quantity: {quantity}</h1>
         <p>description: {description}</p>
         <Link to={linkDestination}>

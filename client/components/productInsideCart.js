@@ -41,7 +41,7 @@ class ProductInsideCart extends React.Component {
       <img src={imgUrl} />
       <div className="info">
         <h1>Product Name: {name}</h1>
-        <h1>Price: ${price}</h1>
+        <h1>Price: ${price.toFixed(2)}</h1>
       </div>
       <Link to={linkDestination}>
         <button type="button"className="button" >VIEW PRODUCT</button>
