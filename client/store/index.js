@@ -9,12 +9,14 @@ import users from './reducers/users'
 import shoppingCart from './reducers/shoppingCart'
 import cartHistory from './reducers/cartHistory'
 import categories from './reducers/categories'
+import selectedUser from './reducers/selectedUser'
 
 const reducer = combineReducers({
   auth,
   shoppingCart,
   products,
   selectedProduct,
+  selectedUser,
   users,
   cartHistory,
   categories

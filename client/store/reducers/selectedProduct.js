@@ -5,6 +5,7 @@ import axios from "axios";
 const GET_SELECTED_PRODUCT = "GET_SELECTED_PRODUCT";
 const UPDATE_PRODUCT = "UPDATE_PRODUCT";
 const CLEAR_SELECTED = "CLEAR_SELECTED";
+const DELETE_SELECTED = "DELETE_SELECTED"
 
 // ACTION CREATORS
 
@@ -27,6 +28,12 @@ export const clearSelectedProduct = () => {
     type: CLEAR_SELECTED,
   }
 }
+
+const deleteProduct = id => {
+  return {
+    type: DELETE_SELECTED,
+  };
+};
 
 // THUNKS
 
@@ -55,6 +62,24 @@ export const fetchModifiedProduct = product => async dispatch => {
   }
 };
 
+export const removeProduct = id => async dispatch => {
+  try {
+    const token = window.localStorage.getItem("token");
+    const res = await axios.delete(`/api/products/${id}`, {
+      headers: {
+        authorization: token,
+      },
+    });
+    if (res.status === 202) {
+      dispatch(deleteProduct())
+    } else {
+      console.log('OOPS, something went wrong while attempting to delete')
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 // INITIAL STATE
 
 const initialState = {};
@@ -68,6 +93,8 @@ const reducer = (state = initialState, action) => {
     case UPDATE_PRODUCT:
       return action.product;
     case CLEAR_SELECTED:
+      return {}
+    case DELETE_SELECTED:
       return {}
     default:
       return state;

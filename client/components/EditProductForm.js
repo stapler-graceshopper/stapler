@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { fetchAllProducts } from "../store/reducers/products";
-import { clearSelectedProduct, fetchModifiedProduct } from '../store/reducers/selectedProduct'
+import { clearSelectedProduct, fetchModifiedProduct, removeProduct } from '../store/reducers/selectedProduct'
 import AllProductsTable from "./AllProductsTable";
 
 const clearEmptyObjectKeys = (obj) => {
@@ -21,6 +21,7 @@ class EditProductForm extends React.Component {
     super();
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
     this.state = {
       name: "",
       description: "",
@@ -53,7 +54,6 @@ class EditProductForm extends React.Component {
         price: this.state.price
       };
       clearEmptyObjectKeys(editedProduct)
-      console.log('EDITED PRODUCT: ', editedProduct)
       await this.props.fetchModifiedProduct(editedProduct)
       await this.props.fetchAllProducts();
 
@@ -64,16 +64,19 @@ class EditProductForm extends React.Component {
         itemNumber: "",
         price: ""
       });
-      console.log("got here, end of handleSubmit");
     } else {
       console.log('select a product before submitting changes')
     }
-    // }
+  }
+
+  handleDelete() {
+    this.props.removeProduct(this.props.selectedProduct.id)
+    this.props.fetchAllProducts()
   }
 
   render() {
     const { name, description, quantity, itemNumber, price } = this.state;
-    const { handleChange, handleSubmit } = this;
+    const { handleChange, handleSubmit, handleDelete } = this;
 
     if (this.props.user.type === "admin") {
       return (
@@ -140,6 +143,9 @@ class EditProductForm extends React.Component {
             <button type="submit">Submit</button>
           </form>
           <hr />
+          <hr />
+          <button type="button" onClick={handleDelete}> DELETE PRODUCT </button>
+          <hr />
           <h3>AllProductsTable</h3>
           <AllProductsTable/>
         </div>
@@ -162,7 +168,8 @@ const mapDispatchToProps = dispatch => {
   return {
     clearSelectedProduct: () => dispatch(clearSelectedProduct()),
     fetchModifiedProduct: (product) => dispatch(fetchModifiedProduct(product)),
-    fetchAllProducts: () => dispatch(fetchAllProducts())
+    fetchAllProducts: () => dispatch(fetchAllProducts()),
+    removeProduct: (id) => dispatch(removeProduct(id))
   };
 };
 

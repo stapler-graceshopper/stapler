@@ -52,7 +52,8 @@ productRouter
     })
     .delete(requireToken, isAdmin, async (req, res, next) => {
       try {
-        res.send(await Product.removeProduct(req.params.id));
+        await Product.removeProduct(req.params.id);
+        res.sendStatus(202)
       } catch (error) {
         next(error);
       }
