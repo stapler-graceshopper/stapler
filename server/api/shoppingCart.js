@@ -8,12 +8,7 @@ const { requireToken } = require("./gatekeepingMiddleware");
 
 router.get("/", requireToken, async (req, res, next) => {
   try {
-    const cart = await Product.findAll({
-      include: {model: ShoppingCart, where: {
-        userId: req.user.id,
-        purchased: false
-      }},
-    })
+    const cart = await Product.fetchHistoryOrCart("cart", req.user.id)
 
     res.json(cart);
   } catch (err) {
@@ -25,12 +20,7 @@ router.get("/", requireToken, async (req, res, next) => {
 
 router.get("/history", requireToken, async (req, res, next) => {
   try {
-    const history = await Product.findAll({
-      include: {model: ShoppingCart, where: {
-        userId: req.user.id,
-        purchased: true
-      }},
-    })
+    const history = await Product.fetchHistoryOrCart('history', req.user.id)
 
     res.json(history);
   } catch (err) {
@@ -41,12 +31,7 @@ router.get("/history", requireToken, async (req, res, next) => {
 
 router.put('/checkout', requireToken, async (req,res,next) => {
   try {
-    const itemsInCart = await Product.findAll({
-      include: {model: ShoppingCart, where: {
-        userId: req.user.id,
-        purchased: false
-      }},
-    })
+    const itemsInCart = await Product.fetchHistoryOrCart('cart', req.user.id)
 
     itemsInCart.forEach(async product => {
       const newQty = product.quantity - product.shoppingCart.quantity;
@@ -56,8 +41,7 @@ router.put('/checkout', requireToken, async (req,res,next) => {
       await product.shoppingCart.update({purchased: true, purchasePrice: product.price, purchaseDate: date})
     })
 
-
-    res.sendStatus(200)
+    res.sendStatus(202)
   } catch (error) {
     next(error)
   }
