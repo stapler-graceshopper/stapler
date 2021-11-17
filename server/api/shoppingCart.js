@@ -47,6 +47,23 @@ router.put('/checkout', requireToken, async (req,res,next) => {
   }
 })
 
+router.put('/guestCheckout', async (req,res,next) => {
+  try {
+    const itemsInCart = req.body;
+
+    itemsInCart.forEach(async (item) => {
+      const fetchItem = await Product.findByPk(item.id);
+      const newQty = item.quantity - item.shoppingCart.quantity
+
+      await fetchItem.update({quantity: newQty})
+    })
+
+    res.sendStatus(202)
+  } catch (error) {
+    next(error)
+  }
+})
+
 //slug is id of product
 router.route("/:id")
   .post(requireToken, async (req, res, next) => {
