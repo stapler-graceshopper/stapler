@@ -43,7 +43,7 @@ class EditUserForm extends React.Component {
     });
   }
 
-  async handleSubmit(event) {
+  handleSubmit(event) {
     event.preventDefault();
     if (this.props.selectedUser.id) {
       const editedUser = {
@@ -75,6 +75,7 @@ class EditUserForm extends React.Component {
   render() {
     const { username, email, address } = this.state;
     const { handleChange, handleSubmit, handleDelete } = this;
+
 
     if (this.props.user.type === "admin") {
       return (

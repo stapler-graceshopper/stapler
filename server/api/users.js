@@ -35,6 +35,17 @@ router.get("/:id", requireToken, isAdmin, async (req, res, next) => {
   }
 });
 
+router.put("/byToken", requireToken, async (req, res, next) => {
+  try {
+    const token = req.headers.authorization;
+    const user = await User.findByToken(token);
+    const updatedUser = await user.update(req.body);
+    res.send(updatedUser);
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.put("/:id", requireToken, isAdmin, async (req, res, next) => {
   try {
     const { username, email, address } = req.body;
