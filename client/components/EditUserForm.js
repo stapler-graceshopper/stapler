@@ -53,7 +53,7 @@ class EditUserForm extends React.Component {
         address: this.state.address,
       };
       clearEmptyObjectKeys(editedUser);
-      await this.props.modifyUser(editedUser.id, editedUser);
+      this.props.modifyUser(editedUser.id, editedUser);
       this.setState({
         username: "",
         email: "",
