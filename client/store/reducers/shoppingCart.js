@@ -104,22 +104,16 @@ export const postItemToCart = (id, amount, history) => async dispatch => {
     console.log(error);
   }
 };
-//------left off here
+
 export const updateItemInCart = (id, amount) => async dispatch => {
   try {
-    const token = window.localStorage.getItem("token");
+    const updatedItem = await authenticateRequest(
+      "put",
+      `/api/shoppingCart/${id}`,
+      { quantity: amount }
+    );
 
-    if (token) {
-      await axios.put(
-        `/api/shoppingCart/${id}`,
-        { quantity: amount },
-        {
-          headers: {
-            authorization: token,
-          },
-        }
-      );
-    } else {
+    if (!updatedItem) {
       let currentCart = window.localStorage.getItem(LOCAL_CART);
       currentCart = JSON.parse(currentCart);
 
@@ -133,6 +127,7 @@ export const updateItemInCart = (id, amount) => async dispatch => {
 
       window.localStorage.setItem(LOCAL_CART, JSON.stringify(currentCart));
     }
+
     dispatch(updateItemFromCart(id, amount));
   } catch (error) {
     console.log(error);
@@ -141,15 +136,12 @@ export const updateItemInCart = (id, amount) => async dispatch => {
 
 export const deleteItemInCart = id => async dispatch => {
   try {
-    const token = window.localStorage.getItem("token");
+    const deleted = await authenticateRequest(
+      "delete",
+      `/api/shoppingCart/${id}`
+    );
 
-    if (token) {
-      await axios.delete(`/api/shoppingCart/${id}`, {
-        headers: {
-          authorization: token,
-        },
-      });
-    } else {
+    if (!deleted) {
       let currentCart = window.localStorage.getItem(LOCAL_CART);
       currentCart = JSON.parse(currentCart);
 
@@ -166,20 +158,15 @@ export const deleteItemInCart = id => async dispatch => {
 
 export const checkoutCart = history => async dispatch => {
   try {
-    const token = window.localStorage.getItem("token");
+    const cart = await authenticateRequest(
+      "put",
+      "/api/shoppingCart/checkout",
+      {}
+    );
 
-    if (token) {
-      await axios.put(
-        "/api/shoppingCart/checkout",
-        {},
-        {
-          headers: {
-            authorization: token,
-          },
-        }
-      );
-
+    if (cart) {
       dispatch(clearCart());
+
       history.push("/confirmation");
     }
   } catch (error) {

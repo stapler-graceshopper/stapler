@@ -4,7 +4,7 @@ import { authenticateRequest } from "../gatekeepingMiddleware";
 // ACTION TYPES
 
 const GET_PRODUCTS = "GET_PRODUCTS";
-const GET_PRODUCTS_BY_CATEGORY = "GET_PRODUCTS_BY_CATEGORY"
+const GET_PRODUCTS_BY_CATEGORY = "GET_PRODUCTS_BY_CATEGORY";
 const DELETE_PRODUCT = "DELETE_PRODUCT";
 const ADD_PRODUCT = "ADD_PRODUCT";
 const UPDATE_PRODUCT = "UPDATE_PRODUCT";
@@ -18,12 +18,12 @@ const getAllProducts = data => {
   };
 };
 
-const getProductsByCategory = (data) => {
+const getProductsByCategory = data => {
   return {
     type: GET_PRODUCTS_BY_CATEGORY,
-    products: data
-  }
-}
+    products: data,
+  };
+};
 
 const addProduct = data => {
   return {
@@ -43,14 +43,14 @@ export const fetchAllProducts = () => async dispatch => {
   }
 };
 
-export const fetchProductsByCategory = (category) => async (dispatch) => {
+export const fetchProductsByCategory = category => async dispatch => {
   try {
-    const {data} = await axios.get(`/api/products/byCategory/${category}`)
-    dispatch(getProductsByCategory(data))
+    const { data } = await axios.get(`/api/products/byCategory/${category}`);
+    dispatch(getProductsByCategory(data));
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
 export const fetchProductToBoDeleted = id => async () => {
   try {
