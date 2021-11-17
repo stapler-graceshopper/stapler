@@ -51,6 +51,15 @@ export const fetchUser = (id) => async (dispatch) => {
   }
 }
 
+export const modifySelf = (update) => async (dispatch) => {
+  try {
+    const updatedUser = await authenticateRequest('put', `/api/users/byToken`, update)
+    dispatch(updateUser(updatedUser))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const modifyUser = (id, user) => async (dispatch) => {
   try {
     const updatedUser = await authenticateRequest('put', `/api/users/${id}`, user)

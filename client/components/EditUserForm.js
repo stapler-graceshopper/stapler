@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { clearUser, modifyUser ,removeUser } from "../store/reducers/selectedUser";
+import { clearUser, modifyUser, removeUser } from "../store/reducers/selectedUser";
 import AllUsersTable from "./AllUsersTable";
 import { fetchAllUsers } from "../store/reducers/users";
 
@@ -39,7 +39,7 @@ class EditUserForm extends React.Component {
     });
   }
 
-  async handleSubmit(event) {
+  handleSubmit(event) {
     event.preventDefault();
     if (this.props.selectedUser.id) {
       const editedUser = {
@@ -49,7 +49,7 @@ class EditUserForm extends React.Component {
         address: this.state.address
       }
       clearEmptyObjectKeys(editedUser)
-      await this.props.modifyUser(editedUser.id, editedUser)
+      this.props.modifyUser(editedUser.id, editedUser)
       this.setState({
         username: "",
         email: "",
@@ -69,53 +69,53 @@ class EditUserForm extends React.Component {
   }
 
   render() {
-    const {username, email, address} = this.state
-    const {handleChange, handleSubmit, handleDelete} = this
+    const { username, email, address } = this.state
+    const { handleChange, handleSubmit, handleDelete } = this
 
     if (this.props.user.type === 'admin') {
       return (
         <div>
           {this.props.selectedUser.id ?
-        <div className="user">
-          <img src={this.props.selectedUser.image}/>
-          <div className="info">
-            <h1>User Name: {this.props.selectedUser.username}</h1>
-            <h1>Privleges: {this.props.selectedUser.type}</h1>
-            <h1>Email Address: {this.props.selectedUser.email}</h1>
-            <h1>Address: {this.props.selectedUser.address}</h1>
-          </div>
-        </div>
-        :
-        <div>
-        <h3>No User Selected</h3>
-        <h3>Choose A User From The Table Below</h3>
-      </div>
-        }
-        <hr />
-        <hr />
-        <h3>Edit Selected User</h3>
-        <h4>NOTE: ADMINS MAY ONLY EDIT NON ADMIN ACCOUNTS!</h4>
-        <form id ="EditUserForm" onSubmit={handleSubmit}>
-          <label htmlFor="username">Change User Name</label>
-          <input type="text" onChange={handleChange} name="username" value={username} />
+            <div className="user">
+              <img src={this.props.selectedUser.image} />
+              <div className="info">
+                <h1>User Name: {this.props.selectedUser.username}</h1>
+                <h1>Privleges: {this.props.selectedUser.type}</h1>
+                <h1>Email Address: {this.props.selectedUser.email}</h1>
+                <h1>Address: {this.props.selectedUser.address}</h1>
+              </div>
+            </div>
+            :
+            <div>
+              <h3>No User Selected</h3>
+              <h3>Choose A User From The Table Below</h3>
+            </div>
+          }
+          <hr />
+          <hr />
+          <h3>Edit Selected User</h3>
+          <h4>NOTE: ADMINS MAY ONLY EDIT NON ADMIN ACCOUNTS!</h4>
+          <form id="EditUserForm" onSubmit={handleSubmit}>
+            <label htmlFor="username">Change User Name</label>
+            <input type="text" onChange={handleChange} name="username" value={username} />
 
-          <label htmlFor="email">Change User Email</label>
-          <input type="text" onChange={handleChange} name="email" value={email} />
+            <label htmlFor="email">Change User Email</label>
+            <input type="text" onChange={handleChange} name="email" value={email} />
 
-          <label htmlFor="address">Change User Address</label>
-          <input type="text" onChange={handleChange} name="address" value={address} />
+            <label htmlFor="address">Change User Address</label>
+            <input type="text" onChange={handleChange} name="address" value={address} />
 
-          <br />
+            <br />
 
-          <button className="button" type="submit">Submit</button>
-        </form>
+            <button className="button" type="submit">Submit</button>
+          </form>
           <hr />
           <hr />
           <button className="button" type="button" onClick={handleDelete}> DELETE USER </button>
           <hr />
           <hr />
           <h3>AllUsersTable</h3>
-          <AllUsersTable/>
+          <AllUsersTable />
 
 
         </div>

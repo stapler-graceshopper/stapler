@@ -7,6 +7,7 @@ const TOKEN = 'token'
 //ACTION TYPES
 
 const SET_AUTH = 'SET_AUTH'
+const UPDATE_USER = 'UPDATE_USER'
 
 
 //ACTION CREATORS
@@ -62,6 +63,8 @@ export default function(state = {}, action) {
   switch (action.type) {
     case SET_AUTH:
       return action.auth
+    case UPDATE_USER:
+      return action.user
     default:
       return state
   }
