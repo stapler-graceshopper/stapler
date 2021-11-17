@@ -78,12 +78,14 @@ class EditUserForm extends React.Component {
       return (
         <div>
           {this.props.selectedUser.id ?
-        <div>
-          <h3>User Name: {this.props.selectedUser.username}</h3>
-          <img src={this.props.selectedUser.image}/> <br /> <br />
-          <span>Privleges: {this.props.selectedUser.type}</span> <br />
-          <span>Email Address: {this.props.selectedUser.email}</span> <br />
-          <span>Address: {this.props.selectedUser.address}</span> <br />
+        <div className="user">
+          <img src={this.props.selectedUser.image}/>
+          <div className="info">
+            <h1>User Name: {this.props.selectedUser.username}</h1>
+            <h1>Privleges: {this.props.selectedUser.type}</h1>
+            <h1>Email Address: {this.props.selectedUser.email}</h1>
+            <h1>Address: {this.props.selectedUser.address}</h1>
+          </div>
         </div>
         :
         <div>
@@ -107,11 +109,11 @@ class EditUserForm extends React.Component {
 
           <br />
 
-          <button type="submit">Submit</button>
+          <button className="button" type="submit">Submit</button>
         </form>
           <hr />
           <hr />
-          <button type="button" onClick={handleDelete}> DELETE USER </button>
+          <button className="button" type="button" onClick={handleDelete}> DELETE USER </button>
           <hr />
           <hr />
           <h3>AllUsersTable</h3>

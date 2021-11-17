@@ -11,12 +11,13 @@ label {
 }
 
 .nav {
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-evenly;
   display: flex;
 }
 
 nav a {
+  text-align: center;
   margin: 1em;
 }
 
@@ -70,7 +71,7 @@ form div {
 .checkout {
   position:absolute;
   left: 1100px;
-  top: 170px;
+  top: 230px;
   width: 100px;
   height: 30px;
   background-color: rgb(240, 170, 65)
