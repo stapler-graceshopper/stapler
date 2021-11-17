@@ -18,6 +18,20 @@ ShoppingCart.belongsTo(Product)
 Product.belongsToMany(Category, {through: 'ProductsToCategories'})
 Category.belongsToMany(Product, {through: 'ProductsToCategories'})
 
+Product.fetchHistoryOrCart = async (path, userId) => {
+  const type = path === 'history' ? true : false;
+
+  const cart = await Product.findAll({
+    include: {model: ShoppingCart, where: {
+      userId: userId,
+      purchased: type
+    }},
+  })
+
+  return cart
+}
+
+
 
 module.exports = {
   db,

@@ -31,6 +31,9 @@ const Product = db.define("product", {
     type: Sequelize.TEXT,
     defaultValue:
      defaultImageUrl,
+     validate: {
+       isUrl: true
+     }
   },
 
   quantity: {

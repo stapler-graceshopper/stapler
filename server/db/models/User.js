@@ -36,7 +36,10 @@ const User = db.define('user', {
   },
   image: {
     type: Sequelize.STRING,
-    defaultValue: "https://th.bing.com/th/id/OIP.zsaaVp0tIiSnOK-1rYpBnwAAAA?w=194&h=194&c=7&r=0&o=5&dpr=2&pid=1.7"
+    defaultValue: "https://th.bing.com/th/id/OIP.zsaaVp0tIiSnOK-1rYpBnwAAAA?w=194&h=194&c=7&r=0&o=5&dpr=2&pid=1.7",
+    validate: {
+      isUrl: true
+    }
   },
   address: {
     type: Sequelize.STRING,
