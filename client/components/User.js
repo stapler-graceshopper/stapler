@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { modifySelf } from '../store/reducers/selectedUser'
+import { me } from '../store/auth'
 
 const clearEmptyObjectKeys = (obj) => {
   try {
@@ -32,7 +33,7 @@ class User extends React.Component {
     });
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault();
     const editedUser = {
       username: this.state.username,
@@ -40,7 +41,8 @@ class User extends React.Component {
       address: this.state.address
     }
     clearEmptyObjectKeys(editedUser)
-    this.props.modifySelf(editedUser)
+    await this.props.modifySelf(editedUser)
+    await this.props.me()
     this.setState({
       username: "",
       email: "",
@@ -88,7 +90,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    modifySelf: (update) => dispatch(modifySelf(update))
+    modifySelf: (update) => dispatch(modifySelf(update)),
+    me: () => dispatch(me())
   }
 }
 
