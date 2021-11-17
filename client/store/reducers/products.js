@@ -72,7 +72,7 @@ export const createProduct = product => async dispatch => {
     const newProduct = await authenticateRequest('post', `/api/products`, product)
 
     if (newProduct) {
-      dispatch(addProduct(data));
+      dispatch(addProduct(newProduct));
     }
 
 

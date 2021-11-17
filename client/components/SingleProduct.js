@@ -6,9 +6,10 @@ import {Link} from 'react-router-dom'
 const singleProduct = (props) => {
 
   const product = props.product
-  const {id, name, description, imgUrl, quantity, price} = product
+  let {id, name, description, imgUrl, quantity, price} = product
   const linkDestination = `/products/${id}`
 
+  price = price || 0;
 
   return (
     <div className="product">
