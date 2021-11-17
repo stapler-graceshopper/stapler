@@ -14,6 +14,8 @@ import ShoppingCartView from './components/ShoppingCartView';
 import CartHistory from './components/CartHistory';
 import ConfirmationPage from './components/ConfirmationPage'
 import ViewCategories from './components/ViewCategories';
+import EditProductForm from './components/EditProductForm';
+import EditUserForm from './components/EditUserForm';
 
 class Routes extends Component {
   componentDidMount() {
@@ -26,6 +28,8 @@ class Routes extends Component {
     const allUsersPath = this.props.userType === 'admin' ? <Route path="/AllUsers" component={AllUsers} /> : null
     const createProductPath = this.props.userType === 'admin' ? <Route path="/create" component={AddProductForm} /> : null
     const createViewCategories = this.props.userType === 'admin' ? <Route path='/category' component={ViewCategories} /> : null
+    const createEditProductView = this.props.userType === 'admin' ? <Route path ='/editProduct' component={EditProductForm} /> : null
+    const createEditUserView = this.props.userType === 'admin' ? <Route path ='/editUser' component={EditUserForm} /> : null
 
     return (
       <div>
@@ -44,6 +48,8 @@ class Routes extends Component {
             {allUsersPath}
             {createProductPath}
             {createViewCategories}
+            {createEditProductView}
+            {createEditUserView}
 
             <Redirect to="/home" />
           </Switch>
