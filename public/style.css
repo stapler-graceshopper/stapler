@@ -70,8 +70,8 @@ form div {
 
 .checkout {
   position: absolute;
-  left: 75em;
-  top: 18em;
+  left: 75%;
+  top: 33%;
   width: 100px;
   height: 30px;
   background-color: rgb(240, 170, 65);
