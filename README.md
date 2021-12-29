@@ -16,7 +16,6 @@ Stapler was built using React and Redux for state management on the front-end, a
 2. Sync and seed your database by running `npm run seed`
 3. Use `npm run start:dev` to start a local server (on port 8080)
 
-<br/>
 
 # Demo here: https://stapler-graceshopper.herokuapp.com
 
